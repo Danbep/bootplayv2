@@ -2781,7 +2781,7 @@ const GAMES = [
 "image": "imagenes/zombie-driver-hd.webp"
 }
 ];
-
+GAMES.sort((a, b) => a.name.localeCompare(b.name));
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
 let selected = JSON.parse(localStorage.getItem("bootplay_selected") || "[]");
 
