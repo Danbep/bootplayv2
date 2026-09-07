@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Web de Juegos - Inicio</title>
+    <style>
+        /* Estilos generales básicos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* 1. Barra de Navegación */
+        .navbar {
+            background-color: #1f1f1f;
+            padding: 15px 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #00ff88;
+        }
+
+        /* 2. Estilo del rectángulo deslizable (Carrusel) */
+        .carrusel-contenedor {
+            width: 80%;           /* Ancho del rectángulo */
+            max-width: 900px;     /* Tamaño máximo para que no se estire de más */
+            height: 350px;        /* Altura del rectángulo largo */
+            margin: 30px auto;    /* Centrado en la pantalla */
+            overflow: hidden;     /* Oculta las imágenes que no están en vista */
+            border-radius: 10px;  /* Bordes redondeados modernos */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .carrusel-slides {
+            display: flex;
+            width: 300%;          /* Como son 3 imágenes, el ancho total es del 300% */
+            height: 100%;
+            animation: deslizar 12s infinite; /* Duración y repetición automática */
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;    /* Asegura que la imagen cubra el rectángulo sin deformarse */
+        }
+
+        /* Animación automática para que las imágenes pasen solas */
+        @keyframes deslizar {
+            0% { transform: translateX(0%); }
+            30% { transform: translateX(0%); }
+            35% { transform: translateX(-33.33%); }
+            65% { transform: translateX(-33.33%); }
+            70% { transform: translateX(-66.66%); }
+            95% { transform: translateX(-66.66%); }
+            100% { transform: translateX(0%); }
+        }
+
+        /* Contenido de bienvenida debajo del carrusel */
+        .bienvenida {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="ps3.html">PS3 (HEN)</a></li>
+            <li><a href="ps2.html">PS2</a></li>
+            <li><a href="tienda.html">Tienda Digital</a></li>
+        </ul>
+    </nav>
+
+    <!-- RECTÁNGULO DESLIZABLE (CARRUSEL) -->
+    <div class="carrusel-contenedor">
+        <div class="carrusel-slides">
+            <div class="slide">
+                <img src="imagenes/banner1.jpg" alt="Banner PS3 HEN">
+            </div>
+            <div class="slide">
+                <img src="imagenes/banner2.jpg" alt="Banner Juegos Digitales">
+            </div>
+            <div class="slide">
+                <img src="imagenes/banner3.jpg" alt="Banner Ofertas PS4 y PS5">
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN DE BIENVENIDA -->
+    <div class="bienvenida">
+        <h1>¡Bienvenido a tu sitio de juegos!</h1>
+        <p>Explora las secciones superiores para encontrar los mejores contenidos y juegos digitales.</p>
+    </div>
+
+</body>
+</html>
