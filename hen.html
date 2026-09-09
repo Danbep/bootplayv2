@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootplay | Catálogo PS3</title>
+<link rel="icon" href="imagenes/mi-logo-removebg-preview.png">
+<meta name="description" content="Catálogo de juegos PS3 de Bootplay. Seleccioná tus juegos y enviá tu pedido.">
+<style>
+  /* Estilos para la ventana emergente (Modal) */
+/* Estilos corregidos para la ventana emergente (Modal) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+}
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-box {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  width: min(480px, 92vw);
+  max-height: 85vh; /* Evita que se salga de la pantalla en celulares */
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto; /* Activa la barra de desplazamiento general si el contenido es largo */
+}
+.modal-close {
+  position: sticky; /* Se queda fija arriba a la derecha cuando haces scroll */
+  top: 0;
+  float: right;
+  margin-left: auto;
+  background: rgba(16, 19, 26, 0.8);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  z-index: 10; /* Asegura que la cruz esté siempre al frente de todo */
+  backdrop-filter: blur(4px);
+}
+.modal-img-container {
+  width: 100%;
+  max-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.modal-img-container img {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain; /* Cambiado a contain para que la imagen se vea COMPLETA sin recortarse */
+}
+.modal-title {
+  font-size: 22px;
+  font-weight: 850;
+  margin: 0;
+}
+.modal-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+  max-height: 120px; /* Si el texto de la descripción es muy largo, genera su propia barra interna */
+  overflow-y: auto;
+  padding-right: 4px;
+}
+  .hero-card-hen {
+  position: relative;
+  overflow: hidden;
+}
+.hero-card-hen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('imagenes/HEN-logo.png'); /* Reemplaza con la ruta de tu logo */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08; /* Esto controla qué tan difuminado/transparente se ve (de 0 a 1) */
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-card-hen > * {
+  position: relative;
+  z-index: 1;
+}
+:root{
+  --bg:#07080c; --panel:#10131a; --panel2:#151923; --text:#f4f6fb;
+  --muted:#9ca3b0; --accent:#7c5cff; --accent2:#9b86ff;
+  --border:rgba(255,255,255,.09); --ok:#45d483; --danger:#ff6574;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% -10%,#21194a 0,transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(7,8,12,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:22px;letter-spacing:.3px}
+.logo{width:55px;height:55px;border-radius:11px;background:linear-gradient(135deg,var(--accent),#4d38b8);display:grid;place-items:center;box-shadow:0 8px 28px rgba(124,92,255,.28)}
+.logo span{font-size:19px}
+.nav-actions{display:flex;gap:10px}
+.btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:10px 15px;border-radius:12px;cursor:pointer;font-weight:750;transition:.18s}
+.boton-invisible {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  box-shadow: none;
+}
+
+.boton-invisible:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.18)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#6248db);border-color:transparent}
+.hero{padding:74px 0 42px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}
+.eyebrow{color:#b7aaff;font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1.6px}
+h1{font-size:clamp(44px,7vw,78px);line-height:.95;margin:12px 0 20px;letter-spacing:-3px}
+.hero p{font-size:18px;line-height:1.6;color:var(--muted);max-width:680px}
+.hero-card{background:linear-gradient(145deg,rgba(124,92,255,.16),rgba(255,255,255,.03));border:1px solid var(--border);border-radius:24px;padding:25px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
+.hero-card .big{font-size:48px}
+.hero-card strong{font-size:22px}
+.hero-card p{font-size:14px;margin:8px 0 0}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 28px}
+.search{flex:1;min-width:240px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:14px 16px;border-radius:14px;outline:none}
+.search:focus{border-color:var(--accent)}
+.catalog-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:15px}
+.catalog-head h2{margin:0;font-size:30px}
+.count{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:90px}
+.card{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-height:270px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:rgba(124,92,255,.4)}
+.cover{height:150px;background:radial-gradient(circle at 50% 35%,rgba(124,92,255,.4),transparent 45%),linear-gradient(145deg,#17122d,#0b0d13);display:grid;place-items:center;position:relative}
+.cover-icon{font-size:50px;filter:drop-shadow(0 8px 20px rgba(124,92,255,.25))}
+.badge{position:absolute;top:11px;left:11px;font-size:11px;font-weight:800;padding:6px 8px;border-radius:9px;background:rgba(69,212,131,.12);color:var(--ok);border:1px solid rgba(69,212,131,.18)}
+.card-body{padding:15px;display:flex;flex-direction:column;flex:1}
+.game-name{font-weight:850;line-height:1.25;margin-bottom:8px}
+.meta{font-size:12px;color:var(--muted);margin-bottom:14px}
+.add{margin-top:auto;width:100%}
+.empty{grid-column:1/-1;padding:45px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:18px}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.2s;z-index:30}
+.drawer{position:fixed;right:0;top:0;height:100%;width:min(440px,94vw);background:#0d1017;border-left:1px solid var(--border);transform:translateX(100%);transition:.25s;z-index:31;padding:22px;display:flex;flex-direction:column}
+.open .drawer-backdrop{opacity:1;pointer-events:auto}
+.open .drawer{transform:translateX(0)}
+.drawer-head{display:flex;justify-content:space-between;align-items:center}
+.drawer h3{font-size:25px;margin:0}
+.selected{flex:1;overflow:auto;margin:20px 0}
+.selected-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}
+.remove{border:0;background:transparent;color:var(--muted);cursor:pointer}
+.drawer-footer{border-top:1px solid var(--border);padding-top:18px}
+.drawer-footer p{color:var(--muted);font-size:13px;line-height:1.5}
+footer{border-top:1px solid var(--border);padding:30px 0;color:var(--muted);font-size:13px}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.nav{height:64px}.hero{padding-top:50px}.grid{grid-template-columns:repeat(2,1fr);gap:11px}h1{letter-spacing:-2px}.card{min-height:255px}.cover{height:125px}.catalog-head{align-items:start;flex-direction:column}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.nav-actions .btn:first-child{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+         <button class="boton-invisible" onclick="window.location.href='index.html'">
+       <a class="brand" href="#"><span class="logo"><img src="imagenes/mi-logo.jpg" alt="Logo" style="width: 100%; height: 100%; border-radius: 11px; object-fit: cover;"></span>BOOTPLAY</a>
+   </button>
+    <div class="nav-actions">
+      <button class="btn" onclick="document.getElementById('catalogo').scrollIntoView()">Catálogo</button>
+      <button class="btn primary" onclick="openCart()">🛒 Pedido <span id="cartCount">0</span></button>
+        <div class="nav-actions">
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Catálogo PS3 HEN</div>
+      <h1>Elegí tus<br>juegos para HEN</h1>
+      <p>Explorá el catálogo de Bootplay, seleccioná los juegos que querés y prepará tu pedido en unos pocos pasos.</p>
+      <button class="btn primary" onclick="document.getElementById('catalogo').scrollIntoView()">Ver catálogo →</button>
+    </div>
+<div class="hero-card hero-card-hen">
+  <div class="big">🕹️</div>
+  <strong><span id="heroCount">0</span> juegos disponibles</strong>
+  <p>Buscá por nombre y agregá tus favoritos al pedido.</p>
+</div>
+  </div>
+</section>
+
+<section class="container" id="catalogo">
+  <div class="catalog-head">
+    <div>
+      <h2>Catálogo</h2>
+      <div class="count" id="resultCount"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <input id="search" class="search" type="search" placeholder="🔎 Buscar un juego..." autocomplete="off">
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+</main>
+
+<footer>
+  <div class="container">© <span id="year"></span> Bootplay · Catálogo PS3</div>
+</footer>
+
+<div id="drawerRoot"></div>
+<div id="modalRoot"></div>
+
+<script>
+const GAMES = [
+  {
+    "name": "007 LEGENDS",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/007-legends.webp"
+  },
+  {
+    "name": "2010 Fifa World Cup South Africa",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/2010-fifa-world-cup-south-africa.webp"
+  },
+  {
+    "name": "2014 FIFA World Cup Brazil",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/2014-fifa-world-cup-brazil.webp"
+  },
+  {
+    "name": "3 on 3 NHL Arcade",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/3-on-3-nhl-arcade.webp"
+  },
+  {
+    "name": "Ace Combat: Assault Horizon",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/ace-combat-assault-horizon.webp"
+  },
+  {
+    "name": "Adventure Time: Finn & Jake Investigations",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/adventure-time-finn-jake-investigations.webp"
+  },
+  {
+    "name": "AFL Live",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/afl-live.webp"
+  },
+  {
+    "name": "Akimi Village",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/akimi-village.webp"
+  },
+  {
+    "name": "Aliens vs. Predator",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/aliens-vs-predator.webp"
+  },
+  {
+    "name": "Alone in the Dark: Inferno",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/alone-in-the-dark-inferno.webp"
+  },
+  {
+    "name": "Angry Birds: Star Wars",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/angry-birds-star-wars.webp"
+  },
+  {
+    "name": "Angry Birds: Trilogy",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/angry-birds-trilogy.webp"
+  },
+  {
+    "name": "Apache: Air Assault",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/apache-air-assault.webp"
+  },
+  {
+    "name": "Armored Core 4",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/armored-core-4.webp"
+  },
+  {
+    "name": "Armored Core V",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/armored-core-v.webp"
+  },
+  {
+    "name": "Armored Core: For Answer",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/armored-core-for-answer.webp"
+  },
+  {
+    "name": "Armored Core: Verdict Day",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/armored-core-verdict-day.webp"
+  },
+  {
+    "name": "Army Of Two",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/army-of-two.webp"
+  },
+  {
+    "name": "Army Of TWO: The 40th Day",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/army-of-two-the-40th-day.webp"
+  },
+  {
+    "name": "Army Of Two: The Devil's Cartel",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/army-of-two-the-devils-cartel.webp"
+  },
+  {
+    "name": "Assassin's Creed 4: Freedom Cry",
+    "console": "PS3",
+    "format": "HEN PKG",  
+    "image": "imagenes/assassins-creed-4 Freedom Cry.webp"
+  },
+  {
+    "name": "Assassins Creed: Brotherhood",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/assassins-creed-brotherhood.webp"
+  },
+  {
+    "name": "Asura's Wrath",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/asuras-wrath.webp"
+  },
+  {
+    "name": "Awesomenauts",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/awesomenauts.webp"
+  },
+  {
+    "name": "Back To Bed",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/back-to-bed.webp"
+    
+  },
+  {
+    "name": "Backbreaker Vengeance",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/backbreaker-vengeance.webp"
+  },
+  {
+    "name": "Backgammon Blitz",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/backgammon-blitz.webp"
+  },
+  {
+    "name": "Bakugan Battle Brawlers",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/bakugan-battle-brawlers.webp"
+  },
+  {
+    "name": "Bakugan Battle Brawlers: Defenders Of The Court",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/bakugan-battle-brawlers-defenders-of-the-court.webp"
+  },
+  {
+    "name": "Batman Arkham Origins",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/batman-arkham-origins.webp"
+  },
+  {
+    "name": "Batman Origins Blackgate",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/batman-origins-blackgate.webp"
+  },
+  {
+    "name": "Battlefield 3",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/battlefield-3.webp"
+  },
+  {
+    "name": "Battlefield 4: Premium",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/battlefield-4-premium.webp"
+  },
+  {
+    "name": "Battlefield Hardline",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/battlefield-hardline.webp"
+  },
+  {
+    "name": "Battlefield: Bad Company - Gold Edition",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/battlefield-bad-company-gold-edition.webp"
+  },
+  {
+    "name": "Battlefield: Bad Company 2 - Limited Edition",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/battlefield-bad-company-2-limited-edition.webp"
+  },
+  {
+    "name": "Bejeweled 2",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/bejeweled-2.webp"
+  },
+  {
+    "name": "Ben 10: Omniverse",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/ben-10-omniverse.webp"
+  },
+  {
+    "name": "Ben 10: Ultimate Cosmic Destruction",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/ben-10-ultimate-cosmic-destruction.webp"
+  },
+  {
+    "name": "Beyond Two Souls",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/beyond-two-souls.webp"
+  },
+  {
+    "name": "Big Sky Infinity",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/big-sky-infinity.webp"
+  },
+  {
+    "name": "Bioshock Infinite",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/bioshock-infinite.webp"  
+  },
+  {
+    "name": "Blazblue Central Fiction",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/blazblue-central-fiction.webp"
+  },
+  {
+    "name": "Blazblue: Calamity Trigger",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/blazblue-calamity-trigger.webp"
+  },
+  {
+    "name": "Blazing Angels: Squadrons of WWII",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/blazing-angels-squadrons-of-wwii.webp"
+  },
+  {
+    "name": "Bleach Soul Resurreccion",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/bleach-soul-resurreccion.webp"
+  },
+  {
+    "name": "Blokus",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/blokus.webp"
+  },
+  {
+    "name": "Blood Drive",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/blood-drive.webp"
+  },
+  {
+    "name": "Blood Of The Werewolf",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/blood-of-the-werewolf.webp"
+  },
+  {
+    "name": "Bloodrayne Betrayal",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/bloodrayne-betrayal.webp"  
+  },
+  {
+    "name": "BLUR",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/blur.webp"
+  },
+  {
+    "name": "Blur",
+    "console": "PS3",
+    "format": "ISO",
+    "image": "imagenes/blur.webp"
+  },
+  {
+    "name": "Borderlands 2: GOTY Edition",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/borderlands-2-goty-edition.webp"
+  },
+  {
+    "name": "Brink",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/brink.webp"
+  },
+  {
+    "name": "Brutal Legend",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/brutal-legend.webp"
+  },
+  {
+    "name": "Burnout Crash",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/burnout-crash.webp"
+  },
+  {
+    "name": "Burnout Paradise",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/burnout-paradise.webp"
+  },
+  {
+    "name": "Cabela's Big Game: Hunter Pro Hunts",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/cabelas-big-game-hunter-pro-hunts.webp"
+  },
+  {
+    "name": "Cabela's Hunting: Expeditions",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/cabelas-hunting-expeditions.webp"
+  },
+  {
+    "name": "Call Of Duty: Advanced Warfare",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-advanced-warfare.webp"
+  },
+  {
+    "name": "Call Of Duty: Black OPS",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-black-ops.webp"
+  },
+  {
+    "name": "Call Of Duty: Black OPS",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/call-of-duty-black-ops.webp"
+  },
+  {
+    "name": "Call Of Duty: Black OPS 2",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-black-ops-2.webp"
+  },
+  {
+    "name": "Call Of Duty: Ghosts",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-ghosts.webp"
+  },
+  {
+    "name": "Call Of Duty: Modern Warfare 2",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-modern-warfare-2.webp"
+  },
+  {
+    "name": "Call Of Duty: Modern Warfare 3",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/call-of-duty-modern-warfare-3.webp"
+  },
+  {
+    "name": "Call Of Duty: World At War",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/call-of-duty-world-at-war.webp"
+  },
+  {
+    "name": "Call of Juarez: Bound in Blood",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/call-of-juarez-bound-in-blood.webp"
+  },
+  {
+    "name": "Call of Juarez: Gunslinger",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/call-of-juarez-gunslinger.webp"
+  },
+  {
+    "name": "Call of Juarez: The Cartel",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/call-of-juarez-the-cartel.webp"
+  },
+  {
+    "name": "Capitan America: Super Soldier",
+    "console": "PS3",
+    "format": "HEN PKG",
+    "image": "imagenes/capitan-america-super-soldier.webp"
+  },
+  {
+    "name": "Cars 2",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/cars-2.webp"
+  },
+  {
+    "name": "Cars: Race-O-Rama",
+    "console": "PS3",
+    "format": "CARPETA PKG",
+    "image": "imagenes/cars-race-o-rama.webp"
+  },
+  {
+    "name": "Castle Crashers",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/castle-crashers.webp"
+  },
+  {
+    "name": "Castle of Illusion Starring Mickey Mouse",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/castle-of-illusion-starring-mickey-mouse.webp"
+  },
+  {
+    "name": "Castlevania Harmony of Despair",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/castlevania-harmony-of-despair.webp"
+  },
+  {
+    "name": "Castlevania: Lord Of Shadows",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/castlevania-lord-of-shadows.webp"
+  },
+  {
+    "name": "Castlevania: Lord Of Shadows 2",
+    "console": "PS3",
+    "format": "NO HEN PKG",
+    "image": "imagenes/castlevania-lord-of-shadows-2.webp"
+  },
+  {
+    "name": "Castlevania: Lords of Shadow – Mirror of Fate HD",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/castlevania-lords-of-shadow-mirror-of-fate-hd.webp"
+  },
+  {
+    "name": "Child of Light",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/child-of-light.webp"
+  },
+   {
+    "name": "Chime Super Deluxe",
+    "console": "PS3",
+    "format": "PSN ISO",
+    "image": "imagenes/Chime-Super-Deluxe.webp"
+  },
+  { "name": "Clash of the Titans: The Video Game", 
+  "console": "PS3", 
+  "format": "Carpeta PKG", 
+  "image": "imagenes/Clash-of-the-Titans.webp" 
+},
+    { "name": "Colin McRae: Dirt", 
+    "console": "PS3", 
+    "format": "Carpeta PKG", 
+    "image": "imagenes/Colin-McRae-Dirt.webp" 
+  },
+  { 
+      "name": "Colin McRae: Dirt 2", 
+      "console": "PS3", 
+      "format": "Carpeta PKG", 
+      "image": "imagenes/Colin-McRae-Dirt 2.webp" 
+  },
+  { "name": "Condemned 2: Bloodshoot", 
+  "console": "PS3", 
+  "format": "Carpeta PKG", 
+  "image": "imagenes/Condemned-2Bloodshoot.webp" 
+},
+  { "name": "Crazy Machines Elements", 
+  "console": "PS3", 
+  "format": "PSN ISO", 
+  "image": "imagenes/Crazy-Machines-Elements.webp" 
+},
+  { "name": "Crimsonland", 
+  "console": "PS3", 
+  "format": "PSN ISO", 
+  "image": "imagenes/Crimsonland.webp"
+ },
+    { name: "Critter Crunch", 
+    console: "PS3", 
+    format: "PSN ISO", 
+    image: "imagenes/Critter-Crunch.webp" 
+  },
+{ name: "Crysis 3",
+ console: "PS3", 
+ format: "NO HEN PKG", 
+ image: "imagenes/Crysis-3.webp" 
+},
+{ 
+name: "Cubixx HD", 
+console: "PS3", 
+format: "PSN ISO", 
+image: "imagenes/Cubixx-HD.webp" 
+},
+{ 
+name: "Dante's Inferno", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dante's-Inferno.webp" 
+},
+{ 
+name: "Dark Sector", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dark-Sector.webp" 
+},
+{ 
+name: "Dark Souls", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dark-Souls.webp" 
+},
+{ 
+name: "Dark Souls II", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dark-Souls-II.webp" 
+},
+{ 
+name: "Dark Souls II: Scholar of the First Sin", 
+console: "PS3", 
+format: "Carpeta PKG", 
+image: "imagenes/Dark-Souls-II-Scholar-of-the-First-Sin.webp" 
+},
+{ 
+name: "Dark Souls: Prepare To Die Edition", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dark-Souls-Prepare-To-Die-edition.webp" },
+{ 
+name: "Dead Island", 
+console: "PS3", 
+format: "NO HEN PKG", 
+image: "imagenes/Dead-Island.webp" 
+},
+    { name: "Dead Island Riptide", 
+    console: "PS3", 
+    format: "NO HEN PKG", 
+    image: "imagenes/Dead-Island-Riptide.webp" },
+    { name: "Dead Island: Riptide: Complete Edition", console: "PS3", format: "Carpeta PKG", image: "imagenes/Dead-Island-Riptide-Complete-Edition.webp" },
+    { name: "Dead Or Alive 5: Ultimate", console: "PS3", format: "NO HEN PKG", image: "imagenes/Dead-Or-Alive-5-Ultimate.webp" },
+    { name: "Dead Rising 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Dead-Rising-2.webp" },
+    { name: "Dead Space 3", console: "PS3", format: "ISO", image: "imagenes/Dead-Space-3.webp" },
+    { name: "Dead Space: Ignition", console: "PS3", format: "PSN ISO", image: "imagenes/Dead-Space-Ignition.webp" },
+    { name: "Deadliest Warrior Legends", console: "PS3", format: "PSN ISO", image: "imagenes/Deadliest-Warrior-Legends.webp" },
+    { name: "Deadliest Warrior: The Game", console: "PS3", format: "PSN ISO", image: "imagenes/Deadliest-Warrior-The-Game.webp" },
+    { name: "Deadpool", console: "PS3", format: "Carpeta PKG", image: "imagenes/Deadpool.webp" },
+    { name: "DeathSpank The Baconing", console: "PS3", format: "PSN ISO", image: "imagenes/DeathSpank-The-Baconing.webp" },
+    { name: "DeathSpank: Thongs of Virtue", console: "PS3", format: "PSN ISO", image: "imagenes/DeathSpank-Thongs-of-Virtue.webp" },
+    { name: "Def Jam: Icon", console: "PS3", format: "Carpeta PKG", image: "imagenes/Def-Jam-Icon.webp" },
+    { name: "Defense Technica", console: "PS3", format: "PSN ISO", image: "imagenes/Defense-Technica.webp" },
+    { name: "Destiny", console: "PS3", format: "Carpeta PKG", image: "imagenes/Destiny.webp" },
+    { name: "Destiny : The Taken King", console: "PS3", format: "NO HEN PKG", image: "imagenes/Destiny-The-Taken-King.webp" },
+    { name: "Destroy All Humans! Path of the Furon", console: "PS3", format: "Carpeta PKG", image: "imagenes/Destroy-All-Humans!-Path-of-the-Furon.webp" },
+    { name: "Devil May Cry 4", console: "PS3", format: "Carpeta PKG", image: "imagenes/Devil-May-Cry-4.webp" },
+    { name: "Diablo III", console: "PS3", format: "NO HEN PKG", image: "imagenes/Diablo-III.webp" },
+    { name: "Diablo III: Reaper Of Souls - Ultimate Evil Edition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Diablo-III-Reaper-Of-Souls---Ultimate-Evil-Edition.webp" },
+    { name: "Diner Dash", console: "PS3", format: "PSN ISO", image: "imagenes/Diner-Dash.webp" },
+    { name: "Disney Infinity", console: "PS3", format: "NO HEN PKG", image: "imagenes/Disney-Infinity.webp" },
+    { name: "Disney Infinity 2.0", console: "PS3", format: "NO HEN PKG", image: "imagenes/Disney-Infinity-2.0.webp" },
+    { name: "Double Dragon Neon", console: "PS3", format: "PSN ISO", image: "imagenes/Double-Dragon-Neon.webp" },
+    { name: "Dragon Age: Inquisition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Dragon-Age-Inquisition.webp" },
+    { name: "Dragon Ball Xenoverse", console: "PS3", format: "NO HEN PKG", image: "imagenes/Dragon-Ball-Xenoverse.webp" },
+    { name: "Dragon Ball Z: Budokai HD Collection", console: "PS3", format: "Carpeta PKG", image: "imagenes/Dragon-Ball-Z-Budokai-HD-Collection.webp" },
+    { name: "Dragon Ball Z: Ultimate Tenkaichi", console: "PS3", format: "HEN PKG", image: "imagenes/Dragon-Ball-Z-Ultimate-Tenkaichi.webp" },
+    { name: "Dragon Ball: Raging Blast", console: "PS3", format: "Carpeta PKG", image: "imagenes/Dragon-Ball-Raging-Blast.webp" },
+    { name: "Dragon Ball: Raging Blast 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Dragon-Ball-Raging-Blast-2.webp" },
+    { name: "Dragon Quest Heroes: Yamiryuu To Sekaiju No Shiro", console: "PS3", format: "NO HEN PKG", image: "imagenes/Dragon-Quest-Heroes-Yamiryuu-To-Sekaiju-No-Shiro.webp" },
+    { name: "Dream Chronicles", console: "PS3", format: "PSN ISO", image: "imagenes/Dream-Chronicles.webp" },
+    { name: "DreamWorks Super Star Kartz", console: "PS3", format: "HEN PKG", image: "imagenes/DreamWorks-Super-Star-Kartz.webp" },
+    { name: "Driver: San Francisco", console: "PS3", format: "NO HEN PKG", image: "imagenes/Driver-San-Francisco.webp" },
+    { name: "Dungeon Hunter: Alliance", console: "PS3", format: "PSN ISO", image: "imagenes/Dungeon-Hunter-Alliance.webp" },
+    { name: "Dungeons & Dragons: Chronicles of Mystara", console: "PS3", format: "PSN ISO", image: "imagenes/Dungeons-&-Dragons-Chronicles-of-Mystara.webp" },
+    { name: "Dustforce", console: "PS3", format: "PSN ISO", image: "imagenes/Dustforce.webp" },
+    { name: "Earthworm Jim HD", console: "PS3", format: "PSN ISO", image: "imagenes/Earthworm-Jim-HD.webp" },
+    { name: "eFOOTBALL 2025: Potato Patch v14.4", console: "PS3", format: "NO HEN PKG", image: "imagenes/eFOOTBALL-2025-Potato-Patch-v14.4.webp" },
+    { name: "eFootball 23: VR Patch", console: "PS3", format: "NO HEN PKG", image: "imagenes/eFootball-23-VR-Patch.webp" },
+    { name: "eFootball PES 2021: VR Patch", console: "PS3", format: "NO HEN PKG", image: "imagenes/eFootball-PES-2021-VR-Patch.webp" },
+    { name: "eFootball PES 2022: VR Patch", console: "PS3", format: "NO HEN PKG", image: "imagenes/eFootball-PES-2022-VR-Patch.webp" },
+    { name: "El Chavo Kart", console: "PS3", format: "HEN PKG", image: "imagenes/El-Chavo-Kart.webp" },
+    { name: "El Señor De Los Anillos: La Conquista", console: "PS3", format: "Carpeta PKG", image: "imagenes/El-Señor-De-Los-Anillos-La-Conquista.webp" },
+    { name: "El Señor de Los Anillos: La Guerra Del Norte", console: "PS3", format: "NO HEN PKG", image: "imagenes/El-Señor-de-Los-Anillos-La-Guerra-Del-Norte.webp" },
+    { name: "Epic Mickey: El Retorno De Los Dos Heroes", console: "PS3", format: "Carpeta PKG", image: "imagenes/Epic-Mickey-El-Retorno-De-Los-Dos-Heroes.webp" },
+    { name: "F.E.A.R.", console: "PS3", format: "Carpeta PKG", image: "imagenes/F.E.A.R..webp" },
+    { name: "F.E.A.R. 2: Project Origin", console: "PS3", format: "NO HEN PKG", image: "imagenes/F.E.A.R.-2-Project-Origin.webp" },
+    { name: "F.E.A.R. 3", console: "PS3", format: "ISO", image: "imagenes/F.E.A.R.-3.webp" },
+    { name: "F1 2010", console: "PS3", format: "NO HEN PKG", image: "imagenes/F1-2010.webp" },
+    { name: "Faery: Legends of Avalon", console: "PS3", format: "PSN ISO", image: "imagenes/Faery-Legends-of-Avalon.webp" },
+    { name: "Fallout 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fallout-3.webp" },
+    { name: "Fallout: New Vegas Ultimate Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Fallout-New-Vegas-Ultimate-Edition.webp" },
+    { name: "Family Guy: Back To Multiverse", console: "PS3", format: "HEN PKG", image: "imagenes/Family-Guy-Back-To-Multiverse.webp" },
+    { name: "Far Cry 4", console: "PS3", format: "NO HEN PKG", image: "imagenes/Far-Cry-4.webp" },
+    { name: "Farming Simulator 15", console: "PS3", format: "NO HEN PKG", image: "imagenes/Farming-Simulator-15.webp" },
+    { name: "Feeding Frenzy 2: Shipwreck Showdown", console: "PS3", format: "PSN ISO", image: "imagenes/Feeding-Frenzy-2-Shipwreck-Showdown.webp" },
+    { name: "Fez", console: "PS3", format: "PSN ISO", image: "imagenes/Fez.webp" },
+    { name: "Fifa 10", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-10.webp" },
+    { name: "Fifa 17", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-17.webp" },
+    { name: "Fifa 18", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-18.webp" },
+    { name: "Fifa 19", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-19.webp" },
+    { name: "Fifa 21 Next Level v1.2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-21-Next-Level-v1.2.webp" },
+    { name: "Fifa 23: Cubans Gamers Patch", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-23-Cubans-Gamers-Patch.webp" },
+     { name: "Fifa 26 patch", console: "PS3", format: "NO HEN PKG", image: "imagenes/Fifa-26.webp" },
+    { name: "Final Exam", console: "PS3", format: "PSN ISO", image: "imagenes/Final-Exam.webp" },
+    { name: "Final Fantasy XIII-2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Final-Fantasy-XIII-2.webp" },
+    { name: "Final Fantasy XIII: Lightning Returns", console: "PS3", format: "NO HEN PKG", image: "imagenes/Final-Fantasy-XIII-Lightning-Returns.webp" },
+    { name: "Fist Of The North: Star Ken's Rage", console: "PS3", format: "Carpeta PKG", image: "imagenes/Fist-Of-The-North-Star-Ken's-Rage.webp" },
+    { name: "Fist Of The North: Star Ken's Rage 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Fist-Of-The-North-Star-Ken's-Rage-2.webp" },
+    { name: "Folklore", console: "PS3", format: "NO HEN PKG", image: "imagenes/Folklore.webp" },
+    { name: "Foosball 2012", console: "PS3", format: "PSN ISO", image: "imagenes/Foosball-2012.webp" },
+    { name: "Forest Legends: The Call of Love", console: "PS3", format: "PSN ISO", image: "imagenes/Forest-Legends-The-Call-of-Love.webp" },
+    { name: "Frogger: Hyper Arcade Edition", console: "PS3", format: "PSN ISO", image: "imagenes/Frogger-Hyper-Arcade-Edition.webp" },
+    { name: "FUEL", console: "PS3", format: "Carpeta PKG", image: "imagenes/FUEL.webp" },
+    { name: "Full Auto 2: Battlelines", console: "PS3", format: "HEN PKG", image: "imagenes/Full-Auto-2-Battlelines.webp" },
+    { name: "Funky Lab Rat", console: "PS3", format: "PSN ISO", image: "imagenes/Funky-Lab-Rat.webp" },
+    { name: "Galaga Legions DX", console: "PS3", format: "PSN ISO", image: "imagenes/Galaga-Legions-DX.webp" },
+    { name: "Gatling Gears", console: "PS3", format: "PSN ISO", image: "imagenes/Gatling-Gears.webp" },
+    { name: "Germinator", console: "PS3", format: "PSN ISO", image: "imagenes/Germinator.webp" },
+    { name: "Ghostbusters: The Video Game", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ghostbusters-The-Video-Game.webp" },
+    { name: "Giana Sisters: Twisted Dreams", console: "PS3", format: "PSN ISO", image: "imagenes/Giana-Sisters:-Twisted-Dreams.webp" },
+    { name: "God Mode", console: "PS3", format: "PSN ISO", image: "imagenes/God-Mode.webp" },
+    { name: "God Of War 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/God-Of-War-3.webp" },
+    { name: "God Of War: Origins Collection", console: "PS3", format: "Carpeta PKG", image: "imagenes/God-Of-War:-Origins-Collection.webp" },
+    { name: "Golden Axe Beast Rider", console: "PS3", format: "NO HEN PKG", image: "imagenes/Golden-Axe-Beast-Rider.webp" },
+    { name: "GoldenEye 007: Reloaded", console: "PS3", format: "NO HEN PKG", image: "imagenes/GoldenEye-007:-Reloaded.webp" },
+    { name: "Gran Turismo 5 XL Edition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Gran-Turismo-5-XL-Edition.webp" },
+    { name: "Grand Theft Auto V", console: "PS3", format: "Carpeta PKG", image: "imagenes/Grand-Theft-Auto-V.webp" },
+    { name: "Grand Theft Auto V - BLUS", console: "PS3", format: "Carpeta PKG", image: "imagenes/Grand-Theft-Auto-V---BLUS.webp" },
+    { name: "Grand Theft Auto: San Andreas", console: "PS3", format: "NO HEN PKG", image: "imagenes/Grand-Theft-Auto:-San-Andreas.webp" },
+    { name: "Grand Theft Auto: San Andreas: Project Kaizo v2.1 Final", console: "PS3", format: "NO HEN PKG", image: "imagenes/Grand-Theft-Auto:-San-Andreas:-Project-Kaizo-v2.1-Final.webp" },
+    { name: "Gravity Crash", console: "PS3", format: "PSN ISO", image: "imagenes/Gravity-Crash.webp" },
+    { name: "Green Lantern: Rise Of The Manhunters", console: "PS3", format: "Carpeta PKG", image: "imagenes/Green-Lantern:-Rise-Of-The-Manhunters.webp" },
+    { name: "Grid 2: Reloaded Edition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Grid-2:-Reloaded-Edition.webp" },
+    { name: "Guardians of Middle-earth", console: "PS3", format: "PSN ISO", image: "imagenes/Guardians-of-Middle-earth.webp" },
+    { name: "Guitar Hero 3: Legends Of Rocks", console: "PS3", format: "NO HEN PKG", image: "imagenes/Guitar-Hero-3:-Legends-Of-Rocks.webp" },
+    { name: "Guitar Hero: Aerosmith", console: "PS3", format: "NO HEN PKG", image: "imagenes/Guitar-Hero:-Aerosmith.webp" },
+    { name: "Guitar Hero: Metallica", console: "PS3", format: "HEN PKG", image: "imagenes/Guitar-Hero:-Metallica.webp" },
+    { name: "Guitar Hero: Smash Hits", console: "PS3", format: "Carpeta PKG", image: "imagenes/Guitar-Hero:-Smash-Hits.webp" },
+    { name: "Guitar Hero: Van Halen", console: "PS3", format: "Carpeta PKG", image: "imagenes/Guitar-Hero:-Van-Halen.webp" },
+    { name: "Guitar Hero: Warriors Of Rock", console: "PS3", format: "HEN PKG", image: "imagenes/Guitar-Hero:-Warriors-Of-Rock.webp" },
+    { name: "Guitar Hero: World Tour", console: "PS3", format: "Carpeta PKG", image: "imagenes/Guitar-Hero:-World-Tour.webp" },
+    { name: "Hajime no Ippo: The Fighting", console: "PS3", format: "NO HEN PKG", image: "imagenes/Hajime-no-Ippo:-The-Fighting.webp" },
+    { name: "Harry Potter Y EL Principe Mestizo", console: "PS3", format: "Carpeta PKG", image: "imagenes/Harry-Potter-Y-EL-Principe-Mestizo.webp" },
+    { name: "Harry Potter Y Las Reliquias De La Muerte: Parte 1", console: "PS3", format: "Carpeta PKG", image: "imagenes/Harry-Potter-Y-Las-Reliquias-De-La-Muerte:-Parte-1.webp" },
+    { name: "Harry Potter Y Las Reliquias De La Muerte: Parte 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Harry-Potter-Y-Las-Reliquias-De-La-Muerte:-Parte-2.webp" },
+    { name: "Hatsune Miku Project DIVA F", console: "PS3", format: "HEN PKG", image: "imagenes/Hatsune-Miku-Project-DIVA-F.webp" },
+    { name: "Heavenly Sword", console: "PS3", format: "NO HEN PKG", image: "imagenes/Heavenly-Sword.webp" },
+    { name: "Heavy Rain", console: "PS3", format: "Carpeta PKG", image: "imagenes/Heavy-Rain.webp" },
+    { name: "Hokuto No Ken", console: "PS3", format: "Carpeta PKG", image: "imagenes/Hokuto-No-Ken.webp" },
+    { name: "Hunted: The Demons Forge", console: "PS3", format: "Carpeta PKG", image: "imagenes/Hunted:-The-Demons-Forge.webp" },
+    { name: "Ice Age 3: El Origen de los Dinosaurios", console: "PS3", format: "HEN PKG", image: "imagenes/Ice-Age-3:-El-Origen-de-los-Dinosaurios.webp" },
+    { name: "Ice Age 4: Continental Drift Arctic Games", console: "PS3", format: "HEN PKG", image: "imagenes/Ice-Age-4:-Continental-Drift-Arctic-Games.webp" },
+    { name: "IL-2 Sturmovik Birds of Prey", console: "PS3", format: "Carpeta PKG", image: "imagenes/IL-2-Sturmovik-Birds-of-Prey.webp" },
+    { name: "Injustice Gods Among Us: Ultimate Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Injustice-Gods-Among-Us:-Ultimate-Edition.webp" },
+    { name: "Iron Man", console: "PS3", format: "NO HEN PKG", image: "imagenes/Iron-Man.webp" },
+    { name: "Iron Man 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Iron-Man-2.webp" },
+    { name: "James Bond 007: Blood Stone", console: "PS3", format: "Carpeta PKG", image: "imagenes/James-Bond-007:-Blood-Stone.webp" },
+    { name: "Jojo's Bizarre Adventure: All Star Battle", console: "PS3", format: "Carpeta PKG", image: "imagenes/Jojo's-Bizarre-Adventure:-All-Star-Battle.webp" },
+    { name: "Jojo's Bizarre Adventure: Eyes Of Heaven", console: "PS3", format: "NO HEN PKG", image: "imagenes/Jojo's-Bizarre-Adventure:-Eyes-Of-Heaven.webp" },
+    { name: "Just Dance 2017", console: "PS3", format: "HEN PKG", image: "imagenes/Just-Dance-2017.webp" },
+    { name: "Just Dance 2018", console: "PS3", format: "HEN PKG", image: "imagenes/Just-Dance-2018.webp" },
+    { name: "Just Dance 2019", console: "PS3", format: "Carpeta PKG", image: "imagenes/Just-Dance-2019.webp" },
+    { name: "Just Dance 4", console: "PS3", format: "Carpeta PKG", image: "imagenes/Just-Dance-4.webp" },
+    { name: "Kill Zone 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Kill-Zone-2.webp" },
+    { name: "Killzone 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Killzone-3.webp" },
+    { name: "Kingdom Hearts HD 1.5 Remix", console: "PS3", format: "Carpeta PKG", image: "imagenes/Kingdom-Hearts-HD-1.5-Remix.webp" },
+    { name: "Kingdom Hearts HD 2.5 Remix", console: "PS3", format: "Carpeta PKG", image: "imagenes/Kingdom-Hearts-HD-2.5-Remix.webp" },
+    { name: "LAIR", console: "PS3", format: "NO HEN PKG", image: "imagenes/LAIR.webp" },
+    { name: "Le Tour De France 2014", console: "PS3", format: "Carpeta PKG", image: "imagenes/Le-Tour-De-France-2014.webp" },
+    { name: "LEGO Harry Potter Years 5-7", console: "PS3", format: "NO HEN PKG", image: "imagenes/LEGO-Harry-Potter-Years-5-7.webp" },
+    { name: "LEGO Harry Potter: Years 1-4", console: "PS3", format: "NO HEN PKG", image: "imagenes/LEGO-Harry-Potter:-Years-1-4.webp" },
+    { name: "LEGO Indiana Jones 2: The Adventure Continues", console: "PS3", format: "NO HEN PKG", image: "imagenes/LEGO-Indiana-Jones-2:-The-Adventure-Continues.webp" },
+    { name: "LEGO Indiana Jones: The Original Adventures", console: "PS3", format: "HEN PKG", image: "imagenes/LEGO-Indiana-Jones:-The-Original-Adventures.webp" },
+    { name: "Lego Marvel: Avengers", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lego-Marvel:-Avengers.webp" },
+    { name: "Lego Marvel: Super Heroes", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lego-Marvel:-Super-Heroes.webp" },
+    { name: "Lego Rock Band", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lego-Rock-Band.webp" },
+    { name: "LEGO Star Wars III: The Clone Wars", console: "PS3", format: "NO HEN PKG", image: "imagenes/LEGO-Star-Wars-III:-The-Clone-Wars.webp" },
+    { name: "Lego Star Wars: El Despertar De La Fuerza", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lego-Star-Wars:-El-Despertar-De-La-Fuerza.webp" },
+    { name: "Lego Star Wars: The Complete Saga", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lego-Star-Wars:-The-Complete-Saga.webp" },
+    { name: "Limbo", console: "PS3", format: "PSN ISO", image: "imagenes/Limbo.webp" },
+    { name: "Lollipop ChainSaw", console: "PS3", format: "Carpeta PKG", image: "imagenes/Lollipop-ChainSaw.webp" },
+    { name: "London 2012: The Olympic Games", console: "PS3", format: "Carpeta PKG", image: "imagenes/London-2012:-The-Olympic-Games.webp" },
+    { name: "Lucha Libre AAA: Heroes Del Ring", console: "PS3", format: "NO HEN PKG", image: "imagenes/Lucha-Libre-AAA:-Heroes-Del-Ring.webp" },
+    { name: "Mafia 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Mafia-2.webp" },
+    { name: "Marvel Super Hero Squad: Comic Combat", console: "PS3", format: "HEN PKG", image: "imagenes/Marvel-Super-Hero-Squad:-Comic-Combat.webp" },
+    { name: "Marvel Ultimate Alliance", console: "PS3", format: "HEN PKG", image: "imagenes/Marvel-Ultimate-Alliance.webp" },
+    { name: "Marvel Ultimate Alliance 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Marvel-Ultimate-Alliance-2.webp" },
+    { name: "Mass Effect 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/Mass-Effect-3.webp" },
+    { name: "Medal Of Honor", console: "PS3", format: "NO HEN PKG", image: "imagenes/Medal-Of-Honor.webp" },
+    { name: "Medal Of Honor: AirBorne", console: "PS3", format: "Carpeta PKG", image: "imagenes/Medal-Of-Honor:-AirBorne.webp" },
+    { name: "Medal Of Honor: Warfighter", console: "PS3", format: "NO HEN PKG", image: "imagenes/Medal-Of-Honor:-Warfighter.webp" },
+    { name: "Megamente: Comienza La Batalla", console: "PS3", format: "Carpeta PKG", image: "imagenes/Megamente:-Comienza-La-Batalla.webp" },
+    { name: "Mercenaries 2: World in Flames", console: "PS3", format: "NO HEN PKG", image: "imagenes/Mercenaries-2:-World-in-Flames.webp" },
+    { name: "Metal Gear Solid 4: Guns Of The Patriot", console: "PS3", format: "NO HEN PKG", image: "imagenes/Metal-Gear-Solid-4:-Guns-Of-The-Patriot.webp" },
+    { name: "Metal Gear Solid V: Ground Zeroes", console: "PS3", format: "NO HEN PKG", image: "imagenes/Metal-Gear-Solid-V:-Ground-Zeroes.webp" },
+    { name: "Metal Gear Solid V: The Phantom Pain", console: "PS3", format: "NO HEN PKG", image: "imagenes/Metal-Gear-Solid-V:-The-Phantom-Pain.webp" },
+    { name: "Metro Last Light", console: "PS3", format: "Carpeta PKG", image: "imagenes/Metro-Last-Light.webp" },
+    { name: "Middle-Earth: Shadow Of Mordor", console: "PS3", format: "NO HEN PKG", image: "imagenes/Middle-Earth:-Shadow-Of-Mordor.webp" },
+    { name: "Midnight Club: Los Angeles", console: "PS3", format: "NO HEN PKG", image: "imagenes/Midnight-Club:-Los-Angeles.webp" },
+    { name: "Minecraft: PlayStation 3 Edition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Minecraft:-PlayStation-3-Edition.webp" },
+    { name: "Minecraft: Story Mode - The Complete Adventure", console: "PS3", format: "NO HEN PKG", image: "imagenes/Minecraft:-Story-Mode---The-Complete-Adventure.webp" },
+    { name: "MLB The Show 16", console: "PS3", format: "NO HEN PKG", image: "imagenes/MLB-The-Show-16.webp" },
+    { name: "Modern Combat: Domination", console: "PS3", format: "PSN ISO", image: "imagenes/Modern-Combat:-Domination.webp" },
+    { name: "Modnation Racers", console: "PS3", format: "NO HEN PKG", image: "imagenes/Modnation-Racers.webp" },
+    { name: "Mortal Kombat vs DC Universe", console: "PS3", format: "NO HEN PKG", image: "imagenes/Mortal-Kombat-vs-DC-Universe.webp" },
+    { name: "Mortal Kombat: Komplete Edition", console: "PS3", format: "Carpeta PKG", image: "imagenes/Mortal-Kombat:-Komplete-Edition.webp" },
+    { name: "MotoGP 15", console: "PS3", format: "NO HEN PKG", image: "imagenes/MotoGP-15.webp" },
+    { name: "MotorStorm: Apocalypse", console: "PS3", format: "NO HEN PKG", image: "imagenes/MotorStorm:-Apocalypse.webp" },
+    { name: "MotorStorm: Complete Edition", console: "PS3", format: "Carpeta PKG", image: "imagenes/MotorStorm:-Complete-Edition.webp" },
+    { name: "MotorStorm: Pacific Rift", console: "PS3", format: "NO HEN PKG", image: "imagenes/MotorStorm:-Pacific-Rift.webp" },
+    { name: "Murdered Soul Suspect", console: "PS3", format: "HEN PKG", image: "imagenes/Murdered-Soul-Suspect.webp" },
+    { name: "MX Vs ATV Reflex", console: "PS3", format: "NO HEN PKG", image: "imagenes/MX-Vs-ATV-Reflex.webp" },
+    { name: "MXGP: The Official Motocross Videogame", console: "PS3", format: "HEN PKG", image: "imagenes/MXGP:-The-Official-Motocross-Videogame.webp" },
+    { name: "Naruto Shippuden Ultimate Ninja Storm", console: "PS3", format: "Carpeta PKG", image: "imagenes/Naruto-Shippuden-Ultimate-Ninja-Storm.webp" },
+    { name: "Naruto Shippuden Ultimate Ninja Storm 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Naruto-Shippuden-Ultimate-Ninja-Storm-2.webp" },
+    { name: "Naruto Shippuden Ultimate Ninja Storm 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/Naruto-Shippuden-Ultimate-Ninja-Storm-3.webp" },
+    { name: "Naruto Shippuden: Ultimate Ninja Storm Generations", console: "PS3", format: "NO HEN PKG", image: "imagenes/Naruto-Shippuden:-Ultimate-Ninja-Storm-Generations.webp" },
+    { name: "Naruto Shippuden: Ultimate Ninja Storm Revolution", console: "PS3", format: "NO HEN PKG", image: "imagenes/Naruto-Shippuden:-Ultimate-Ninja-Storm-Revolution.webp" },
+    { name: "Naruto Shippuden: Ultimate Ninja Storm Revolution 4 - Roud to Boruto", console: "PS3", format: "HEN PKG", image: "imagenes/Naruto-Shippuden:-Ultimate-Ninja-Storm-Revolution-4---Roud-to-Boruto.webp" },
+    { name: "Naruto Shipudden: Ultimate Ninja Storm 4 - Road To Boruto (BETA MOD)", console: "PS3", format: "HEN PKG", image: "imagenes/Naruto-Shipudden:-Ultimate-Ninja-Storm-4---Road-To-Boruto-(BETA-MOD).webp" },
+    { name: "NASCAR 15", console: "PS3", format: "NO HEN PKG", image: "imagenes/NASCAR-15.webp" },
+    { name: "NBA 2K16", console: "PS3", format: "NO HEN PKG", image: "imagenes/NBA-2K16.webp" },
+    { name: "NBA 2K18", console: "PS3", format: "Carpeta PKG", image: "imagenes/NBA-2K18.webp" },
+    { name: "NBA Street Homecourt", console: "PS3", format: "HEN PKG", image: "imagenes/NBA-Street-Homecourt.webp" },
+    { name: "NCAA Football 14: College Football Revamped v17", console: "PS3", format: "Carpeta PKG", image: "imagenes/NCAA-Football-14:-College-Football-Revamped-v17.webp" },
+    { name: "Need For Speed : Rivals", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed-:-Rivals.webp" },
+    { name: "Need For Speed: Carbon", console: "PS3", format: "Carpeta PKG", image: "imagenes/Need-For-Speed:-Carbon.webp" },
+    { name: "Need For Speed: Hot Pursuit", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-Hot-Pursuit.webp" },
+    { name: "Need For Speed: Most Wanted", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-Most-Wanted.webp" },
+    { name: "Need For Speed: ProStreet", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-ProStreet.webp" },
+    { name: "Need For Speed: Shift", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-Shift.webp" },
+    { name: "Need For Speed: The Run", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-The-Run.webp" },
+    { name: "Need For Speed: UnderCover", console: "PS3", format: "NO HEN PKG", image: "imagenes/Need-For-Speed:-UnderCover.webp" },
+    { name: "NieR", console: "PS3", format: "Carpeta PKG", image: "imagenes/NieR.webp" },
+    { name: "Nier Replicant", console: "PS3", format: "Carpeta PKG", image: "imagenes/Nier-Replicant.webp" },
+    { name: "Ninja Gaiden 3: Razor´s Edge", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ninja-Gaiden-3:-Razor´s-Edge.webp" },
+    { name: "Ninja Gaiden Sigma", console: "PS3", format: "HEN PKG", image: "imagenes/Ninja-Gaiden-Sigma.webp" },
+    { name: "No More Heroes Paradise", console: "PS3", format: "HEN PKG", image: "imagenes/No-More-Heroes-Paradise.webp" },
+    { name: "One Piece: Pirate Warriors", console: "PS3", format: "Carpeta PKG", image: "imagenes/One-Piece:-Pirate-Warriors.webp" },
+    { name: "One Piece: Pirate Warriors 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/One-Piece:-Pirate-Warriors-2.webp" },
+    { name: "One Piece: Pirate Warriors 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/One-Piece:-Pirate-Warriors-3.webp" },
+    { name: "Operation Flashpoint: Dragon Rising", console: "PS3", format: "NO HEN PKG", image: "imagenes/Operation-Flashpoint:-Dragon-Rising.webp" },
+    { name: "Operation Flashpoint: Red River", console: "PS3", format: "NO HEN PKG", image: "imagenes/Operation-Flashpoint:-Red-River.webp" },
+    { name: "Outland", console: "PS3", format: "PSN ISO", image: "imagenes/Outland.webp" },
+    { name: "Pacific Rim: The Video Game", console: "PS3", format: "PSN ISO", image: "imagenes/Pacific-Rim:-The-Video-Game.webp" },
+    { name: "Persona 5", console: "PS3", format: "Carpeta PKG", image: "imagenes/Persona-5.webp" },
+    { name: "PES 2008: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2008:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2009: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2009:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2010: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2010:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2011: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2011:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2013: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2013:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2016: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2016:-Pro-Evolution-Soccer.webp" },
+    { name: "PES 2018: Pro Evolution Soccer", console: "PS3", format: "NO HEN PKG", image: "imagenes/PES-2018:-Pro-Evolution-Soccer.webp" },
+    { name: "Pid", console: "PS3", format: "PSN ISO", image: "imagenes/Pid.webp" },
+    { name: "Plants vs. Zombies", console: "PS3", format: "Carpeta PKG", image: "imagenes/Plants-vs.-Zombies.webp" },
+    { name: "Plants vs. Zombies: Garden Warfare", console: "PS3", format: "NO HEN PKG", image: "imagenes/Plants-vs.-Zombies:-Garden-Warfare.webp" },
+    { name: "PlayStation All Stars: Battle Royale", console: "PS3", format: "NO HEN PKG", image: "imagenes/PlayStation-All-Stars:-Battle-Royale.webp" },
+    { name: "Portal 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Portal-2.webp" },
+    { name: "Prototype 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Prototype-2.webp" },
+    { name: "Pure Futbol", console: "PS3", format: "Carpeta PKG", image: "imagenes/Pure-Futbol.webp" },
+    { name: "Puss In Boots", console: "PS3", format: "HEN PKG", image: "imagenes/Puss-In-Boots.webp" },
+    { name: "RaceDriver : Grid", console: "PS3", format: "NO HEN PKG", image: "imagenes/RaceDriver-:-Grid.webp" },
+    { name: "Rage", console: "PS3", format: "NO HEN PKG", image: "imagenes/Rage.webp" },
+    { name: "Ragnarok Odyssey ACE", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ragnarok-Odyssey-ACE.webp" },
+    { name: "Rambo: The Video Game", console: "PS3", format: "NO HEN PKG", image: "imagenes/Rambo:-The-Video-Game.webp" },
+    { name: "Rapala Pro Bass Fishing", console: "PS3", format: "Carpeta PKG", image: "imagenes/Rapala-Pro-Bass-Fishing.webp" },
+    { name: "Rapala: Fishing Frenzy", console: "PS3", format: "Carpeta PKG", image: "imagenes/Rapala:-Fishing-Frenzy.webp" },
+    { name: "Ratatouille", console: "PS3", format: "HEN PKG", image: "imagenes/Ratatouille.webp" },
+    { name: "Ratchet & Clank: A Crack in Time", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ratchet-&-Clank:-A-Crack-in-Time.webp" },
+    { name: "Ratchet And Clank: All 4 One", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ratchet-And-Clank:-All-4-One.webp" },
+    { name: "Ratchet and Clank: Full Frontal Assault", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ratchet-and-Clank:-Full-Frontal-Assault.webp" },
+    { name: "Ratchet And Clank: Nexus", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ratchet-And-Clank:-Nexus.webp" },
+    { name: "Ratchet And Clank: Quest for Booty", console: "PS3", format: "HEN PKG", image: "imagenes/Ratchet-And-Clank:-Quest-for-Booty.webp" },
+    { name: "Ratchet And Clank: Tools of Destruction", console: "PS3", format: "HEN PKG", image: "imagenes/Ratchet-And-Clank:-Tools-of-Destruction.webp" },
+    { name: "Red Dead Redemption: GOTY", console: "PS3", format: "NO HEN PKG", image: "imagenes/Red-Dead-Redemption:-GOTY.webp" },
+    { name: "Resident Evil 0: HD Remaster", console: "PS3", format: "HEN PKG", image: "imagenes/Resident-Evil-0:-HD-Remaster.webp" },
+    { name: "Resident Evil 5: Definitive Edition - Filtro Natural", console: "PS3", format: "HEN PKG", image: "imagenes/Resident-Evil-5:-Definitive-Edition---Filtro-Natural.webp" },
+    { name: "Resident Evil 5: Gold Edition", console: "PS3", format: "NO HEN PKG", image: "imagenes/Resident-Evil-5:-Gold-Edition.webp" },
+    { name: "Resident Evil 6", console: "PS3", format: "NO HEN PKG", image: "imagenes/Resident-Evil-6.webp" },
+    { name: "Resident Evil: Operation Raccoon City", console: "PS3", format: "Carpeta PKG", image: "imagenes/Resident-Evil:-Operation-Raccoon-City.webp" },
+    { name: "Resident Evil: Revelations", console: "PS3", format: "NO HEN PKG", image: "imagenes/Resident-Evil:-Revelations.webp" },
+    { name: "Resident Evil: Revelations 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Resident-Evil:-Revelations-2.webp" },
+    { name: "Resistance 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Resistance-3.webp" },
+    { name: "Ride", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ride.webp" },
+    { name: "Ridge Racer: Unbounded", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ridge-Racer:-Unbounded.webp" },
+    { name: "Rio: The Video Game", console: "PS3", format: "HEN PKG", image: "imagenes/Rio:-The-Video-Game.webp" },
+    { name: "Rock Band 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Rock-Band-2.webp" },
+    { name: "Rock Band 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Rock-Band-3.webp" },
+    { name: "Sacred 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sacred-3.webp" },
+    { name: "Saint Seiya: Sanctuary Battle", console: "PS3", format: "HEN PKG", image: "imagenes/Saint-Seiya:-Sanctuary-Battle.webp" },
+    { name: "Saint Seiya: Soldier's Soul", console: "PS3", format: "NO HEN PKG", image: "imagenes/Saint-Seiya:-Soldier's-Soul.webp" },
+    { name: "SAW: The Video Game", console: "PS3", format: "Carpeta PKG", image: "imagenes/SAW:-The-Video-Game.webp" },
+    { name: "Scott Pilgrim vs The World: The Game", console: "PS3", format: "HEN PKG", image: "imagenes/Scott-Pilgrim-vs-The-World:-The-Game.webp" },
+    { name: "Shadows of the Damned", console: "PS3", format: "HEN PKG", image: "imagenes/Shadows-of-the-Damned.webp" },
+    { name: "Shaun White: Skatebording", console: "PS3", format: "Carpeta PKG", image: "imagenes/Shaun-White:-Skatebording.webp" },
+    { name: "ShellShock 2: Blood Trails", console: "PS3", format: "HEN PKG", image: "imagenes/ShellShock-2:-Blood-Trails.webp" },
+    { name: "Shingeki no Kyojin: Attack on Titan", console: "PS3", format: "NO HEN PKG", image: "imagenes/Shingeki-no-Kyojin:-Attack-on-Titan.webp" },
+    { name: "Shrek: Forever After: The Final Chapter", console: "PS3", format: "Carpeta PKG", image: "imagenes/Shrek:-Forever-After:-The-Final-Chapter.webp" },
+    { name: "Sid Meier's Civilization Revolution", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sid-Meier's-Civilization-Revolution.webp" },
+    { name: "Silent Hill: DownPour", console: "PS3", format: "Carpeta PKG", image: "imagenes/Silent-Hill:-DownPour.webp" },
+    { name: "Silent Hill: Downpour", console: "PS3", format: "NO HEN PKG", image: "imagenes/Silent-Hill:-Downpour.webp" },
+    { name: "Silent Hill: HD Collection", console: "PS3", format: "NO HEN PKG", image: "imagenes/Silent-Hill:-HD-Collection.webp" },
+    { name: "Singularity", console: "PS3", format: "Carpeta PKG", image: "imagenes/Singularity.webp" },
+    { name: "Siren: Blood Curse", console: "PS3", format: "HEN PKG", image: "imagenes/Siren:-Blood-Curse.webp" },
+    { name: "Skate 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Skate-2.webp" },
+    { name: "Skate 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Skate-3.webp" },
+    { name: "Slender: The Arrival", console: "PS3", format: "HEN PKG", image: "imagenes/Slender:-The-Arrival.webp" },
+    { name: "Sniper Elite III", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sniper-Elite-III.webp" },
+    { name: "Sniper Elite III: Ultimate Edition", console: "PS3", format: "Carpeta PKG", image: "imagenes/Sniper-Elite-III:-Ultimate-Edition.webp" },
+    { name: "Sniper Elite v2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sniper-Elite-v2.webp" },
+    { name: "Sniper Elite v2: Game of the Year Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Sniper-Elite-v2:-Game-of-the-Year-Edition.webp" },
+    { name: "Sniper Elite V2: Silver Star Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Sniper-Elite-V2:-Silver-Star-Edition.webp" },
+    { name: "Sniper: Ghost Warrior", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sniper:-Ghost-Warrior.webp" },
+    { name: "Sniper: Ghost Warrior 2", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sniper:-Ghost-Warrior-2.webp" },
+    { name: "SOCOM 4: U.S. Navy SEALs", console: "PS3", format: "NO HEN PKG", image: "imagenes/SOCOM-4:-U.S.-Navy-SEALs.webp" },
+    { name: "SOCOM: Confrontation", console: "PS3", format: "NO HEN PKG", image: "imagenes/SOCOM:-Confrontation.webp" },
+    { name: "SOCOM: U.S. Navy SEALs - Confrontation", console: "PS3", format: "NO HEN PKG", image: "imagenes/SOCOM:-U.S.-Navy-SEALs---Confrontation.webp" },
+    { name: "Sonic And All Stars Racing Transformed", console: "PS3", format: "Carpeta PKG", image: "imagenes/Sonic-And-All-Stars-Racing-Transformed.webp" },
+    { name: "Soul Calibur IV", console: "PS3", format: "NO HEN PKG", image: "imagenes/Soul-Calibur-IV.webp" },
+    { name: "Soul Calibur V", console: "PS3", format: "NO HEN PKG", image: "imagenes/Soul-Calibur-V.webp" },
+    { name: "Spider-Man 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/Spider-Man-3.webp" },
+    { name: "Spider-Man 3: Collector's Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Spider-Man-3:-Collector's-Edition.webp" },
+    { name: "Spider-Man: Edge Of Time", console: "PS3", format: "Carpeta PKG", image: "imagenes/Spider-Man:-Edge-Of-Time.webp" },
+    { name: "Spider-Man: Web Of Shadows", console: "PS3", format: "Carpeta PKG", image: "imagenes/Spider-Man:-Web-Of-Shadows.webp" },
+    { name: "Splatterhouse", console: "PS3", format: "HEN PKG", image: "imagenes/Splatterhouse.webp" },
+    { name: "SSX", console: "PS3", format: "NO HEN PKG", image: "imagenes/SSX.webp" },
+    { name: "Stacking", console: "PS3", format: "PSN ISO", image: "imagenes/Stacking.webp" },
+    { name: "Star Wars: The Clone Wars Republic Heroes", console: "PS3", format: "NO HEN PKG", image: "imagenes/Star-Wars:-The-Clone-Wars-Republic-Heroes.webp" },
+    { name: "Star Wars: The Forced Unleashed Sith Edition", console: "PS3", format: "HEN PKG", image: "imagenes/Star-Wars:-The-Forced-Unleashed-Sith-Edition.webp" },
+    { name: "Start the Party!", console: "PS3", format: "NO HEN PKG", image: "imagenes/Start-the-Party!.webp" },
+    { name: "Street Fighter X Tekken", console: "PS3", format: "NO HEN PKG", image: "imagenes/Street-Fighter-X-Tekken.webp" },
+    { name: "Sword Art Online: Lost Song", console: "PS3", format: "NO HEN PKG", image: "imagenes/Sword-Art-Online:-Lost-Song.webp" },
+    { name: "Syndicate", console: "PS3", format: "HEN PKG", image: "imagenes/Syndicate.webp" },
+    { name: "Tales Of Berseria", console: "PS3", format: "NO HEN PKG", image: "imagenes/Tales-Of-Berseria.webp" },
+    { name: "Tekken 6", console: "PS3", format: "NO HEN PKG", image: "imagenes/Tekken-6.webp" },
+    { name: "Terraria (EUR)", console: "PS3", format: "HEN PKG", image: "imagenes/Terraria-(EUR).webp" },
+    { name: "Terraria (USA)", console: "PS3", format: "HEN PKG", image: "imagenes/Terraria-(USA).webp" },
+    { name: "Test Drive: Ultimated 2", console: "PS3", format: "Carpeta PKG", image: "imagenes/Test-Drive:-Ultimated-2.webp" },
+    { name: "The Beatles: RockBand (EUR)", console: "PS3", format: "HEN PKG", image: "imagenes/The-Beatles:-RockBand-(EUR).webp" },
+    { name: "The Beattles: Rockband (USA)", console: "PS3", format: "HEN PKG", image: "imagenes/The-Beattles:-Rockband-(USA).webp" },
+    { name: "The Bourne Conspiracy", console: "PS3", format: "Carpeta PKG", image: "imagenes/The-Bourne-Conspiracy.webp" },
+    { name: "The Chronicles Of Riddick: Assault On Dark Athena", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Chronicles-Of-Riddick:-Assault-On-Dark-Athena.webp" },
+    { name: "The Elder Scrolls V: Skyrim", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Elder-Scrolls-V:-Skyrim.webp" },
+    { name: "The Elder Scrolls V: Skyrim Legendary Edition", console: "PS3", format: "HEN PKG", image: "imagenes/The-Elder-Scrolls-V:-Skyrim-Legendary-Edition.webp" },
+    { name: "The Elder Scrolls: Oblivion GOTY", console: "PS3", format: "Carpeta PKG", image: "imagenes/The-Elder-Scrolls:-Oblivion-GOTY.webp" },
+    { name: "The Godfather II", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Godfather-II.webp" },
+    { name: "The Godfather: The Don's Edition", console: "PS3", format: "HEN PKG", image: "imagenes/The-Godfather:-The-Don's-Edition.webp" },
+    { name: "The Incredible Hulk", console: "PS3", format: "Carpeta PKG", image: "imagenes/The-Incredible-Hulk.webp" },
+    { name: "The King Of Figthers XII", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-King-Of-Figthers-XII.webp" },
+    { name: "The King Of Figthers XIII", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-King-Of-Figthers-XIII.webp" },
+    { name: "The Last Of Us", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Last-Of-Us.webp" },
+    { name: "The Orange Box", console: "PS3", format: "Carpeta PKG", image: "imagenes/The-Orange-Box.webp" },
+    { name: "The Saboteur", console: "PS3", format: "HEN PKG", image: "imagenes/The-Saboteur.webp" },
+    { name: "The Simpsons Game", console: "PS3", format: "HEN PKG", image: "imagenes/The-Simpsons-Game.webp" },
+    { name: "The Sims 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Sims-3.webp" },
+    { name: "The Sims 3: Pets", console: "PS3", format: "Carpeta PKG", image: "imagenes/The-Sims-3:-Pets.webp" },
+    { name: "The Walking Dead: Season Two", console: "PS3", format: "NO HEN PKG", image: "imagenes/The-Walking-Dead:-Season-Two.webp" },
+    { name: "Thor: God Of Thunder", console: "PS3", format: "Carpeta PKG", image: "imagenes/Thor:-God-Of-Thunder.webp" },
+    { name: "Time Crisis 4", console: "PS3", format: "NO HEN PKG", image: "imagenes/Time-Crisis-4.webp" },
+    { name: "Time Crisis: Razing Storm", console: "PS3", format: "NO HEN PKG", image: "imagenes/Time-Crisis:-Razing-Storm.webp" },
+    { name: "Tom Clamcy's: Ghost Recon Future Soldier", console: "PS3", format: "NO HEN PKG", image: "imagenes/Tom-Clamcy's:-Ghost-Recon-Future-Soldier.webp" },
+    { name: "Tom Clancy's: Raibow Six Vegas", console: "PS3", format: "Carpeta PKG", image: "imagenes/Tom-Clancy's:-Raibow-Six-Vegas.webp" },
+    { name: "Tom Clancy's: Splinter Cell Black List", console: "PS3", format: "Carpeta PKG", image: "imagenes/Tom-Clancy's:-Splinter-Cell-Black-List.webp" },
+    { name: "Tony Hawk's Pro Skater 5", console: "PS3", format: "Carpeta PKG", image: "imagenes/Tony-Hawk's-Pro-Skater-5.webp" },
+    { name: "Tony Hawk's Project 8", console: "PS3", format: "Carpeta PKG", image: "imagenes/Tony-Hawk's-Project-8.webp" },
+    { name: "Tony Hawk's Proving Ground", console: "PS3", format: "HEN PKG", image: "imagenes/Tony-Hawk's-Proving-Ground.webp" },
+    { name: "Transformers: Dark Of The Moon", console: "PS3", format: "NO HEN PKG", image: "imagenes/Transformers:-Dark-Of-The-Moon.webp" },
+    { name: "Transformers: The Game", console: "PS3", format: "Carpeta PKG", image: "imagenes/Transformers:-The-Game.webp" },
+    { name: "Transformers: War For Cybertron", console: "PS3", format: "Carpeta PKG", image: "imagenes/Transformers:-War-For-Cybertron.webp" },
+    { name: "Trinity: Souls of Zill O'll", console: "PS3", format: "HEN PKG", image: "imagenes/Trinity:-Souls-of-Zill-O'll.webp" },
+    { name: "Turok", console: "PS3", format: "NO HEN PKG", image: "imagenes/Turok.webp" },
+    { name: "Twisted Metal", console: "PS3", format: "NO HEN PKG", image: "imagenes/Twisted-Metal.webp" },
+    { name: "Two Worlds II", console: "PS3", format: "NO HEN PKG", image: "imagenes/Two-Worlds-II.webp" },
+    { name: "UFC Undisputed 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/UFC-Undisputed-3.webp" },
+    { name: "Ultimate Marvel Vs Capcom 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ultimate-Marvel-Vs-Capcom-3.webp" },
+    { name: "Ultra Street Fighter IV", console: "PS3", format: "NO HEN PKG", image: "imagenes/Ultra-Street-Fighter-IV.webp" },
+    { name: "Uncharted 2 : Among Thieves", console: "PS3", format: "NO HEN PKG", image: "imagenes/Uncharted-2-:-Among-Thieves.webp" },
+    { name: "Uncharted 3: Drake's Deception", console: "PS3", format: "NO HEN PKG", image: "imagenes/Uncharted-3:-Drake's-Deception.webp" },
+    { name: "Uncharted: Drakes Fortune", console: "PS3", format: "NO HEN PKG", image: "imagenes/Uncharted:-Drakes-Fortune.webp" },
+    { name: "Under Night In Birth Exe Late", console: "PS3", format: "Carpeta PKG", image: "imagenes/Under-Night-In-Birth-Exe-Late.webp" },
+    { name: "Unreal Tournament 3", console: "PS3", format: "NO HEN PKG", image: "imagenes/Unreal-Tournament-3.webp" },
+    { name: "Up: The Game", console: "PS3", format: "Carpeta PKG", image: "imagenes/Up:-The-Game.webp" },
+    { name: "Valkyria Chronicles", console: "PS3", format: "NO HEN PKG", image: "imagenes/Valkyria-Chronicles.webp" },
+    { name: "Vampire Rain: Altered Species", console: "PS3", format: "HEN PKG", image: "imagenes/Vampire-Rain:-Altered-Species.webp" },
+    { name: "Vancouver 2010", console: "PS3", format: "NO HEN PKG", image: "imagenes/Vancouver-2010.webp" },
+    { name: "Viking: Battle For Asgard", console: "PS3", format: "NO HEN PKG", image: "imagenes/Viking:-Battle-For-Asgard.webp" },
+    { name: "Vin Diesel: Wheelman", console: "PS3", format: "NO HEN PKG", image: "imagenes/Vin-Diesel:-Wheelman.webp" },
+    { name: "Virtua Tennis 2009", console: "PS3", format: "NO HEN PKG", image: "imagenes/Virtua-Tennis-2009.webp" },
+    { name: "Virtua Tennis 3", console: "PS3", format: "HEN PKG", image: "imagenes/Virtua-Tennis-3.webp" },
+    { name: "Virtua Tennis 4", console: "PS3", format: "HEN PKG", image: "imagenes/Virtua-Tennis-4.webp" },
+    { name: "Wall-E", console: "PS3", format: "Carpeta PKG", image: "imagenes/Wall-E.webp" },
+    { name: "Wanted Weapons Of Fate", console: "PS3", format: "HEN PKG", image: "imagenes/Wanted-Weapons-Of-Fate.webp" },
+    { name: "Warhawk", console: "PS3", format: "NO HEN PKG", image: "imagenes/Warhawk.webp" },
+    { name: "Warriors Legends Of Troy", console: "PS3", format: "HEN PKG", image: "imagenes/Warriors-Legends-Of-Troy.webp" },
+    { name: "Watch Dogs", console: "PS3", format: "NO HEN PKG", image: "imagenes/Watch-Dogs.webp" },
+    { name: "Way of the Samurai 3", console: "PS3", format: "HEN PKG", image: "imagenes/Way-of-the-Samurai-3.webp" },
+    { name: "WET", console: "PS3", format: "HEN PKG", image: "imagenes/WET.webp" },
+    { name: "White Knight Chronicles", console: "PS3", format: "NO HEN PKG", image: "imagenes/White-Knight-Chronicles.webp" },
+    { name: "White Knight Chronicles II", console: "PS3", format: "NO HEN PKG", image: "imagenes/White-Knight-Chronicles-II.webp" },
+    { name: "Wolfenstein", console: "PS3", format: "NO HEN PKG", image: "imagenes/Wolfenstein.webp" },
+    { name: "WRC 3: FIA World Rally Championship", console: "PS3", format: "Carpeta PKG", image: "imagenes/WRC-3:-FIA-World-Rally-Championship.webp" },
+    { name: "WRC 5: FIA World Rally Championship", console: "PS3", format: "NO HEN PKG", image: "imagenes/WRC-5:-FIA-World-Rally-Championship.webp" },
+    { name: "Wrc Powerslide", console: "PS3", format: "PSN ISO", image: "imagenes/Wrc-Powerslide.webp" },
+    { name: "WSC Real 2011", console: "PS3", format: "NO HEN PKG", image: "imagenes/WSC-Real-2011.webp" },
+    { name: "WWE '12", console: "PS3", format: "Carpeta PKG", image: "imagenes/WWE-'12.webp" },
+    { name: "WWE 2K14", console: "PS3", format: "NO HEN PKG", image: "imagenes/WWE-2K14.webp" },
+    { name: "WWE 2K16", console: "PS3", format: "Carpeta PKG", image: "imagenes/WWE-2K16.webp" },
+    { name: "WWE All Stars", console: "PS3", format: "NO HEN PKG", image: "imagenes/WWE-All-Stars.webp" },
+    { name: "WWE Legends Of Wrestle Mania", console: "PS3", format: "HEN PKG", image: "imagenes/WWE-Legends-Of-Wrestle-Mania.webp" },
+    { name: "WWE SmackDown Vs Raw 2008", console: "PS3", format: "Carpeta PKG", image: "imagenes/WWE-SmackDown-Vs-Raw-2008.webp" },
+    { name: "WWE SmackDown Vs Raw 2010", console: "PS3", format: "Carpeta PKG", image: "imagenes/WWE-SmackDown-Vs-Raw-2010.webp" },
+    { name: "WWE SmackDown vs. RAW 2011", console: "PS3", format: "NO HEN PKG", image: "imagenes/WWE-SmackDown-vs.-RAW-2011.webp" },
+    { name: "X-Blades", console: "PS3", format: "Carpeta PKG", image: "imagenes/X-Blades.webp" },
+    { name: "X-Men Origins: Wolverine Uncaged Edition", console: "PS3", format: "Carpeta PKG", image: "imagenes/X-Men-Origins:-Wolverine-Uncaged-Edition.webp" },
+    { name: "X-Men: Destiny", console: "PS3", format: "HEN PKG", image: "imagenes/X-Men:-Destiny.webp" },
+    { name: "XBLAZE Code: Embryo", console: "PS3", format: "HEN PKG", image: "imagenes/XBLAZE-Code:-Embryo.webp" },
+    { name: "Yaiba Ninja Gaiden Z", console: "PS3", format: "NO HEN PKG", image: "imagenes/Yaiba-Ninja-Gaiden-Z.webp" },
+    { name: "Yakuza 3", console: "PS3", format: "Carpeta PKG", image: "imagenes/Yakuza-3.webp" },
+    { name: "Yakuza 4", console: "PS3", format: "Carpeta PKG", image: "imagenes/Yakuza-4.webp" },
+    { name: "Zombie Driver HD", console: "PS3", format: "NO HEN PKG", image: "imagenes/Zombie-Driver-HD.webp" }
+];
+const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
+let selected = JSON.parse(localStorage.getItem("bootplay_selected") || "[]");
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+document.getElementById("heroCount").textContent = GAMES.length;
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function save(){ localStorage.setItem("bootplay_selected", JSON.stringify(selected)); updateCount(); }
+function updateCount(){ document.getElementById("cartCount").textContent = selected.length; }
+
+function render(){
+  const q = search.value.trim().toLowerCase();
+  const list = GAMES.filter(g => g.name.toLowerCase().includes(q));
+  document.getElementById("resultCount").textContent = `${list.length} juego${list.length===1?"":"s"}`;
+  grid.innerHTML = "";
+  
+  if(!list.length){ 
+      grid.innerHTML = '<div class="empty">No encontramos ese juego. Probá con otro nombre.</div>'; 
+      return; 
+  }
+  
+  list.forEach((g)=>{
+    const exists = selected.includes(g.name);
+    const card = document.createElement("article");
+    card.className = "card";
+    
+    let portada = '<div class="cover-icon">🎮</div>';
+    if (g.image) {
+        portada = `<img src="${g.image}" alt="${escapeHtml(g.name)}" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0;">`;
+    }
+
+    card.innerHTML = `
+      <div class="cover" style="cursor: pointer;">
+        ${portada}
+        <span class="badge" style="z-index:1;">● Disponible</span>
+      </div>
+      <div class="card-body">
+        <div class="game-name" style="cursor: pointer;">${escapeHtml(g.name)}</div>
+        <div class="meta">${escapeHtml(g.console)} · Formato: ${escapeHtml(g.format || 'Consultar')}</div>
+        <button class="btn ${exists?"":"primary"} add">${exists?"✓ Agregado":"＋ Agregar al pedido"}</button>
+      </div>`;
+      
+    // Al hacer clic en la tarjeta (portada o nombre), abre el modal de detalles
+    card.querySelector(".cover").onclick = () => openGameModal(g);
+    card.querySelector(".game-name").onclick = () => openGameModal(g);
+
+    // El botón sigue cumpliendo su función de agregar/quitar directamente
+    card.querySelector("button").onclick = (e) => {
+      e.stopPropagation();
+      toggle(g.name);
+    };
+
+    grid.appendChild(card);
+  });
+}
+
+// Funciones para abrir y cerrar la ventana emergente de detalles
+function openGameModal(g) {
+  const exists = selected.includes(g.name);
+  let modalPortada = '<div style="font-size: 60px;">🎮</div>';
+  if (g.image) {
+    modalPortada = `<img src="${g.image}" alt="${escapeHtml(g.name)}">`;
+  }
+
+  // Puedes cambiar el texto de la descripción por defecto o sacarlo de tu lista de juegos si agregas una propiedad "desc"
+  const descripcion = g.desc || `Juego disponible para PS3 (${g.format || 'HEN / No HEN'}). Seleccionalo para armar tu pedido y coordinar la instalación por WhatsApp.`;
+
+  document.getElementById("modalRoot").innerHTML = `
+    <div class="modal-backdrop active" onclick="closeGameModal(event)">
+      <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeGameModal()">✕</button>
+        <div class="modal-img-container">
+          ${modalPortada}
+        </div>
+        <div>
+          <h3 class="modal-title">${escapeHtml(g.name)}</h3>
+          <p style="font-size: 13px; color: var(--accent2); margin: 4px 0 10px 0;">Consola: ${escapeHtml(g.console)} | Formato: ${escapeHtml(g.format || 'Consultar')}</p>
+          <p class="modal-desc">${escapeHtml(descripcion)}</p>
+        </div>
+        <button class="btn ${exists?"":"primary"}" style="width: 100%; padding: 12px;" onclick="toggleModalGame('${escapeHtml(g.name).replace(/'/g, "\\'")}')">
+          ${exists?"✓ Quitar del pedido":"＋ Agregar al pedido"}
+        </button>
+      </div>
+    </div>`;
+}
+
+function closeGameModal(e) {
+  if (!e || e.target.classList.contains("modal-backdrop") || e.target.classList.contains("modal-close")) {
+    document.getElementById("modalRoot").innerHTML = "";
+  }
+}
+
+function toggleModalGame(name) {
+  toggle(name);
+  // Actualiza el botón dentro del modal al instante si está abierto
+  const gameObj = GAMES.find(x => x.name === name);
+  if (gameObj) openGameModal(gameObj);
+}
+
+function toggle(name){
+  if(selected.includes(name)) selected = selected.filter(x=>x!==name);
+  else selected.push(name);
+  save(); render();
+}
+
+function openCart(){
+  document.body.classList.add("open");
+  document.getElementById("drawerRoot").innerHTML = `
+    <div class="drawer-backdrop" onclick="closeCart()"></div>
+    <aside class="drawer">
+      <div class="drawer-head"><h3>Tu pedido</h3><button class="btn" onclick="closeCart()">✕</button></div>
+      <div class="selected">
+        ${selected.length ? selected.map((name,i)=>`
+          <div class="selected-item"><span>${escapeHtml(name)}</span><button class="remove" onclick="removeSelected(${i})">Quitar</button></div>
+        `).join("") : '<div class="empty">Todavía no seleccionaste juegos.</div>'}
+      </div>
+      <div class="drawer-footer">
+        <p>Al enviar, se abrirá WhatsApp con tu selección para que puedas consultar y coordinar el pedido.</p>
+        <button class="btn primary" style="width:100%" onclick="sendWhatsApp()" ${selected.length?"":"disabled"}>📲 Enviar pedido por WhatsApp</button>
+      </div>
+    </aside>`;
+}
+function closeCart(){ document.body.classList.remove("open"); document.getElementById("drawerRoot").innerHTML=""; }
+function removeSelected(i){ selected.splice(i,1); save(); openCart(); render(); }
+function sendWhatsApp(){
+  if(!selected.length) return;
+  if(WHATSAPP_NUMBER.includes("X")){
+    alert("Primero configurá tu número de WhatsApp en el archivo index.html.");
+    return;
+  }
+  const text = "Hola Bootplay! Quiero consultar por estos juegos:%0A%0A" +
+    selected.map((x,i)=>`${i+1}. ${encodeURIComponent(x)}`).join("%0A") +
+    "%0A%0APara HEN 4.93.";
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+}
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+
+search.addEventListener("input", render);
+updateCount(); render();
+</script>
+</body>
+</html>

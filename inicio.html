@@ -1,24 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+
+<header>
+     <div class="container nav">
+    <a class="brand" href="#">
+      <span class="logo">
+        <img src="imagenes/mi-logo.jpg" alt="Logo" style="width: 100%; height: 100%; border-radius: 11px; object-fit: cover;">
+      </span>
+      BOOTPLAY </a>
+   <div class="nav-actions">
+    
+      
+    </div>   <button  justify-content: space-between class="btn primary" onclick="openCart()">🛒 Pedido <span id="cartCount">0</span></button>
+    </header>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Web de Juegos - Inicio</title>
+    
     <style>
-        /* Estilos generales básicos */
+       
+            /*color del cuadro superioyr*/ 
+header{height:72px;display:flex;align-items:center; justify-content: space-between;gap:20px; position:sticky;top:0;z-index:20;background:rgba(7,8,12,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+ /*botones*/
+  .btn.primary{background:linear-gradient(135deg,var(--accent),#6248db);border-color:transparent}    
+          /* Estilos generales básicos */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #ffffff;
+              margin: 0;
+     background: #030250;
+    color: #3aad17;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
         }
+        .brand{ 
+         color: #eceef3;
+         display:flex;
+        align-items:center;
+        margin-left:48px;
+         gap:11px;
+         font-weight:900;
+        font-size:22px;
+         letter-spacing:.3px;
+         text-decoration: none;
+}
+.logo{width:55px;height:55px;border-radius:11px;background:linear-gradient(135deg,var(--accent),#000000);display:grid;place-items:center;box-shadow:0 8px 28px rgba(124,92,255,.28)}
+
+
 
         /* 1. Barra de Navegación */
         .navbar {
-            background-color: #1f1f1f;
+            background-color: #d1ce10;
             padding: 15px 20px;
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #132b7c;
         }
 
         .navbar ul {
@@ -30,7 +62,7 @@
         }
 
         .navbar li a {
-            color: #ffffff;
+            color: #00865963;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
@@ -86,8 +118,16 @@
             text-align: center;
             padding: 20px;
         }
+.nav-actions{display:flex;gap:10px}
+.btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:10px 15px;border-radius:12px;cursor:pointer;font-weight:750;transition:.18s}
+.btn:hover{transform:translateY(-1px);border-color:rgba(0, 241, 93, 0.18)}
+    
+    .eyebrow{color:#b7aaff;font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1.6px}
+h1{font-size:clamp(44px,7vw,78px);line-height:.95;margin:12px 0 20px;letter-spacing:-3px}
     </style>
+    
 </head>
+
 <body>
 
     <!-- BARRA DE NAVEGACIÓN -->
