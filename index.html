@@ -8,9 +8,11 @@
         style="width: 100%; height: 100%; border-radius: 11px; object-fit: cover;">
       </span>
       BOOTPLAY
-    </a>
-<title>Bootplay | Inicio</title>
-<link rel="icon" href="imagenes/mi-logo-removebg-preview.png">
+    </a><head>
+<title>
+  Bootplay | Inicio</title>
+<link rel="icon" href="imagenes/mi-logo.jpg">
+</head>
     <div class="nav-actions">
       <a class="btn" href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0">
         Whatsapp💬 
@@ -268,6 +270,179 @@ h1{
     height: 260px;
   }
 }
+footer{
+  background:#252525;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+  color:#999;
+}
+
+.footer-contenido{
+  width:min(1100px,92%);
+
+  margin:auto;
+
+  padding:
+    65px 0
+    45px;
+
+  display:grid;
+
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1fr;
+
+  gap:45px;
+}
+
+.footer-col h3{
+  color:#fff;
+
+  font-size:16px;
+
+  margin:
+    0 0 22px;
+}
+
+.footer-logo{
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:18px;
+}
+
+.footer-logo img{
+  width:55px;
+  height:55px;
+
+  object-fit:cover;
+
+  border-radius:10px;
+}
+
+.footer-logo strong{
+  color:#fff;
+
+  font-size:22px;
+}
+
+.footer-col p{
+  line-height:1.7;
+
+  margin:8px 0;
+
+  font-size:14px;
+}
+
+.footer-link{
+  display:block;
+
+  padding:
+    12px 0;
+
+  border-bottom:
+    1px dashed
+    rgba(255,255,255,.08);
+
+  color:#999;
+
+  transition:.2s;
+}
+
+.footer-link:hover{
+  color:#fff;
+
+  padding-left:5px;
+}
+
+.footer-bottom{
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+  text-align:center;
+
+  padding:20px;
+
+  font-size:13px;
+
+  color:#777;
+}
+
+.whatsapp{
+  position:fixed;
+
+  right:20px;
+  bottom:20px;
+
+  z-index:50;
+
+  background:#20d66b;
+
+  color:white;
+
+  padding:13px 19px;
+
+  border-radius:30px;
+
+  font-weight:800;
+
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.35);
+
+  transition:.2s;
+}
+
+.whatsapp:hover{
+  transform:translateY(-3px);
+
+  background:#19c460;
+}
+
+
+.arriba{
+  position:fixed;
+
+  right:20px;
+  bottom:78px;
+
+  width:42px;
+  height:42px;
+
+  display:grid;
+  place-items:center;
+
+  background:#171717;
+
+  color:white;
+
+  border-radius:8px;
+
+  font-size:25px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  transition:.2s;
+
+  z-index:50;
+}
+
+.arriba:hover{
+  background:#292929;
+
+  transform:translateY(-3px);
+}
 </style>
 
 <body>
@@ -306,7 +481,7 @@ h1{
     </div>
   </a>
 
-  <a href="hen.html" class="categoria juegos">
+  <a href="categorias.html" class="categoria juegos">
     <div class="categoria-contenido">
       <h2>⚡ Modificación y carga de juegos</h2>
       <p>Para jugar sin usar discos (USB o WIFI).</p>
@@ -320,5 +495,146 @@ h1{
     </div>
   </a>
 
+
 </section> 
+  <footer>
+
+  <div class="footer-contenido">
+
+    <div class="footer-col">
+
+      <div class="footer-logo">
+
+        <img
+          src="imagenes/mi-logo.jpg"
+          alt="Bootplay"
+        >
+
+        <strong>BOOTPLAY</strong>
+
+      </div>
+
+      <p>
+        Juegos, servicios y mantenimiento
+        para consolas.
+      </p>
+
+      <p>
+        📍 Paraná, Entre Ríos
+      </p>
+
+      <p>
+        📱 WhatsApp: +54 9 343 452-4653
+      </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Servicios</h3>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación y carga de juegos
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda digital
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Contacto</h3>
+
+      <a
+        class="footer-link"
+        href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+        target="_blank"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        class="footer-link"
+        href="https://www.instagram.com/bootplay_parana/"
+        target="_blank"
+      >
+        Instagram
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Mapa del sitio</h3>
+
+      <a
+        class="footer-link"
+        href="index.html"
+      >
+        Inicio
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación
+      </a>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 Bootplay — Todos los derechos reservados.
+
+  </div>
+
+</footer>
+<a href="#" class="arriba" aria-label="Volver arriba">
+  ↑
+</a>
+
+
+<a
+  class="whatsapp"
+  href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+  target="_blank"
+>
+  WhatsApp 💬
+</a>
 </body>

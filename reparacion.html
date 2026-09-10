@@ -1,0 +1,1189 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bootplay | Servicio Técnico</title>
+
+  <link rel="icon" href="./imagenes/mi-logo-removebg-preview.png">
+
+  <style>
+
+    /* =========================
+       COLORES GENERALES
+    ========================= */
+
+    :root{
+      --bg:#07080c;
+      --panel:#10131a;
+      --panel2:#151923;
+      --text:#f4f6fb;
+      --muted:#9ca3b0;
+      --accent:#7c5cff;
+      --accent2:#9b86ff;
+      --border:rgba(255,255,255,.09);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(
+          circle at 15% -10%,
+          #21194a 0,
+          transparent 35%
+        ),
+        var(--bg);
+
+      color:var(--text);
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        Segoe UI,
+        Roboto,
+        Arial,
+        sans-serif;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+
+    /* =========================
+       BARRA SUPERIOR
+    ========================= */
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+
+      background:rgba(7,8,12,.82);
+
+      backdrop-filter:blur(14px);
+
+      border-bottom:1px solid var(--border);
+    }
+
+    .container{
+      width:min(1180px,92%);
+      margin:auto;
+    }
+
+    .nav{
+      height:72px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+
+      gap:11px;
+
+      font-weight:900;
+      font-size:22px;
+
+      letter-spacing:.3px;
+    }
+
+    .logo{
+      width:55px;
+      height:55px;
+
+      border-radius:11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          #4d38b8
+        );
+
+      display:grid;
+      place-items:center;
+
+      box-shadow:
+        0 8px 28px rgba(124,92,255,.28);
+
+      overflow:hidden;
+    }
+
+    .logo img{
+      width:100%;
+      height:100%;
+
+      object-fit:cover;
+
+      border-radius:11px;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+
+      background:var(--panel2);
+
+      color:var(--text);
+
+      padding:10px 15px;
+
+      border-radius:12px;
+
+      cursor:pointer;
+
+      font-weight:750;
+
+      transition:.18s;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+
+      border-color:
+        rgba(255,255,255,.18);
+    }
+
+    .btn.primary{
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          #6248db
+        );
+
+      border-color:transparent;
+    }
+
+
+    /* =========================
+       PRESENTACIÓN
+    ========================= */
+
+    .presentacion{
+      text-align:center;
+
+      padding:
+        100px 20px
+        70px;
+    }
+
+    .presentacion h1{
+      margin:0;
+
+      font-size:
+        clamp(48px,8vw,82px);
+
+      line-height:1;
+
+      font-weight:950;
+
+      letter-spacing:-2px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #b9aaff
+        );
+
+      -webkit-background-clip:text;
+      background-clip:text;
+
+      color:transparent;
+    }
+
+    .presentacion p{
+      margin:25px auto 0;
+
+      max-width:650px;
+
+      color:var(--muted);
+
+      font-size:19px;
+
+      line-height:1.6;
+    }
+
+
+    /* =========================
+       SECCIONES
+    ========================= */
+
+    .seccion{
+      width:min(1100px,92%);
+
+      margin:
+        0 auto
+        80px;
+    }
+
+    .titulo-seccion{
+      text-align:center;
+
+      margin-bottom:35px;
+    }
+
+    .titulo-seccion h2{
+      margin:0;
+
+      font-size:36px;
+
+      font-weight:900;
+    }
+
+    .titulo-seccion p{
+      margin:10px 0 0;
+
+      color:var(--muted);
+
+      font-size:16px;
+    }
+
+
+    /* =========================
+       TARJETAS
+    ========================= */
+
+    .tarjetas{
+      display:grid;
+
+      grid-template-columns:
+        repeat(2,1fr);
+
+      gap:20px;
+    }
+
+    .tarjeta{
+      position:relative;
+
+      padding:32px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(21,25,35,.95),
+          rgba(16,19,26,.95)
+        );
+
+      border:1px solid var(--border);
+
+      border-radius:20px;
+
+      min-height:270px;
+
+      transition:.25s;
+
+      overflow:hidden;
+    }
+
+    .tarjeta::before{
+      content:"";
+
+      position:absolute;
+
+      width:180px;
+      height:180px;
+
+      right:-70px;
+      top:-70px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(124,92,255,.18),
+          transparent 70%
+        );
+    }
+
+    .tarjeta:hover{
+      transform:translateY(-5px);
+
+      border-color:
+        rgba(124,92,255,.35);
+
+      box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.25);
+    }
+
+    .icono{
+      width:55px;
+      height:55px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:15px;
+
+      background:
+        rgba(124,92,255,.13);
+
+      border:
+        1px solid
+        rgba(124,92,255,.25);
+
+      font-size:27px;
+
+      margin-bottom:20px;
+    }
+
+    .tarjeta h3{
+      margin:0 0 15px;
+
+      font-size:23px;
+    }
+
+    .tarjeta p{
+      color:var(--muted);
+
+      line-height:1.7;
+
+      margin:0;
+    }
+
+    .tarjeta ul{
+      padding:0;
+
+      margin:15px 0 0;
+
+      list-style:none;
+    }
+
+    .tarjeta li{
+      color:var(--muted);
+
+      margin:
+        10px 0;
+
+      padding-left:20px;
+
+      position:relative;
+    }
+
+    .tarjeta li::before{
+      content:"✓";
+
+      position:absolute;
+
+      left:0;
+
+      color:var(--accent2);
+
+      font-weight:bold;
+    }
+
+
+    /* =========================
+       CONTACTO
+    ========================= */
+
+    .contacto{
+      width:min(1000px,92%);
+
+      margin:
+        0 auto
+        100px;
+
+      padding:45px;
+
+      text-align:center;
+
+      border-radius:22px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(124,92,255,.14),
+          rgba(21,25,35,.95)
+        );
+
+      border:
+        1px solid
+        rgba(124,92,255,.22);
+    }
+
+    .contacto h2{
+      margin:0 0 12px;
+
+      font-size:32px;
+    }
+
+    .contacto p{
+      color:var(--muted);
+
+      max-width:600px;
+
+      margin:
+        0 auto
+        25px;
+
+      line-height:1.6;
+    }
+
+    .contacto .btn{
+      display:inline-block;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          #6248db
+        );
+
+      border:0;
+
+      padding:
+        13px 22px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer{
+      background:#252525;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+      color:#999;
+    }
+
+    .footer-contenido{
+      width:min(1100px,92%);
+
+      margin:auto;
+
+      padding:
+        65px 0
+        45px;
+
+      display:grid;
+
+      grid-template-columns:
+        1.4fr
+        1fr
+        1fr
+        1fr;
+
+      gap:45px;
+    }
+
+    .footer-col h3{
+      color:#fff;
+
+      font-size:16px;
+
+      margin:
+        0 0 22px;
+    }
+
+    .footer-logo{
+      display:flex;
+
+      align-items:center;
+
+      gap:12px;
+
+      margin-bottom:18px;
+    }
+
+    .footer-logo img{
+      width:55px;
+      height:55px;
+
+      object-fit:cover;
+
+      border-radius:10px;
+    }
+
+    .footer-logo strong{
+      color:#fff;
+
+      font-size:22px;
+    }
+
+    .footer-col p{
+      line-height:1.7;
+
+      margin:8px 0;
+
+      font-size:14px;
+    }
+
+    .footer-link{
+      display:block;
+
+      padding:
+        12px 0;
+
+      border-bottom:
+        1px dashed
+        rgba(255,255,255,.08);
+
+      color:#999;
+
+      transition:.2s;
+    }
+
+    .footer-link:hover{
+      color:#fff;
+
+      padding-left:5px;
+    }
+
+    .footer-bottom{
+      border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+      text-align:center;
+
+      padding:20px;
+
+      font-size:13px;
+
+      color:#777;
+    }
+
+
+    /* =========================
+       WHATSAPP
+    ========================= */
+
+    .whatsapp{
+      position:fixed;
+
+      right:20px;
+      bottom:20px;
+
+      z-index:50;
+
+      background:#20d66b;
+
+      color:white;
+
+      padding:
+        13px 19px;
+
+      border-radius:30px;
+
+      font-weight:800;
+
+      box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.35);
+
+      transition:.2s;
+    }
+
+    .whatsapp:hover{
+      transform:translateY(-3px);
+
+      background:#19c460;
+    }
+
+
+    /* =========================
+       VOLVER ARRIBA
+    ========================= */
+
+    .arriba{
+      position:fixed;
+
+      right:20px;
+      bottom:78px;
+
+      width:42px;
+      height:42px;
+
+      display:grid;
+      place-items:center;
+
+      background:#171717;
+
+      color:white;
+
+      border-radius:8px;
+
+      font-size:25px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.08);
+
+      transition:.2s;
+
+      z-index:50;
+    }
+
+    .arriba:hover{
+      background:#292929;
+
+      transform:translateY(-3px);
+    }
+
+
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media(max-width:800px){
+
+      .nav{
+        height:auto;
+
+        padding:
+          10px 0;
+      }
+
+      .nav-actions{
+        gap:5px;
+      }
+
+      .btn{
+        padding:
+          9px 10px;
+
+        font-size:13px;
+      }
+
+      .tarjetas{
+        grid-template-columns:1fr;
+      }
+
+      .footer-contenido{
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+    }
+
+    @media(max-width:550px){
+
+      .brand{
+        font-size:18px;
+      }
+
+      .logo{
+        width:45px;
+        height:45px;
+      }
+
+      .presentacion{
+        padding:
+          70px 15px
+          55px;
+      }
+
+      .presentacion h1{
+        font-size:48px;
+      }
+
+      .footer-contenido{
+        grid-template-columns:1fr;
+      }
+
+      .contacto{
+        padding:30px 20px;
+      }
+
+      .whatsapp{
+        right:12px;
+        bottom:12px;
+      }
+
+      .arriba{
+        right:12px;
+        bottom:70px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body id="inicio">
+
+
+  <!-- =========================
+       BARRA SUPERIOR
+  ========================= -->
+
+  <header>
+
+    <div class="container nav">
+
+      <a class="brand" href="index.html">
+
+        <span class="logo">
+          <img
+            src="imagenes/mi-logo.jpg"
+            alt="Logo Bootplay"
+          >
+        </span>
+
+        BOOTPLAY
+
+      </a>
+
+
+      <div class="nav-actions">
+
+        <a
+          class="btn"
+          href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+          target="_blank"
+        >
+          WhatsApp 💬
+        </a>
+
+        <a
+          class="btn primary"
+          href="https://www.instagram.com/bootplay_parana/"
+          target="_blank"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       PRESENTACIÓN
+  ========================= -->
+
+  <section class="presentacion">
+
+    <h1>Servicio Técnico</h1>
+
+    <p>
+      Cuidamos, mantenemos y reparamos tu consola
+      para que vuelva a funcionar y lucir como nueva.
+    </p>
+
+  </section>
+
+
+
+  <!-- =========================
+       MANTENIMIENTO
+  ========================= -->
+
+  <section class="seccion">
+
+    <div class="titulo-seccion">
+
+      <h2>¿Qué ofrecemos?</h2>
+
+      <p>
+        Mantenimiento para mantener tu consola
+        limpia, fresca y en buenas condiciones.
+      </p>
+
+    </div>
+
+
+    <div class="tarjetas">
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          🧹
+        </div>
+
+        <h3>Limpieza interna</h3>
+
+        <p>
+          Remoción de polvo y suciedad acumulada
+          en el interior de la consola, incluyendo
+          ventiladores y zonas de ventilación.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          ❄️
+        </div>
+
+        <h3>Cambio de pasta térmica</h3>
+
+        <p>
+          Reemplazo de la pasta térmica para
+          mejorar la transferencia de calor y
+          ayudar a mantener una temperatura
+          adecuada de funcionamiento.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          ✨
+        </div>
+
+        <h3>Limpieza y pulido exterior</h3>
+
+        <p>
+          Limpieza y pulido de las partes exteriores
+          para recuperar el aspecto de la consola
+          y dejarla mucho más limpia y cuidada.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          🛠️
+        </div>
+
+        <h3>Mantenimiento completo</h3>
+
+        <p>
+          Combinamos limpieza interna, cambio de
+          pasta térmica y limpieza exterior para
+          realizar un mantenimiento integral de
+          tu consola.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       REPARACIONES
+  ========================= -->
+
+  <section class="seccion">
+
+    <div class="titulo-seccion">
+
+      <h2>¿Tu consola presenta algún problema?</h2>
+
+      <p>
+        Realizamos diagnóstico, asesoramiento y
+        reparación para encontrar el origen de la falla.
+      </p>
+
+    </div>
+
+
+    <div class="tarjetas">
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          🔍
+        </div>
+
+        <h3>Testeo y diagnóstico</h3>
+
+        <p>
+          Revisamos el funcionamiento de la consola
+          para identificar posibles fallas y determinar
+          qué componente o sistema puede estar
+          provocando el problema.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          💬
+        </div>
+
+        <h3>Asesoramiento</h3>
+
+        <p>
+          Te ayudamos a entender qué problema tiene
+          tu consola y qué solución resulta más
+          conveniente según el caso.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          🔧
+        </div>
+
+        <h3>Reparación de consolas</h3>
+
+        <p>
+          Reparación y solución de fallas generales
+          en consolas, realizando previamente el
+          diagnóstico correspondiente.
+        </p>
+
+      </div>
+
+
+      <div class="tarjeta">
+
+        <div class="icono">
+          ⚙️
+        </div>
+
+        <h3>Revisión general</h3>
+
+        <p>
+          Comprobación de los principales sistemas
+          de la consola para detectar problemas de
+          funcionamiento, temperatura, alimentación
+          u otros síntomas.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       CONTACTO
+  ========================= -->
+
+  <section class="contacto">
+
+    <h2>¿Necesitás revisar tu consola?</h2>
+
+    <p>
+      Contanos qué problema presenta tu consola
+      y te asesoramos sobre el mantenimiento o
+      reparación que necesita.
+    </p>
+
+    <a
+      class="btn"
+      href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+      target="_blank"
+    >
+      Consultar por WhatsApp
+    </a>
+
+  </section>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div class="footer-contenido">
+
+
+      <!-- COLUMNA 1 -->
+
+      <div class="footer-col">
+
+        <div class="footer-logo">
+
+          <img
+            src="imagenes/mi-logo.jpg"
+            alt="Bootplay"
+          >
+
+          <strong>BOOTPLAY</strong>
+
+        </div>
+
+        <p>
+          Juegos, servicios y mantenimiento
+          para consolas.
+        </p>
+
+        <p>
+          📍 Paraná, Entre Ríos
+        </p>
+
+        <p>
+          📱 WhatsApp: +54 9 343 452-4653
+        </p>
+
+      </div>
+
+
+      <!-- COLUMNA 2 -->
+
+      <div class="footer-col">
+
+        <h3>Servicios</h3>
+
+        <a
+          class="footer-link"
+          href="reparacion.html"
+        >
+          Servicio técnico
+        </a>
+
+        <a
+          class="footer-link"
+          href="hen.html"
+        >
+          Modificación y carga de juegos
+        </a>
+
+        <a
+          class="footer-link"
+          href="tienda.html"
+        >
+          Tienda digital
+        </a>
+
+      </div>
+
+
+      <!-- COLUMNA 3 -->
+
+      <div class="footer-col">
+
+        <h3>Contacto</h3>
+
+        <a
+          class="footer-link"
+          href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+          target="_blank"
+        >
+          WhatsApp
+        </a>
+
+        <a
+          class="footer-link"
+          href="https://www.instagram.com/bootplay_parana/"
+          target="_blank"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+
+      <!-- COLUMNA 4 -->
+
+      <div class="footer-col">
+
+        <h3>Mapa del sitio</h3>
+
+        <a
+          class="footer-link"
+          href="index.html"
+        >
+          Inicio
+        </a>
+
+        <a
+          class="footer-link"
+          href="tienda.html"
+        >
+          Tienda
+        </a>
+
+        <a
+          class="footer-link"
+          href="hen.html"
+        >
+          Modificación
+        </a>
+
+        <a
+          class="footer-link"
+          href="reparacion.html"
+        >
+          Servicio técnico
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      © 2026 Bootplay — Todos los derechos reservados.
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================
+       BOTÓN VOLVER ARRIBA
+  ========================= -->
+
+  <a
+    href="#inicio"
+    class="arriba"
+    aria-label="Volver arriba"
+  >
+    ↑
+  </a>
+
+
+  <!-- =========================
+       WHATSAPP FLOTANTE
+  ========================= -->
+
+  <a
+    class="whatsapp"
+    href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+    target="_blank"
+  >
+    WhatsApp 💬
+  </a>
+
+
+</body>
+</html>

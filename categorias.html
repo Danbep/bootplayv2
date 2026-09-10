@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Bootplay | Modificación y carga de juegos</title>
+  <link rel="icon" href="./imagenes/mi-logo-removebg-preview.png">
+
+  <style>
+    /* =========================
+       COLORES GENERALES
+    ========================= */
+
+    :root {
+      --bg: #07080c;
+      --panel: #10131a;
+      --panel2: #151923;
+      --text: #f4f6fb;
+      --muted: #9ca3b0;
+      --accent: #7c5cff;
+      --accent2: #9b86ff;
+      --border: rgba(255,255,255,.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% -10%, #21194a 0, transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    /* =========================
+       BARRA SUPERIOR
+    ========================= */
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7,8,12,.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: .3px;
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+      border-radius: 11px;
+      background: linear-gradient(135deg,var(--accent),#4d38b8);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 28px rgba(124,92,255,.28);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      padding: 10px 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 750;
+      transition: .18s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg,var(--accent),#6248db);
+      border-color: transparent;
+    }
+
+
+    /* =========================
+       TITULO
+    ========================= */
+
+    .titulo {
+      text-align: center;
+      padding: 75px 20px 45px;
+    }
+
+    .titulo .eyebrow {
+      color: #b7aaff;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 1.6px;
+      margin-bottom: 12px;
+    }
+
+    .titulo h1 {
+      margin: 0;
+      font-size: clamp(38px, 5vw, 58px);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .titulo p {
+      margin: 18px auto 0;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+
+    /* =========================
+       TARJETAS
+    ========================= */
+
+    .servicios {
+      width: min(1100px, 92%);
+      margin: 10px auto 90px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .servicio {
+      position: relative;
+
+      height: 500px;
+
+      border-radius: 22px;
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+
+      background: #151923;
+
+      display: flex;
+      align-items: flex-end;
+
+      cursor: pointer;
+
+      transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+    }
+
+
+    /* IMAGEN DE FONDO */
+
+    .servicio::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background-size: cover;
+      background-position: center;
+
+      transition: transform .5s ease;
+    }
+
+
+    /* DEGRADADO SOBRE LA IMAGEN */
+
+    .servicio::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(21,25,35,.05) 0%,
+          rgba(21,25,35,.15) 25%,
+          rgba(21,25,35,.45) 50%,
+          rgba(21,25,35,.90) 78%,
+          #151923 100%
+        );
+    }
+
+
+    /* =========================
+       IMAGENES
+    ========================= */
+
+    .ps2::before {
+      background-image: url("imagenes/ps2.png");
+    }
+
+    .ps3::before {
+      background-image: url("imagenes/ps3.png");
+    }
+
+    .ps4::before {
+      background-image: url("imagenes/ps4.png");
+    }
+
+
+    /* =========================
+       TEXTO DE LAS TARJETAS
+    ========================= */
+
+    .servicio-contenido {
+      position: relative;
+      z-index: 2;
+
+      width: 100%;
+
+      padding: 28px;
+    }
+
+    .servicio-contenido h2 {
+      margin: 0 0 10px;
+
+      font-size: 29px;
+      font-weight: 900;
+
+      letter-spacing: -.5px;
+    }
+
+    .servicio-contenido p {
+      margin: 0;
+
+      color: #b8bdc9;
+
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+
+    /* =========================
+       EFECTO HOVER
+    ========================= */
+
+    .servicio:hover {
+      transform: translateY(-8px);
+
+      border-color: rgba(124,92,255,.6);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.35),
+        0 0 25px rgba(124,92,255,.12);
+    }
+
+    .servicio:hover::before {
+      transform: scale(1.06);
+    }
+
+
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media (max-width: 850px) {
+
+      .servicios {
+        grid-template-columns: 1fr;
+      }
+
+      .servicio {
+        height: 420px;
+      }
+
+      .titulo {
+        padding-top: 50px;
+      }
+
+      .titulo h1 {
+        font-size: 40px;
+      }
+
+    }
+footer{
+  background:#252525;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+  color:#999;
+}
+
+.footer-contenido{
+  width:min(1100px,92%);
+
+  margin:auto;
+
+  padding:
+    65px 0
+    45px;
+
+  display:grid;
+
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1fr;
+
+  gap:45px;
+}
+
+.footer-col h3{
+  color:#fff;
+
+  font-size:16px;
+
+  margin:
+    0 0 22px;
+}
+
+.footer-logo{
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:18px;
+}
+
+.footer-logo img{
+  width:55px;
+  height:55px;
+
+  object-fit:cover;
+
+  border-radius:10px;
+}
+
+.footer-logo strong{
+  color:#fff;
+
+  font-size:22px;
+}
+
+.footer-col p{
+  line-height:1.7;
+
+  margin:8px 0;
+
+  font-size:14px;
+}
+
+.footer-link{
+  display:block;
+
+  padding:
+    12px 0;
+
+  border-bottom:
+    1px dashed
+    rgba(255,255,255,.08);
+
+  color:#999;
+
+  transition:.2s;
+}
+
+.footer-link:hover{
+  color:#fff;
+
+  padding-left:5px;
+}
+
+.footer-bottom{
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+  text-align:center;
+
+  padding:20px;
+
+  font-size:13px;
+
+  color:#777;
+}
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       BARRA SUPERIOR
+  ========================= -->
+
+  <header>
+
+    <div class="container nav">
+
+      <a class="brand" href="index.html">
+
+        <span class="logo">
+
+          <img
+            src="imagenes/mi-logo.jpg"
+            alt="Logo"
+            style="
+              width:100%;
+              height:100%;
+              border-radius:11px;
+              object-fit:cover;
+            "
+          >
+
+        </span>
+
+        BOOTPLAY
+
+      </a>
+
+
+      <div class="nav-actions">
+
+        <a
+          class="btn"
+          href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+        >
+          Whatsapp 💬
+        </a>
+
+        <a
+          class="btn primary"
+          href="https://www.instagram.com/bootplay_parana/"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       TITULO
+  ========================= -->
+
+  <section class="titulo">
+
+    <div class="eyebrow">
+      Servicios Bootplay
+    </div>
+
+    <h1>
+      Modificación y carga de juegos
+    </h1>
+
+    <p>
+      Jugá tus juegos favoritos sin necesidad de discos.
+    </p>
+
+  </section>
+
+
+
+  <!-- =========================
+       SERVICIOS
+  ========================= -->
+
+  <section class="servicios">
+
+
+    <!-- PS2 -->
+
+    <a href="#" class="servicio ps2">
+
+      <div class="servicio-contenido">
+
+        <h2>
+          OPL para PS2
+        </h2>
+
+        <p>
+          Preparación de tu PS2 para jugar tus juegos desde USB,
+          sin necesidad de utilizar discos.
+        </p>
+
+      </div>
+
+    </a>
+
+
+
+    <!-- PS3 -->
+
+    <a href="hen.html" class="servicio ps3">
+
+      <div class="servicio-contenido">
+
+        <h2>
+          HEN + Tiendas para PS3
+        </h2>
+
+        <p>
+          Instalación y configuración de HEN junto con tiendas
+          para disfrutar tus juegos y aplicaciones.
+        </p>
+
+      </div>
+
+    </a>
+
+
+
+    <!-- PS4 -->
+
+    <a href="#" class="servicio ps4">
+
+      <div class="servicio-contenido">
+
+        <h2>
+          GoldHEN para PS4
+        </h2>
+
+        <p>
+          Configuración de GoldHEN y preparación de la consola
+          para utilizar tus juegos y aplicaciones.
+        </p>
+
+      </div>
+
+    </a>
+
+
+  </section>
+  <footer>
+
+  <div class="footer-contenido">
+
+    <div class="footer-col">
+
+      <div class="footer-logo">
+
+        <img
+          src="imagenes/mi-logo.jpg"
+          alt="Bootplay"
+        >
+
+        <strong>BOOTPLAY</strong>
+
+      </div>
+
+      <p>
+        Juegos, servicios y mantenimiento
+        para consolas.
+      </p>
+
+      <p>
+        📍 Paraná, Entre Ríos
+      </p>
+
+      <p>
+        📱 WhatsApp: +54 9 343 452-4653
+      </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Servicios</h3>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación y carga de juegos
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda digital
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Contacto</h3>
+
+      <a
+        class="footer-link"
+        href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+        target="_blank"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        class="footer-link"
+        href="https://www.instagram.com/bootplay_parana/"
+        target="_blank"
+      >
+        Instagram
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Mapa del sitio</h3>
+
+      <a
+        class="footer-link"
+        href="index.html"
+      >
+        Inicio
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación
+      </a>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 Bootplay — Todos los derechos reservados.
+
+  </div>
+
+</footer>
+<a
+  href="#inicio"
+  class="arriba"
+  aria-label="Volver arriba"
+>
+  ↑
+</a>
+
+
+<a
+  class="whatsapp"
+  href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+  target="_blank"
+>
+  WhatsApp 💬
+</a>
+
+</body>
+
+</html>
