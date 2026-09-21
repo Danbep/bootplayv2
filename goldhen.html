@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootplay | Gold HEN</title>
+<link rel="icon" href="imagenes/mi-logo.jpg">
+<meta name="description" content="Gold HEN para PS4 de Bootplay. Elegí la versión de tu consola y pedí por WhatsApp.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+ /*fondo*/
+ :root{
+  --bg:#07080c; --panel:#10131a; --panel2:#151923; --text:#f4f6fb;
+  --muted:#9ca3b0; --accent:#7c5cff; --accent2:#9b86ff;
+  --border:rgba(255,255,255,.09); --ok:#45d483; --danger:#ff6574;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(circle at 15% -10%,#21194a 0,transparent 35%),var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+/*panel*/
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(7,8,12,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border)}
+.nav{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:900;
+  font-size:22px;
+  letter-spacing:.3px}
+.logo{
+  width:55px;
+  height:55px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),#4d38b8);
+  display:grid;
+  place-items:center;
+  box-shadow:0 8px 28px rgba(124,92,255,.28)}
+.logo span{font-size:19px}
+.nav-actions{
+  display:flex;
+  gap:10px}
+.btn{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:750;
+  transition:.18s}
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.18)}
+.btn.primary{
+  background:linear-gradient(135deg,var(--accent),#6248db);
+  border-color:transparent;}
+.titulo-hero{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;}
+.hero{
+  padding:74px 0 42px;
+  text-align:center;}
+.eyebrow{
+  color:#b7aaff;
+  font-weight:800;
+  text-transform:uppercase;
+  font-size:16px;
+  letter-spacing:1.6px;
+  margin-bottom:12px;}
+h1{
+  font-size:clamp(44px,7vw,78px);
+  line-height:.95;
+  margin:0 0 35px;
+  letter-spacing:-3px;}
+/* =========================
+   GOLD HEN
+========================= */
+.gh-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:28px;
+  padding:0 0 80px;}
+/* Cuadrado con la imagen de la PS4: arriba del rectángulo y más ancho que él */
+.gh-cuadrado{
+  width:min(760px,96%);
+  aspect-ratio:1/1;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(124,92,255,.16),var(--panel2) 65%);
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
+  display:grid;
+  place-items:center;}
+.gh-cuadrado img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:36px;
+  opacity:.9;
+  filter:blur(2px);   /* "poco difuminada" */
+  user-select:none;
+  pointer-events:none;}
+/* Rectángulo horizontal: selector de versión + pedido */
+.gh-rect{
+  width:min(600px,92%);   /* más angosto que el cuadrado */
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;}
+.gh-label{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;}
+.gh-select{
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+  padding:11px 14px;
+  border-radius:12px;
+  font-weight:750;
+  cursor:pointer;
+  min-width:200px;}
+.gh-select:focus{
+  outline:none;
+  border-color:rgba(124,92,255,.55);}
+.gh-nota{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  text-align:center;}
+footer{
+  background:#252525;
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+  color:#999;}
+.footer-contenido{
+  width:min(1100px,92%);
+  margin:auto;
+  padding:
+    65px 0
+    45px;
+  display:grid;
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1fr;
+  gap:45px;}
+.footer-col h3{
+  color:#fff;
+  font-size:16px;
+  margin:
+    0 0 22px;}
+.footer-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;}
+.footer-logo img{
+  width:55px;
+  height:55px;
+  object-fit:cover;
+  border-radius:10px;}
+.footer-logo strong{
+  color:#fff;
+  font-size:22px;}
+.footer-col p{
+  line-height:1.7;
+  margin:8px 0;
+  font-size:14px;}
+.footer-link{
+  display:block;
+  padding:
+    12px 0;
+  border-bottom:
+    1px dashed
+    rgba(255,255,255,.08);
+  color:#999;
+  transition:.2s;}
+.footer-link:hover{
+  color:#fff;
+  padding-left:5px;}
+.footer-bottom{
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+  text-align:center;
+  padding:20px;
+  font-size:13px;
+  color:#777;}
+.whatsapp{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:50;
+  background:#20d66b;
+  color:white;
+  padding:13px 19px;
+  border-radius:30px;
+  font-weight:800;
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.35);
+  transition:.2s;}
+.whatsapp:hover{
+  transform:translateY(-3px);
+  background:#19c460;}
+.arriba{
+  position:fixed;
+  right:20px;
+  bottom:78px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  background:#171717;
+  color:white;
+  border-radius:8px;
+  font-size:25px;
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+  transition:.2s;
+  z-index:50;}
+.arriba:hover{
+  background:#292929;
+  transform:translateY(-3px);}
+/* Celular: se adaptan los bloques nuevos de Gold HEN */
+@media (max-width:800px){
+  .gh-cuadrado{
+    width:min(520px,96%);}
+  .gh-rect{
+    width:92%;}
+  .gh-rect .btn{
+    width:100%;}}
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     HEADER — copiado de index.html (logo + botones fijos)
+====================================================== -->
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <span class="logo">
+        <img src="imagenes/mi-logo.jpg" alt="Logo"
+        style="width: 100%; height: 100%; border-radius: 11px; object-fit: cover;">
+      </span>
+      BOOTPLAY
+    </a>
+    <div class="nav-actions">
+      <a class="btn" href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0" target="_blank">
+        Whatsapp💬
+      </a>
+      <a class="btn primary" href="https://www.instagram.com/bootplay_parana/" target="_blank">Instagram</a>
+    </div>
+  </div>
+</header>
+
+<!-- ======================================================
+     GOLD HEN (PS4)
+====================================================== -->
+<section class="hero">
+  <div class="container titulo-hero">
+    <div class="eyebrow">Gold HEN</div>
+    <h1>Gold HEN<br>para PS4</h1>
+  </div>
+</section>
+
+<section class="gh-wrap">
+
+  <!-- Cuadrado: va arriba del rectángulo y es más ancho que él -->
+  <div class="gh-cuadrado">
+    <img src="imagenes/ps4.png" alt="PlayStation 4">
+  </div>
+
+  <!-- Rectángulo horizontal: selector de versión + pedido -->
+  <div class="gh-rect">
+    <label class="gh-label" for="version">Versión de tu consola</label>
+
+    <select class="gh-select" id="version" name="version">
+      <option value="" disabled selected>Elegí tu versión</option>
+      <option value="5.05">5.05</option>
+      <!-- ⚠️ PENDIENTE: acá van las versiones intermedias.
+           Falta la lista exacta entre 5.05 y 13.52 (ver contexto/pendientes.md). -->
+      <option value="" disabled>— versiones intermedias pendientes —</option>
+      <option value="13.52">13.52</option>
+    </select>
+
+    <button class="btn primary" type="button" onclick="pedirPorWhatsApp()">
+      📲 Pedir por WhatsApp
+    </button>
+  </div>
+
+  <p class="gh-nota">Elegí la versión de tu consola y enviá el pedido por WhatsApp.</p>
+
+</section>
+
+<!-- ======================================================
+     FOOTER — copiado tal cual de index.html (HTML + CSS)
+====================================================== -->
+  <footer>
+
+  <div class="footer-contenido">
+
+    <div class="footer-col">
+
+      <div class="footer-logo">
+
+        <img
+          src="imagenes/mi-logo.jpg"
+          alt="Bootplay"
+        >
+
+        <strong>BOOTPLAY</strong>
+
+      </div>
+
+      <p>
+        Juegos, servicios y mantenimiento
+        para consolas.
+      </p>
+
+      <p>
+        📍 Paraná, Entre Ríos
+      </p>
+
+      <p>
+        📱 WhatsApp: +54 9 343 452-4653
+      </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Servicios</h3>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación y carga de juegos
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda digital
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Contacto</h3>
+
+      <a
+        class="footer-link"
+        href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+        target="_blank"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        class="footer-link"
+        href="https://www.instagram.com/bootplay_parana/"
+        target="_blank"
+      >
+        Instagram
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Mapa del sitio</h3>
+
+      <a
+        class="footer-link"
+        href="index.html"
+      >
+        Inicio
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación
+      </a>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 Bootplay — Todos los derechos reservados.
+
+  </div>
+
+</footer>
+
+
+<a href="#" class="arriba" aria-label="Volver arriba">
+  ↑
+</a>
+
+
+<a
+  class="whatsapp"
+  href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+  target="_blank"
+>
+  WhatsApp 💬
+</a>
+
+<!-- ======================================================
+     PEDIDO POR WHATSAPP — mismo sistema que hen.html
+====================================================== -->
+<script>
+const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
+
+function pedirPorWhatsApp(){
+  const select = document.getElementById("version");
+  const version = select.value;
+
+  if(!version){
+    alert("Elegí la versión de tu consola.");
+    select.focus();
+    return;
+  }
+
+  if(WHATSAPP_NUMBER.includes("X")){
+    alert("Primero configurá tu número de WhatsApp en goldhen.html.");
+    return;
+  }
+
+  const text = "Hola Bootplay! Quiero consultar por Gold HEN para la versión " +
+    encodeURIComponent(version) + ".";
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+}
+</script>
+
+</body>
+</html>
