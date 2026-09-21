@@ -642,11 +642,16 @@ footer{
    - CATÁLOGO PS4: se carga página por página (el catálogo tiene
      767 productos en 26 páginas). Todas las fichas llevan
      console: "PS4" porque la consola está confirmada por la
-     categoría. priceBefore y off solo tienen valor si la página
-     muestra descuento; si no, van en 0 y no se muestran.
+     categoría.
    - OFERTAS DESTACADAS: los 30 juegos leídos de la home del
      proveedor antes de tener el catálogo por categorías. Quedan
      como provisionales (a confirmar si se eliminan).
+   - PRECIOS: el campo price es el PRECIO FINAL DE BOOTPLAY, ya
+     calculado con la regla "rango + monto fijo" definida en
+     contexto/proyecto.md (hasta 10.000 → +2.000 · 10.001-25.000 →
+     +4.000 · 25.001-50.000 → +7.000 · más de 50.000 → +10.000).
+     Los precios del proveedor NO se guardan en este archivo.
+     priceBefore y off quedaron en 0 (no se muestran).
 
    ⚠️ PENDIENTES (no inventados, ver contexto/pendientes.md):
    - image: "" → todavía no hay portadas cargadas. La tarjeta
@@ -656,68 +661,68 @@ footer{
 ====================================================== */
 const GAMES = [
   /* ---------- CATÁLOGO PS4 — página 1 de 26 (30 juegos) ---------- */
-  { name: "60 Seconds! Reatomized", console: "PS4", price: 7976, priceBefore: 0, off: 0, image: "" },
-  { name: "A Plague Tale Bundle (Innocence + Requiem)", console: "PS4", price: 119565, priceBefore: 0, off: 0, image: "" },
-  { name: "A Plague Tale: Innocence", console: "PS4", price: 32069, priceBefore: 0, off: 0, image: "" },
-  { name: "A Way Out", console: "PS4", price: 24048, priceBefore: 0, off: 0, image: "" },
-  { name: "Absolum", console: "PS4", price: 19895, priceBefore: 0, off: 0, image: "" },
-  { name: "ACE COMBAT™7: SKIES UNKNOWN", console: "PS4", price: 47827, priceBefore: 0, off: 0, image: "" },
-  { name: "ACE COMBAT™7: SKIES UNKNOWN - TOP GUN: Maverick Edition", console: "PS4", price: 60384, priceBefore: 0, off: 0, image: "" },
-  { name: "AEW: Fight Forever", console: "PS4", price: 36341, priceBefore: 0, off: 0, image: "" },
-  { name: "Agents of Mayhem", console: "PS4", price: 19090, priceBefore: 0, off: 0, image: "" },
-  { name: "Alan Wake Remastered", console: "PS4", price: 24230, priceBefore: 0, off: 0, image: "" },
-  { name: "Alien: Isolation", console: "PS4", price: 24048, priceBefore: 0, off: 0, image: "" },
-  { name: "Alien: Isolation - THE COLLECTION", console: "PS4", price: 13200, priceBefore: 62857, off: 79, image: "" },
-  { name: "Amnesia: Collection", console: "PS4", price: 7600, priceBefore: 27143, off: 72, image: "" },
-  { name: "Among Us", console: "PS4", price: 6493, priceBefore: 0, off: 0, image: "" },
-  { name: "Ancestors: The Humankind Odyssey", console: "PS4", price: 32069, priceBefore: 0, off: 0, image: "" },
-  { name: "AO Tennis 2", console: "PS4", price: 24054, priceBefore: 0, off: 0, image: "" },
-  { name: "ARMORED CORE™ VI FIRES OF RUBICON™", console: "PS4", price: 48246, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage - Master Assassin Edition", console: "PS4", price: 138400, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage & Valhalla Bundle", console: "PS4", price: 72727, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage Deluxe Edition", console: "PS4", price: 55952, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mythology pack", console: "PS4", price: 31200, priceBefore: 164211, off: 81, image: "" },
-  { name: "Assassin's Creed Odyssey - Deluxe Edition", console: "PS4", price: 47143, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Odyssey - Gold Edition", console: "PS4", price: 157000, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Rogue Remastered", console: "PS4", price: 45909, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Unity", console: "PS4", price: 27812, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla - Complete Edition", console: "PS4", price: 213336, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla Deluxe", console: "PS4", price: 19000, priceBefore: 73077, off: 74, image: "" },
-  { name: "Assassin's Creed Valhalla Ragnarök Edition", console: "PS4", price: 27500, priceBefore: 80882, off: 66, image: "" },
-  { name: "Assassin's Creed® III Remastered", console: "PS4", price: 45518, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed® Mirage ESPAÑOL", console: "PS4", price: 44187, priceBefore: 0, off: 0, image: "" },
+  { name: "60 Seconds! Reatomized", console: "PS4", price: 9976, priceBefore: 0, off: 0, image: "" },
+  { name: "A Plague Tale Bundle (Innocence + Requiem)", console: "PS4", price: 129565, priceBefore: 0, off: 0, image: "" },
+  { name: "A Plague Tale: Innocence", console: "PS4", price: 39069, priceBefore: 0, off: 0, image: "" },
+  { name: "A Way Out", console: "PS4", price: 28048, priceBefore: 0, off: 0, image: "" },
+  { name: "Absolum", console: "PS4", price: 23895, priceBefore: 0, off: 0, image: "" },
+  { name: "ACE COMBAT™7: SKIES UNKNOWN", console: "PS4", price: 54827, priceBefore: 0, off: 0, image: "" },
+  { name: "ACE COMBAT™7: SKIES UNKNOWN - TOP GUN: Maverick Edition", console: "PS4", price: 70384, priceBefore: 0, off: 0, image: "" },
+  { name: "AEW: Fight Forever", console: "PS4", price: 43341, priceBefore: 0, off: 0, image: "" },
+  { name: "Agents of Mayhem", console: "PS4", price: 23090, priceBefore: 0, off: 0, image: "" },
+  { name: "Alan Wake Remastered", console: "PS4", price: 28230, priceBefore: 0, off: 0, image: "" },
+  { name: "Alien: Isolation", console: "PS4", price: 28048, priceBefore: 0, off: 0, image: "" },
+  { name: "Alien: Isolation - THE COLLECTION", console: "PS4", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Amnesia: Collection", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Among Us", console: "PS4", price: 8493, priceBefore: 0, off: 0, image: "" },
+  { name: "Ancestors: The Humankind Odyssey", console: "PS4", price: 39069, priceBefore: 0, off: 0, image: "" },
+  { name: "AO Tennis 2", console: "PS4", price: 28054, priceBefore: 0, off: 0, image: "" },
+  { name: "ARMORED CORE™ VI FIRES OF RUBICON™", console: "PS4", price: 55246, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage - Master Assassin Edition", console: "PS4", price: 148400, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage & Valhalla Bundle", console: "PS4", price: 82727, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage Deluxe Edition", console: "PS4", price: 65952, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mythology pack", console: "PS4", price: 38200, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Odyssey - Deluxe Edition", console: "PS4", price: 54143, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Odyssey - Gold Edition", console: "PS4", price: 167000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Rogue Remastered", console: "PS4", price: 52909, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Unity", console: "PS4", price: 34812, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Valhalla - Complete Edition", console: "PS4", price: 223336, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Valhalla Deluxe", console: "PS4", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Valhalla Ragnarök Edition", console: "PS4", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® III Remastered", console: "PS4", price: 52518, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Mirage ESPAÑOL", console: "PS4", price: 51187, priceBefore: 0, off: 0, image: "" },
 
   /* ---------- OFERTAS DESTACADAS de la home (provisional, ver memoria) ---------- */
-  { name: "Back 4 Blood: Deluxe Edition", console: "", price: 5400, priceBefore: 108000, off: 95, image: "" },
-  { name: "Crash Bandicoot™ - Crashiversary Bundle", console: "", price: 11900, priceBefore: 170000, off: 93, image: "" },
-  { name: "Borderlands 3 Next Level Bundle", console: "", price: 4400, priceBefore: 55000, off: 92, image: "" },
-  { name: "Crash Bandicoot™ - Quadrilogy Bundle", console: "", price: 10000, priceBefore: 125000, off: 92, image: "" },
-  { name: "Mortal Kombat 11 Ultimate SUBTITULADO", console: "", price: 4100, priceBefore: 45556, off: 91, image: "" },
-  { name: "STAR WARS™ Battlefront™ II", console: "", price: 4000, priceBefore: 36364, off: 89, image: "" },
-  { name: "WRC 10 - Deluxe Edition", console: "", price: 11000, priceBefore: 91667, off: 88, image: "" },
-  { name: "Suicide Squad: Kill the Justice League - Digital Deluxe Edition PS5", console: "PS5", price: 11000, priceBefore: 91667, off: 88, image: "" },
-  { name: "Diablo III: Eternal Collection", console: "", price: 5800, priceBefore: 48333, off: 88, image: "" },
-  { name: "FAR CRY®6 Gold Edition", console: "", price: 9200, priceBefore: 76667, off: 88, image: "" },
-  { name: "Lost Judgment Digital Deluxe Edition", console: "", price: 6800, priceBefore: 56667, off: 88, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 2 Ultimate Edition", console: "", price: 6700, priceBefore: 51538, off: 87, image: "" },
-  { name: "Injustice 2 - Legendary Edition", console: "", price: 7600, priceBefore: 58462, off: 87, image: "" },
-  { name: "Far Cry® 6 Deluxe Edition", console: "", price: 8500, priceBefore: 65385, off: 87, image: "" },
-  { name: "Tomb Raider: Definitive Survivor Trilogy", console: "", price: 5500, priceBefore: 39286, off: 86, image: "" },
-  { name: "ONE PIECE World Seeker", console: "", price: 7600, priceBefore: 54286, off: 86, image: "" },
-  { name: "Mortal Kombat 11 Ultimate + Injustice 2 Legendary Edition Bundle", console: "", price: 11000, priceBefore: 78571, off: 86, image: "" },
-  { name: "Diablo® II + III (Prime Evil Collection)", console: "", price: 6900, priceBefore: 49286, off: 86, image: "" },
-  { name: "Gotham Knights: Deluxe PS5", console: "PS5", price: 10100, priceBefore: 72143, off: 86, image: "" },
-  { name: "Rugby 22 PS4", console: "PS4", price: 6700, priceBefore: 44667, off: 85, image: "" },
-  { name: "Rugby 22 PS5", console: "PS5", price: 6700, priceBefore: 44667, off: 85, image: "" },
-  { name: "LEGO The Incredibles", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
-  { name: "Far Cry® 5 + Far Cry® New Dawn Ultimate Edition ESPAÑOL", console: "", price: 19000, priceBefore: 118750, off: 84, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 1 & 2 Double Pack", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
-  { name: "Life is Strange 2 - Temporada completa", console: "", price: 4100, priceBefore: 25625, off: 84, image: "" },
-  { name: "NieR Replicant", console: "", price: 7500, priceBefore: 46875, off: 84, image: "" },
-  { name: "LEGO DC Super-Villains", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
-  { name: "Call of Duty®: Vanguard PS4 ESPAÑOL ESPAÑA", console: "PS4", price: 7600, priceBefore: 47500, off: 84, image: "" },
-  { name: "Mortal Kombat 11 Ultimate ESPAÑOL LATINO", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
-  { name: "Middle-earth™: Shadow of War™ Definitive Edition", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" }
+  { name: "Back 4 Blood: Deluxe Edition", console: "", price: 7400, priceBefore: 0, off: 0, image: "" },
+  { name: "Crash Bandicoot™ - Crashiversary Bundle", console: "", price: 15900, priceBefore: 0, off: 0, image: "" },
+  { name: "Borderlands 3 Next Level Bundle", console: "", price: 6400, priceBefore: 0, off: 0, image: "" },
+  { name: "Crash Bandicoot™ - Quadrilogy Bundle", console: "", price: 12000, priceBefore: 0, off: 0, image: "" },
+  { name: "Mortal Kombat 11 Ultimate SUBTITULADO", console: "", price: 6100, priceBefore: 0, off: 0, image: "" },
+  { name: "STAR WARS™ Battlefront™ II", console: "", price: 6000, priceBefore: 0, off: 0, image: "" },
+  { name: "WRC 10 - Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Suicide Squad: Kill the Justice League - Digital Deluxe Edition PS5", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Diablo III: Eternal Collection", console: "", price: 7800, priceBefore: 0, off: 0, image: "" },
+  { name: "FAR CRY®6 Gold Edition", console: "", price: 11200, priceBefore: 0, off: 0, image: "" },
+  { name: "Lost Judgment Digital Deluxe Edition", console: "", price: 8800, priceBefore: 0, off: 0, image: "" },
+  { name: "Sniper Ghost Warrior Contracts 2 Ultimate Edition", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Injustice 2 - Legendary Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry® 6 Deluxe Edition", console: "", price: 10500, priceBefore: 0, off: 0, image: "" },
+  { name: "Tomb Raider: Definitive Survivor Trilogy", console: "", price: 7500, priceBefore: 0, off: 0, image: "" },
+  { name: "ONE PIECE World Seeker", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Mortal Kombat 11 Ultimate + Injustice 2 Legendary Edition Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Diablo® II + III (Prime Evil Collection)", console: "", price: 8900, priceBefore: 0, off: 0, image: "" },
+  { name: "Gotham Knights: Deluxe PS5", console: "PS5", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Rugby 22 PS4", console: "PS4", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Rugby 22 PS5", console: "PS5", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO The Incredibles", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry® 5 + Far Cry® New Dawn Ultimate Edition ESPAÑOL", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Sniper Ghost Warrior Contracts 1 & 2 Double Pack", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Life is Strange 2 - Temporada completa", console: "", price: 6100, priceBefore: 0, off: 0, image: "" },
+  { name: "NieR Replicant", console: "", price: 9500, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO DC Super-Villains", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Vanguard PS4 ESPAÑOL ESPAÑA", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Mortal Kombat 11 Ultimate ESPAÑOL LATINO", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Middle-earth™: Shadow of War™ Definitive Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" }
 ];
 
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
