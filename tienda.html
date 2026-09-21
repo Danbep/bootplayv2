@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootplay | Tienda digital</title>
+<link rel="icon" href="imagenes/mi-logo.jpg">
+<meta name="description" content="Tienda digital de Bootplay: juegos digitales para PS3, PS4 y PS5. Elegí tus juegos y pedí por WhatsApp.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+ /*fondo*/
+ :root{
+  --bg:#07080c; --panel:#10131a; --panel2:#151923; --text:#f4f6fb;
+  --muted:#9ca3b0; --accent:#7c5cff; --accent2:#9b86ff;
+  --border:rgba(255,255,255,.09); --ok:#45d483; --danger:#ff6574;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(circle at 15% -10%,#21194a 0,transparent 35%),var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+/*panel*/
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(7,8,12,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border)}
+.nav{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:900;
+  font-size:22px;
+  letter-spacing:.3px}
+.logo{
+  width:55px;
+  height:55px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),#4d38b8);
+  display:grid;
+  place-items:center;
+  box-shadow:0 8px 28px rgba(124,92,255,.28)}
+.logo span{font-size:19px}
+.nav-actions{
+  display:flex;
+  gap:10px}
+.btn{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:750;
+  transition:.18s}
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.18)}
+.btn.primary{
+  background:linear-gradient(135deg,var(--accent),#6248db);
+  border-color:transparent;}
+.titulo-hero{
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;}
+.hero{
+  padding:74px 0 42px;
+  text-align:center;}
+.hero-sub{
+  font-size:18px;
+  line-height:1.6;
+  color:var(--muted);
+  max-width:680px;
+  margin:0 0 26px;}
+.eyebrow{
+  color:#b7aaff;
+  font-weight:800;
+  text-transform:uppercase;
+  font-size:16px;
+  letter-spacing:1.6px;
+  margin-bottom:12px;}
+h1{
+  font-size:clamp(44px,7vw,78px);
+  line-height:.95;
+  margin:0 0 35px;
+  letter-spacing:-3px;}
+/* =========================
+   TIENDA DIGITAL
+========================= */
+.catalog-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:15px}
+.catalog-head h2{
+  margin:0;
+  font-size:30px}
+.count{
+  color:var(--muted);
+  font-size:14px}
+/* Filtro por consola */
+.chips{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:18px 0 0}
+.chip{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  padding:9px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:750;
+  transition:.18s}
+.chip:hover{
+  border-color:rgba(255,255,255,.18)}
+.chip.active{
+  background:linear-gradient(135deg,var(--accent),#6248db);
+  border-color:transparent;
+  color:#fff}
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:18px 0 28px}
+.search{
+  flex:1;
+  min-width:240px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:14px 16px;
+  border-radius:14px;
+  outline:none}
+.search:focus{
+  border-color:var(--accent)}
+/* Grilla de juegos */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  padding-bottom:90px}
+.card{
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:300px;
+  transition:.2s}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(124,92,255,.4)}
+.cover{
+  height:150px;
+  background:radial-gradient(circle at 50% 35%,rgba(124,92,255,.4),transparent 45%),linear-gradient(145deg,#17122d,#0b0d13);
+  display:grid;
+  place-items:center;
+  position:relative}
+.cover img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover}
+.cover-icon{
+  font-size:50px;
+  filter:drop-shadow(0 8px 20px rgba(124,92,255,.25))}
+.badge{
+  position:absolute;
+  top:11px;
+  left:11px;
+  z-index:1;
+  font-size:11px;
+  font-weight:800;
+  padding:6px 8px;
+  border-radius:9px;
+  background:rgba(124,92,255,.18);
+  color:#cbbcff;
+  border:1px solid rgba(124,92,255,.28)}
+.card-body{
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  flex:1}
+.game-name{
+  font-weight:850;
+  line-height:1.25;
+  margin-bottom:10px}
+.price{
+  font-size:20px;
+  font-weight:900}
+.price-old{
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  text-decoration:line-through;
+  margin-left:8px}
+.meta{
+  font-size:12px;
+  color:var(--muted);
+  margin:8px 0 14px}
+.add{
+  margin-top:auto;
+  width:100%}
+.empty{
+  grid-column:1/-1;
+  padding:45px;
+  text-align:center;
+  color:var(--muted);
+  background:var(--panel);
+  border:1px dashed var(--border);
+  border-radius:18px}
+/* Carrito (drawer) */
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:30}
+.drawer{
+  position:fixed;
+  right:0;
+  top:0;
+  height:100%;
+  width:min(440px,94vw);
+  background:#0d1017;
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:.25s;
+  z-index:31;
+  padding:22px;
+  display:flex;
+  flex-direction:column}
+.open .drawer-backdrop{
+  opacity:1;
+  pointer-events:auto}
+.open .drawer{
+  transform:translateX(0)}
+.drawer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center}
+.drawer h3{
+  font-size:25px;
+  margin:0}
+.selected{
+  flex:1;
+  overflow:auto;
+  margin:20px 0}
+.selected-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid var(--border)}
+.remove{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer}
+.drawer-footer{
+  border-top:1px solid var(--border);
+  padding-top:18px}
+.drawer-footer p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5}
+footer{
+  background:#252525;
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+  color:#999;}
+.footer-contenido{
+  width:min(1100px,92%);
+  margin:auto;
+  padding:
+    65px 0
+    45px;
+  display:grid;
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1fr;
+  gap:45px;}
+.footer-col h3{
+  color:#fff;
+  font-size:16px;
+  margin:
+    0 0 22px;}
+.footer-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;}
+.footer-logo img{
+  width:55px;
+  height:55px;
+  object-fit:cover;
+  border-radius:10px;}
+.footer-logo strong{
+  color:#fff;
+  font-size:22px;}
+.footer-col p{
+  line-height:1.7;
+  margin:8px 0;
+  font-size:14px;}
+.footer-link{
+  display:block;
+  padding:
+    12px 0;
+  border-bottom:
+    1px dashed
+    rgba(255,255,255,.08);
+  color:#999;
+  transition:.2s;}
+.footer-link:hover{
+  color:#fff;
+  padding-left:5px;}
+.footer-bottom{
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
+  text-align:center;
+  padding:20px;
+  font-size:13px;
+  color:#777;}
+.whatsapp{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:50;
+  background:#20d66b;
+  color:white;
+  padding:13px 19px;
+  border-radius:30px;
+  font-weight:800;
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.35);
+  transition:.2s;}
+.whatsapp:hover{
+  transform:translateY(-3px);
+  background:#19c460;}
+.arriba{
+  position:fixed;
+  right:20px;
+  bottom:78px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  background:#171717;
+  color:white;
+  border-radius:8px;
+  font-size:25px;
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+  transition:.2s;
+  z-index:50;}
+.arriba:hover{
+  background:#292929;
+  transform:translateY(-3px);}
+/* Celular */
+@media (max-width:900px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);}}
+@media (max-width:650px){
+  .hero{
+    padding-top:50px;}
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;}
+  h1{
+    letter-spacing:-2px;}
+  .card{
+    min-height:285px;}
+  .cover{
+    height:125px;}
+  .catalog-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;}}
+@media (max-width:620px){
+  .nav{
+    height:auto;
+    flex-wrap:wrap;
+    padding:10px 0;}
+  .nav-actions{
+    width:100%;
+    justify-content:space-between;}}
+@media (max-width:420px){
+  .grid{
+    grid-template-columns:1fr;}}
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     HEADER — copiado de index.html (logo + botones fijos)
+====================================================== -->
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <span class="logo">
+        <img src="imagenes/mi-logo.jpg" alt="Logo"
+        style="width: 100%; height: 100%; border-radius: 11px; object-fit: cover;">
+      </span>
+      BOOTPLAY
+    </a>
+    <div class="nav-actions">
+      <a class="btn" href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0" target="_blank">
+        Whatsapp💬
+      </a>
+      <a class="btn" href="https://www.instagram.com/bootplay_parana/" target="_blank">Instagram</a>
+      <button class="btn primary" type="button" onclick="openCart()">🛒 Pedido <span id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+<section class="hero">
+  <div class="container titulo-hero">
+    <div class="eyebrow">Tienda digital</div>
+    <h1>Juegos digitales<br>para PS3, PS4 y PS5</h1>
+    <p class="hero-sub">Elegí tus juegos, armá tu pedido y coordinamos por WhatsApp.</p>
+    <button class="btn primary" type="button" onclick="document.getElementById('catalogo').scrollIntoView()">
+      Ver catálogo →
+    </button>
+  </div>
+</section>
+
+<!-- ======================================================
+     CATÁLOGO — filtro por consola + buscador + grilla
+====================================================== -->
+<section class="container" id="catalogo">
+
+  <div class="catalog-head">
+    <div>
+      <h2>Catálogo</h2>
+      <div class="count" id="resultCount"></div>
+    </div>
+  </div>
+
+  <div class="chips" id="chips">
+    <button class="chip active" type="button" data-console="Todas">Todas</button>
+    <button class="chip" type="button" data-console="PS3">PS3</button>
+    <button class="chip" type="button" data-console="PS4">PS4</button>
+    <button class="chip" type="button" data-console="PS5">PS5</button>
+  </div>
+
+  <div class="controls">
+    <input id="search" class="search" type="search" placeholder="🔎 Buscar un juego..." autocomplete="off">
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+</section>
+
+<!-- ======================================================
+     FOOTER — copiado tal cual de index.html (HTML + CSS)
+====================================================== -->
+  <footer>
+
+  <div class="footer-contenido">
+
+    <div class="footer-col">
+
+      <div class="footer-logo">
+
+        <img
+          src="imagenes/mi-logo.jpg"
+          alt="Bootplay"
+        >
+
+        <strong>BOOTPLAY</strong>
+
+      </div>
+
+      <p>
+        Juegos, servicios y mantenimiento
+        para consolas.
+      </p>
+
+      <p>
+        📍 Paraná, Entre Ríos
+      </p>
+
+      <p>
+        📱 WhatsApp: +54 9 343 452-4653
+      </p>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Servicios</h3>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación y carga de juegos
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda digital
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Contacto</h3>
+
+      <a
+        class="footer-link"
+        href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+        target="_blank"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        class="footer-link"
+        href="https://www.instagram.com/bootplay_parana/"
+        target="_blank"
+      >
+        Instagram
+      </a>
+
+    </div>
+
+
+    <div class="footer-col">
+
+      <h3>Mapa del sitio</h3>
+
+      <a
+        class="footer-link"
+        href="index.html"
+      >
+        Inicio
+      </a>
+
+      <a
+        class="footer-link"
+        href="tienda.html"
+      >
+        Tienda
+      </a>
+
+      <a
+        class="footer-link"
+        href="hen.html"
+      >
+        Modificación
+      </a>
+
+      <a
+        class="footer-link"
+        href="reparacion.html"
+      >
+        Servicio técnico
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 Bootplay — Todos los derechos reservados.
+
+  </div>
+
+</footer>
+
+
+<a href="#" class="arriba" aria-label="Volver arriba">
+  ↑
+</a>
+
+
+<a
+  class="whatsapp"
+  href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0"
+  target="_blank"
+>
+  WhatsApp 💬
+</a>
+
+<div id="drawerRoot"></div>
+
+<!-- ======================================================
+     DATOS DEL CATÁLOGO + CARRITO (mismo sistema que hen.html)
+====================================================== -->
+<script>
+/* ======================================================
+   CATÁLOGO
+   Datos copiados textualmente del catálogo del proveedor
+   (Digital Games Shop). No se inventó ni se corrigió nada.
+
+   - CATÁLOGO PS4: se carga página por página (el catálogo tiene
+     767 productos en 26 páginas). Todas las fichas llevan
+     console: "PS4" porque la consola está confirmada por la
+     categoría. priceBefore y off solo tienen valor si la página
+     muestra descuento; si no, van en 0 y no se muestran.
+   - OFERTAS DESTACADAS: los 30 juegos leídos de la home del
+     proveedor antes de tener el catálogo por categorías. Quedan
+     como provisionales (a confirmar si se eliminan).
+
+   ⚠️ PENDIENTES (no inventados, ver contexto/pendientes.md):
+   - image: "" → todavía no hay portadas cargadas. La tarjeta
+     muestra el placeholder 🎮 hasta que se agregue la ruta real.
+   - console: "" → el proveedor NO indica la consola de ese juego.
+     La tarjeta muestra "Consola: a confirmar".
+====================================================== */
+const GAMES = [
+  /* ---------- CATÁLOGO PS4 — página 1 de 26 (30 juegos) ---------- */
+  { name: "60 Seconds! Reatomized", console: "PS4", price: 7976, priceBefore: 0, off: 0, image: "" },
+  { name: "A Plague Tale Bundle (Innocence + Requiem)", console: "PS4", price: 119565, priceBefore: 0, off: 0, image: "" },
+  { name: "A Plague Tale: Innocence", console: "PS4", price: 32069, priceBefore: 0, off: 0, image: "" },
+  { name: "A Way Out", console: "PS4", price: 24048, priceBefore: 0, off: 0, image: "" },
+  { name: "Absolum", console: "PS4", price: 19895, priceBefore: 0, off: 0, image: "" },
+  { name: "ACE COMBAT™7: SKIES UNKNOWN", console: "PS4", price: 47827, priceBefore: 0, off: 0, image: "" },
+  { name: "ACE COMBAT™7: SKIES UNKNOWN - TOP GUN: Maverick Edition", console: "PS4", price: 60384, priceBefore: 0, off: 0, image: "" },
+  { name: "AEW: Fight Forever", console: "PS4", price: 36341, priceBefore: 0, off: 0, image: "" },
+  { name: "Agents of Mayhem", console: "PS4", price: 19090, priceBefore: 0, off: 0, image: "" },
+  { name: "Alan Wake Remastered", console: "PS4", price: 24230, priceBefore: 0, off: 0, image: "" },
+  { name: "Alien: Isolation", console: "PS4", price: 24048, priceBefore: 0, off: 0, image: "" },
+  { name: "Alien: Isolation - THE COLLECTION", console: "PS4", price: 13200, priceBefore: 62857, off: 79, image: "" },
+  { name: "Amnesia: Collection", console: "PS4", price: 7600, priceBefore: 27143, off: 72, image: "" },
+  { name: "Among Us", console: "PS4", price: 6493, priceBefore: 0, off: 0, image: "" },
+  { name: "Ancestors: The Humankind Odyssey", console: "PS4", price: 32069, priceBefore: 0, off: 0, image: "" },
+  { name: "AO Tennis 2", console: "PS4", price: 24054, priceBefore: 0, off: 0, image: "" },
+  { name: "ARMORED CORE™ VI FIRES OF RUBICON™", console: "PS4", price: 48246, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage - Master Assassin Edition", console: "PS4", price: 138400, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage & Valhalla Bundle", console: "PS4", price: 72727, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mirage Deluxe Edition", console: "PS4", price: 55952, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Mythology pack", console: "PS4", price: 31200, priceBefore: 164211, off: 81, image: "" },
+  { name: "Assassin's Creed Odyssey - Deluxe Edition", console: "PS4", price: 47143, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Odyssey - Gold Edition", console: "PS4", price: 157000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Rogue Remastered", console: "PS4", price: 45909, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Unity", console: "PS4", price: 27812, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Valhalla - Complete Edition", console: "PS4", price: 213336, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Valhalla Deluxe", console: "PS4", price: 19000, priceBefore: 73077, off: 74, image: "" },
+  { name: "Assassin's Creed Valhalla Ragnarök Edition", console: "PS4", price: 27500, priceBefore: 80882, off: 66, image: "" },
+  { name: "Assassin's Creed® III Remastered", console: "PS4", price: 45518, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Mirage ESPAÑOL", console: "PS4", price: 44187, priceBefore: 0, off: 0, image: "" },
+
+  /* ---------- OFERTAS DESTACADAS de la home (provisional, ver memoria) ---------- */
+  { name: "Back 4 Blood: Deluxe Edition", console: "", price: 5400, priceBefore: 108000, off: 95, image: "" },
+  { name: "Crash Bandicoot™ - Crashiversary Bundle", console: "", price: 11900, priceBefore: 170000, off: 93, image: "" },
+  { name: "Borderlands 3 Next Level Bundle", console: "", price: 4400, priceBefore: 55000, off: 92, image: "" },
+  { name: "Crash Bandicoot™ - Quadrilogy Bundle", console: "", price: 10000, priceBefore: 125000, off: 92, image: "" },
+  { name: "Mortal Kombat 11 Ultimate SUBTITULADO", console: "", price: 4100, priceBefore: 45556, off: 91, image: "" },
+  { name: "STAR WARS™ Battlefront™ II", console: "", price: 4000, priceBefore: 36364, off: 89, image: "" },
+  { name: "WRC 10 - Deluxe Edition", console: "", price: 11000, priceBefore: 91667, off: 88, image: "" },
+  { name: "Suicide Squad: Kill the Justice League - Digital Deluxe Edition PS5", console: "PS5", price: 11000, priceBefore: 91667, off: 88, image: "" },
+  { name: "Diablo III: Eternal Collection", console: "", price: 5800, priceBefore: 48333, off: 88, image: "" },
+  { name: "FAR CRY®6 Gold Edition", console: "", price: 9200, priceBefore: 76667, off: 88, image: "" },
+  { name: "Lost Judgment Digital Deluxe Edition", console: "", price: 6800, priceBefore: 56667, off: 88, image: "" },
+  { name: "Sniper Ghost Warrior Contracts 2 Ultimate Edition", console: "", price: 6700, priceBefore: 51538, off: 87, image: "" },
+  { name: "Injustice 2 - Legendary Edition", console: "", price: 7600, priceBefore: 58462, off: 87, image: "" },
+  { name: "Far Cry® 6 Deluxe Edition", console: "", price: 8500, priceBefore: 65385, off: 87, image: "" },
+  { name: "Tomb Raider: Definitive Survivor Trilogy", console: "", price: 5500, priceBefore: 39286, off: 86, image: "" },
+  { name: "ONE PIECE World Seeker", console: "", price: 7600, priceBefore: 54286, off: 86, image: "" },
+  { name: "Mortal Kombat 11 Ultimate + Injustice 2 Legendary Edition Bundle", console: "", price: 11000, priceBefore: 78571, off: 86, image: "" },
+  { name: "Diablo® II + III (Prime Evil Collection)", console: "", price: 6900, priceBefore: 49286, off: 86, image: "" },
+  { name: "Gotham Knights: Deluxe PS5", console: "PS5", price: 10100, priceBefore: 72143, off: 86, image: "" },
+  { name: "Rugby 22 PS4", console: "PS4", price: 6700, priceBefore: 44667, off: 85, image: "" },
+  { name: "Rugby 22 PS5", console: "PS5", price: 6700, priceBefore: 44667, off: 85, image: "" },
+  { name: "LEGO The Incredibles", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
+  { name: "Far Cry® 5 + Far Cry® New Dawn Ultimate Edition ESPAÑOL", console: "", price: 19000, priceBefore: 118750, off: 84, image: "" },
+  { name: "Sniper Ghost Warrior Contracts 1 & 2 Double Pack", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
+  { name: "Life is Strange 2 - Temporada completa", console: "", price: 4100, priceBefore: 25625, off: 84, image: "" },
+  { name: "NieR Replicant", console: "", price: 7500, priceBefore: 46875, off: 84, image: "" },
+  { name: "LEGO DC Super-Villains", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
+  { name: "Call of Duty®: Vanguard PS4 ESPAÑOL ESPAÑA", console: "PS4", price: 7600, priceBefore: 47500, off: 84, image: "" },
+  { name: "Mortal Kombat 11 Ultimate ESPAÑOL LATINO", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" },
+  { name: "Middle-earth™: Shadow of War™ Definitive Edition", console: "", price: 7600, priceBefore: 47500, off: 84, image: "" }
+];
+
+const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
+let selected = JSON.parse(localStorage.getItem("bootplay_tienda_selected") || "[]");
+let filtroConsola = "Todas";
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const resultCount = document.getElementById("resultCount");
+
+function money(n){ return (n || 0).toLocaleString("es-AR"); }
+
+function save(){
+  localStorage.setItem("bootplay_tienda_selected", JSON.stringify(selected));
+  updateCount();
+}
+function updateCount(){
+  document.getElementById("cartCount").textContent = selected.length;
+}
+
+function render(){
+  const q = search.value.trim().toLowerCase();
+  const list = GAMES.filter(g =>
+    g.name.toLowerCase().includes(q) &&
+    (filtroConsola === "Todas" || g.console === filtroConsola)
+  );
+
+  resultCount.textContent = `${list.length} juego${list.length === 1 ? "" : "s"}`;
+  grid.innerHTML = "";
+
+  if(!list.length){
+    grid.innerHTML = '<div class="empty">No encontramos juegos con esos filtros. Probá con otro nombre o cambiá la consola.</div>';
+    return;
+  }
+
+  list.forEach((g) => {
+    const exists = selected.includes(g.name);
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const portada = g.image
+      ? `<img src="${g.image}" alt="${escapeHtml(g.name)}">`
+      : '<div class="cover-icon">🎮</div>';
+    const badge = g.off ? `<span class="badge">-${g.off}%</span>` : "";
+    const antes = g.priceBefore ? `<span class="price-old">$${money(g.priceBefore)}</span>` : "";
+    const consola = g.console ? `Consola: ${escapeHtml(g.console)}` : "Consola: a confirmar";
+
+    card.innerHTML = `
+      <div class="cover">
+        ${portada}
+        ${badge}
+      </div>
+      <div class="card-body">
+        <div class="game-name">${escapeHtml(g.name)}</div>
+        <div class="price">$${money(g.price)}${antes}</div>
+        <div class="meta">${consola}</div>
+        <button class="btn ${exists ? "" : "primary"} add" type="button">${exists ? "✓ Agregado" : "＋ Agregar al pedido"}</button>
+      </div>`;
+
+    card.querySelector("button").onclick = (e) => {
+      e.stopPropagation();
+      toggle(g.name);
+    };
+
+    grid.appendChild(card);
+  });
+}
+
+/* Filtro por consola */
+document.querySelectorAll(".chip").forEach((chip) => {
+  chip.onclick = () => {
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    filtroConsola = chip.dataset.console;
+    render();
+  };
+});
+
+function toggle(name){
+  if(selected.includes(name)) selected = selected.filter(x => x !== name);
+  else selected.push(name);
+  save(); render();
+}
+
+function openCart(){
+  document.body.classList.add("open");
+  document.getElementById("drawerRoot").innerHTML = `
+    <div class="drawer-backdrop" onclick="closeCart()"></div>
+    <aside class="drawer">
+      <div class="drawer-head"><h3>Tu pedido</h3><button class="btn" onclick="closeCart()">✕</button></div>
+      <div class="selected">
+        ${selected.length ? selected.map((name, i) => `
+          <div class="selected-item"><span>${escapeHtml(name)}</span><button class="remove" onclick="removeSelected(${i})">Quitar</button></div>
+        `).join("") : '<div class="empty">Todavía no seleccionaste juegos.</div>'}
+      </div>
+      <div class="drawer-footer">
+        <p>Al enviar, se abrirá WhatsApp con tu selección para que puedas consultar y coordinar el pedido.</p>
+        <button class="btn primary" style="width:100%" onclick="sendWhatsApp()" ${selected.length ? "" : "disabled"}>📲 Enviar pedido por WhatsApp</button>
+      </div>
+    </aside>`;
+}
+function closeCart(){
+  document.body.classList.remove("open");
+  document.getElementById("drawerRoot").innerHTML = "";
+}
+function removeSelected(i){
+  selected.splice(i, 1);
+  save(); openCart(); render();
+}
+function sendWhatsApp(){
+  if(!selected.length) return;
+  if(WHATSAPP_NUMBER.includes("X")){
+    alert("Primero configurá tu número de WhatsApp en tienda.html.");
+    return;
+  }
+  const text = "Hola Bootplay! Quiero consultar por estos juegos de la Tienda digital:%0A%0A" +
+    selected.map((x, i) => `${i + 1}. ${encodeURIComponent(x)}`).join("%0A");
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+search.addEventListener("input", render);
+updateCount();
+render();
+</script>
+
+</body>
+</html>
