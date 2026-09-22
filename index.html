@@ -15,6 +15,7 @@
 <title>
   Bootplay | Inicio</title>
 <link rel="icon" href="imagenes/mi-logo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
     <div class="nav-actions">
       <a class="btn" href="https://api.whatsapp.com/send/?phone=%2B5493434524653&text&type=phone_number&app_absent=0">
@@ -95,32 +96,43 @@ header{
             max-width: 900px;     /* Tamaño máximo para que no se estire de más */
             height: 350px;        /* Altura del rectángulo largo */
             margin: 30px auto;    /* Centrado en la pantalla */
-            overflow: hidden;     /* Oculta las imágenes que no están en vista */
+            overflow-x: auto;     /* Se desplaza de izquierda a derecha */
+            overflow-y: hidden;
             border-radius: 10px;  /* Bordes redondeados modernos */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            position: relative;}
+            position: relative;
+            scroll-snap-type: x mandatory;    /* Se engancha en cada slide */
+            -webkit-overflow-scrolling: touch;/* Swipe suave en celular */
+            overscroll-behavior-x: contain;   /* No arrastra la página de fondo */
+            cursor: grab;                     /* Indica que se puede arrastrar */
+            scrollbar-width: none;}           /* Sin barra de scroll */
+        .carrusel-contenedor::-webkit-scrollbar {
+            display: none;}
+        /* Mientras se arrastra con el mouse: sin enganche, sigue al cursor */
+        .carrusel-contenedor.arrastrando {
+            scroll-snap-type: none;
+            cursor: grabbing;}
+        .carrusel-contenedor.arrastrando,
+        .carrusel-contenedor.arrastrando * {
+            user-select: none;}
+        .carrusel-contenedor:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;}
         .carrusel-slides {
             display: flex;
-            width: 300%;          /* Como son 3 imágenes, el ancho total es del 300% */
-            height: 100%;
-            animation: deslizar 12s infinite; /* Duración y repetición automática */}
+            height: 100%;}         /* Sin width 300% ni animación: lo maneja el scroll */
         .slide {
+            flex: 0 0 100%;        /* Cada slide ocupa todo el ancho */
             width: 100%;
-            height: 100%;}
+            height: 100%;
+            scroll-snap-align: center;}   /* Punto de enganche */
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;    /* Asegura que la imagen cubra el rectángulo sin deformarse */}
-
-        /* Animación automática para que las imágenes pasen solas */
-        @keyframes deslizar {
-            0% { transform: translateX(0%); }
-            30% { transform: translateX(0%); }
-            35% { transform: translateX(-33.33%); }
-            65% { transform: translateX(-33.33%); }
-            70% { transform: translateX(-66.66%); }
-            95% { transform: translateX(-66.66%); }
-            100% { transform: translateX(0%); }}
+            object-fit: cover;     /* Asegura que la imagen cubra el rectángulo sin deformarse */
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;} /* Evita el arrastre nativo de la imagen */
 .titulo-hero{
   text-align:center;
   display:flex;
@@ -320,7 +332,7 @@ transform:translateY(-3px);}
     <h1>🕹️<br>Tienda digital de juegos y servicios</h1>
   </div>
 
-  <div class="carrusel-contenedor">
+  <div class="carrusel-contenedor" tabindex="0" role="region" aria-label="Carrusel de banners: deslizá o arrastrá para ver más">
     <div class="carrusel-slides">
 
       <div class="slide">
@@ -503,4 +515,142 @@ transform:translateY(-3px);}
 >
   WhatsApp 💬
 </a>
+
+<script>
+/* ======================================================
+   CARRUSEL INTERACTIVO CON AUTOPLAY — índice
+   - Pasa solo: avanza un slide cada INTERVALO
+   - Swipe en celular: scroll nativo + scroll-snap (CSS)
+   - Arrastrar con el mouse en PC: pointer events
+   - Al interactuar el autoplay se PAUSA y se REANUDA solo
+   Sin flechas ni dots.
+====================================================== */
+(function () {
+  var carrusel = document.querySelector('.carrusel-contenedor');
+  if (!carrusel) return;
+  var slides = carrusel.querySelectorAll('.slide');
+  if (!slides.length) return;
+
+  /* ---------- Configuración (cambiar acá si se quiere más rápido/lento) ---------- */
+  var INTERVALO = 4000;   /* ms entre slide y slide (autoplay) */
+  var REANUDAR = 8000;    /* ms de inactividad antes de reanudar el autoplay */
+  var SIN_MOVIMIENTO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var arrastrando = false;
+  var movido = false;
+  var inicioX = 0;
+  var scrollInicial = 0;
+  var timer = null;
+  var timerReanudar = null;
+
+  /* ---------- Autoplay ---------- */
+  /* Slide más cercano a la posición actual (sirve igual tras swipe o drag) */
+  function indiceActual() {
+    var mejor = 0;
+    var mejorDist = Infinity;
+    for (var i = 0; i < slides.length; i++) {
+      var d = Math.abs(slides[i].offsetLeft - carrusel.scrollLeft);
+      if (d < mejorDist) { mejorDist = d; mejor = i; }
+    }
+    return mejor;
+  }
+
+  function pasoAutomatico() {
+    if (arrastrando || document.hidden) return;
+    var siguiente = (indiceActual() + 1) % slides.length;   /* vuelve al primero */
+    carrusel.scrollTo({
+      left: slides[siguiente].offsetLeft,
+      behavior: SIN_MOVIMIENTO ? 'auto' : 'smooth'
+    });
+  }
+
+  function detenerTimer() {
+    if (timer !== null) { window.clearInterval(timer); timer = null; }
+  }
+
+  function iniciarAutoplay() {
+    if (SIN_MOVIMIENTO) return;   /* respeta "reducir movimiento" del sistema */
+    detenerTimer();
+    timer = window.setInterval(pasoAutomatico, INTERVALO);
+  }
+
+  /* Pausa el autoplay mientras el usuario interactúa... */
+  function pausar() {
+    detenerTimer();
+    if (timerReanudar !== null) { window.clearTimeout(timerReanudar); timerReanudar = null; }
+  }
+
+  /* ...y lo reanuda solo, tantos ms después de la última interacción */
+  function pausarYReanudar() {
+    pausar();
+    if (SIN_MOVIMIENTO || document.hidden) return;
+    timerReanudar = window.setTimeout(function () {
+      timerReanudar = null;
+      iniciarAutoplay();
+    }, REANUDAR);
+  }
+
+  /* ---------- Arrastre con el mouse ---------- */
+  carrusel.addEventListener('pointerdown', function (e) {
+    pausar();                              /* cualquier toque o click pausa */
+    /* En touch el desplazamiento lo hace el navegador solo (swipe nativo) */
+    if (e.pointerType === 'touch') return;
+    if (e.button !== 0) return;            /* solo botón izquierdo */
+    arrastrando = true;
+    movido = false;
+    inicioX = e.clientX;
+    scrollInicial = carrusel.scrollLeft;
+    carrusel.classList.add('arrastrando');
+  });
+
+  window.addEventListener('pointermove', function (e) {
+    if (!arrastrando) return;
+    var desplazamiento = e.clientX - inicioX;
+    if (Math.abs(desplazamiento) > 4) movido = true;
+    carrusel.scrollLeft = scrollInicial - desplazamiento;
+  });
+
+  function terminarArrastre() {
+    if (arrastrando) {
+      arrastrando = false;
+      /* Al sacar la clase vuelve el scroll-snap y se engancha solo */
+      carrusel.classList.remove('arrastrando');
+    }
+    pausarYReanudar();
+  }
+
+  window.addEventListener('pointerup', terminarArrastre);
+  window.addEventListener('pointercancel', terminarArrastre);
+
+  /* Rueda del mouse y teclado: pausan y reanudan */
+  carrusel.addEventListener('wheel', pausarYReanudar, { passive: true });
+  carrusel.addEventListener('keydown', function (e) {
+    var teclas = ['ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End'];
+    if (teclas.indexOf(e.key) !== -1) pausarYReanudar();
+  });
+
+  /* Si se arrastró, se anula el clic para que no dispare nada al soltar */
+  carrusel.addEventListener('click', function (e) {
+    if (movido) {
+      e.preventDefault();
+      e.stopPropagation();
+      movido = false;
+    }
+  }, true);
+
+  /* Evita el arrastre nativo de las imágenes */
+  carrusel.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+  });
+
+  /* No avanzar con la pestaña en segundo plano */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) pausar();
+    else pausarYReanudar();
+  });
+
+  /* Arranca el autoplay */
+  iniciarAutoplay();
+})();
+</script>
 </body>
