@@ -285,6 +285,91 @@ h1{
   color:var(--muted);
   font-size:13px;
   line-height:1.5}
+/* =========================
+   PROMO — OFERTAS DE PRIMAVERA
+========================= */
+.promo{
+  width:min(900px,92%);
+  margin:0 auto 45px;
+  text-align:center}
+.promo-titulo{
+  margin:0 0 12px;
+  font-size:clamp(26px,4vw,40px);
+  font-weight:900;
+  letter-spacing:-1px;
+  line-height:1.15}
+.promo-bajada{
+  margin:0 0 24px;
+  color:var(--muted);
+  font-size:18px}
+.promo-contador{
+  background:var(--panel2);
+  border:1px solid var(--accent);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 18px 45px rgba(124,92,255,.18);
+  display:flex;
+  flex-direction:column;
+  gap:16px}
+.promo-falta{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1.4px}
+.promo-bloques{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap}
+.promo-bloque{
+  min-width:84px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px}
+.promo-num{
+  font-size:36px;
+  font-weight:900;
+  line-height:1;
+  color:var(--text)}
+.promo-eti{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--muted)}
+.promo-finalizado{
+  display:none;
+  margin:0;
+  font-size:24px;
+  font-weight:900;
+  color:var(--text);
+  text-transform:uppercase;
+  letter-spacing:1px}
+/* Cuando se termina la promo: opacidad reducida y mensaje final */
+.promo-contador.finalizado{
+  opacity:.5;
+  border-color:var(--border)}
+.promo-contador.finalizado .promo-falta,
+.promo-contador.finalizado .promo-bloques{
+  display:none}
+.promo-contador.finalizado .promo-finalizado{
+  display:block}
+.promo-nota{
+  margin:16px 0 0;
+  color:var(--muted);
+  font-size:15px;
+  font-weight:700}
+@media (max-width:650px){
+  .promo-num{
+    font-size:28px;}
+  .promo-bloque{
+    min-width:68px;}
+  .promo-contador{
+    padding:18px 12px;}
+  .promo-bajada{
+    font-size:16px;}}
 footer{
   background:#252525;
   border-top:
@@ -456,6 +541,42 @@ footer{
 </section>
 
 <!-- ======================================================
+     PROMO — "Florecen los precios: ofertas de primavera"
+     Va arriba del catálogo. Contador regresivo hasta el 07/10/2026.
+====================================================== -->
+<section class="promo">
+  <h2 class="promo-titulo">🌷 Florecen los precios: ofertas de primavera</h2>
+  <p class="promo-bajada">Temporada de descuentos en PS4 y PS5</p>
+
+  <div class="promo-contador" id="promoContador" role="timer" aria-live="polite">
+    <p class="promo-falta">Faltan para el fin de las ofertas</p>
+
+    <div class="promo-bloques">
+      <div class="promo-bloque">
+        <div class="promo-num" id="cdDias">--</div>
+        <div class="promo-eti">Días</div>
+      </div>
+      <div class="promo-bloque">
+        <div class="promo-num" id="cdHoras">--</div>
+        <div class="promo-eti">Horas</div>
+      </div>
+      <div class="promo-bloque">
+        <div class="promo-num" id="cdMin">--</div>
+        <div class="promo-eti">Minutos</div>
+      </div>
+      <div class="promo-bloque">
+        <div class="promo-num" id="cdSeg">--</div>
+        <div class="promo-eti">Segundos</div>
+      </div>
+    </div>
+
+    <p class="promo-finalizado">Ofertas finalizadas</p>
+  </div>
+
+  <p class="promo-nota">⏰ Ofertas válidas hasta el 07/10/2026</p>
+</section>
+
+<!-- ======================================================
      CATÁLOGO — filtro por consola + buscador + grilla
 ====================================================== -->
 <section class="container" id="catalogo">
@@ -469,7 +590,6 @@ footer{
 
   <div class="chips" id="chips">
     <button class="chip active" type="button" data-console="Todas">Todas</button>
-    <button class="chip" type="button" data-console="PS3">PS3</button>
     <button class="chip" type="button" data-console="PS4">PS4</button>
     <button class="chip" type="button" data-console="PS5">PS5</button>
   </div>
@@ -635,94 +755,115 @@ footer{
 ====================================================== -->
 <script>
 /* ======================================================
-   CATÁLOGO
-   Datos copiados textualmente del catálogo del proveedor
-   (Digital Games Shop). No se inventó ni se corrigió nada.
+   CATÁLOGO — "🌷 Florecen los precios: ofertas de primavera"
+   Vigente hasta el 07/10/2026.
 
-   - CATÁLOGO PS4: se carga página por página (el catálogo tiene
-     767 productos en 26 páginas). Todas las fichas llevan
-     console: "PS4" porque la consola está confirmada por la
-     categoría.
-   - OFERTAS DESTACADAS: los 30 juegos leídos de la home del
-     proveedor antes de tener el catálogo por categorías. Quedan
-     como provisionales (a confirmar si se eliminan).
-   - PRECIOS: el campo price es el PRECIO FINAL DE BOOTPLAY, ya
-     calculado con la regla "rango + monto fijo" definida en
-     contexto/proyecto.md (hasta 10.000 → +2.000 · 10.001-25.000 →
-     +4.000 · 25.001-50.000 → +7.000 · más de 50.000 → +10.000).
-     Los precios del proveedor NO se guardan en este archivo.
-     priceBefore y off quedaron en 0 (no se muestran).
+   Datos copiados textualmente de la lista que pasó el usuario.
+   Los precios YA VIENEN calculados con la regla "rango + monto
+   fijo" de contexto/proyecto.md: se cargan tal cual, sin recalcular.
+   No se muestra precio del proveedor ni badges de descuento.
 
-   ⚠️ PENDIENTES (no inventados, ver contexto/pendientes.md):
-   - image: "" → todavía no hay portadas cargadas. La tarjeta
-     muestra el placeholder 🎮 hasta que se agregue la ruta real.
-   - console: "" → el proveedor NO indica la consola de ese juego.
-     La tarjeta muestra "Consola: a confirmar".
+   CONSOLA (regla del usuario):
+   - console: "PS5" → solo PS5
+   - console: "PS4" → solo PS4
+   - console: ""    → el juego no especifica consola: aparece en
+                      AMBAS listas (PS4 y PS5).
+
+   PORTADAS: se mantiene el formato actual (image: "" y el
+   placeholder 🎮). No se cambiaron.
+
+   Total: 81 entradas únicas → 79 en la lista PS5 y 53 en la PS4
+   (las 51 multi-consola se cuentan en las dos).
 ====================================================== */
 const GAMES = [
-  /* ---------- CATÁLOGO PS4 — página 1 de 26 (30 juegos) ---------- */
-  { name: "60 Seconds! Reatomized", console: "PS4", price: 9976, priceBefore: 0, off: 0, image: "" },
-  { name: "A Plague Tale Bundle (Innocence + Requiem)", console: "PS4", price: 129565, priceBefore: 0, off: 0, image: "" },
-  { name: "A Plague Tale: Innocence", console: "PS4", price: 39069, priceBefore: 0, off: 0, image: "" },
-  { name: "A Way Out", console: "PS4", price: 28048, priceBefore: 0, off: 0, image: "" },
-  { name: "Absolum", console: "PS4", price: 23895, priceBefore: 0, off: 0, image: "" },
-  { name: "ACE COMBAT™7: SKIES UNKNOWN", console: "PS4", price: 54827, priceBefore: 0, off: 0, image: "" },
-  { name: "ACE COMBAT™7: SKIES UNKNOWN - TOP GUN: Maverick Edition", console: "PS4", price: 70384, priceBefore: 0, off: 0, image: "" },
-  { name: "AEW: Fight Forever", console: "PS4", price: 43341, priceBefore: 0, off: 0, image: "" },
-  { name: "Agents of Mayhem", console: "PS4", price: 23090, priceBefore: 0, off: 0, image: "" },
-  { name: "Alan Wake Remastered", console: "PS4", price: 28230, priceBefore: 0, off: 0, image: "" },
-  { name: "Alien: Isolation", console: "PS4", price: 28048, priceBefore: 0, off: 0, image: "" },
-  { name: "Alien: Isolation - THE COLLECTION", console: "PS4", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Amnesia: Collection", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Among Us", console: "PS4", price: 8493, priceBefore: 0, off: 0, image: "" },
-  { name: "Ancestors: The Humankind Odyssey", console: "PS4", price: 39069, priceBefore: 0, off: 0, image: "" },
-  { name: "AO Tennis 2", console: "PS4", price: 28054, priceBefore: 0, off: 0, image: "" },
-  { name: "ARMORED CORE™ VI FIRES OF RUBICON™", console: "PS4", price: 55246, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage - Master Assassin Edition", console: "PS4", price: 148400, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage & Valhalla Bundle", console: "PS4", price: 82727, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mirage Deluxe Edition", console: "PS4", price: 65952, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Mythology pack", console: "PS4", price: 38200, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Odyssey - Deluxe Edition", console: "PS4", price: 54143, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Odyssey - Gold Edition", console: "PS4", price: 167000, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Rogue Remastered", console: "PS4", price: 52909, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Unity", console: "PS4", price: 34812, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla - Complete Edition", console: "PS4", price: 223336, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla Deluxe", console: "PS4", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla Ragnarök Edition", console: "PS4", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed® III Remastered", console: "PS4", price: 52518, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed® Mirage ESPAÑOL", console: "PS4", price: 51187, priceBefore: 0, off: 0, image: "" },
+  /* ---------- PS5 (solo PS5) ---------- */
+  { name: "A Quiet Place: The Road Ahead", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Age of Empires II: DE Premium Edition", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
+  { name: "Baldur's Gate 3", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
+  { name: "Battlefield 2042 (Español Latino)", console: "PS5", price: 10400, priceBefore: 0, off: 0, image: "" },
+  { name: "Beast of Reincarnation", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
+  { name: "Dying Light: The Beast Deluxe Edition", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
+  { name: "Empire of the Ants", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Gears of War: Reloaded", console: "PS5", price: 20600, priceBefore: 0, off: 0, image: "" },
+  { name: "Halo: Campaign Evolved", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
+  { name: "High On Life 2", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
+  { name: "House Flipper 2", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "LOLLIPOP CHAINSAW RePOP", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Lost Soul Aside", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Microsoft Flight Simulator 2024 Standard", console: "PS5", price: 62600, priceBefore: 0, off: 0, image: "" },
+  { name: "MotoGP 26", console: "PS5", price: 41600, priceBefore: 0, off: 0, image: "" },
+  { name: "NASCAR 25", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Ninja Gaiden 4 Deluxe Edition", console: "PS5", price: 47500, priceBefore: 0, off: 0, image: "" },
+  { name: "Nobody Wants to Die", console: "PS5", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Raft", console: "PS5", price: 21200, priceBefore: 0, off: 0, image: "" },
+  { name: "Serious Sam 4", console: "PS5", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "SOUTH PARK: SNOW DAY!", console: "PS5", price: 15900, priceBefore: 0, off: 0, image: "" },
+  { name: "Starfield", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "The Chant", console: "PS5", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "The Sinking City 2", console: "PS5", price: 47500, priceBefore: 0, off: 0, image: "" },
+  { name: "Warhammer 40,000: Darktide Imperial Edition", console: "PS5", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Warhammer 40,000: Darktide", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Way of the Hunter", console: "PS5", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Wreckfest (PS5 Version)", console: "PS5", price: 17200, priceBefore: 0, off: 0, image: "" },
 
-  /* ---------- OFERTAS DESTACADAS de la home (provisional, ver memoria) ---------- */
-  { name: "Back 4 Blood: Deluxe Edition", console: "", price: 7400, priceBefore: 0, off: 0, image: "" },
-  { name: "Crash Bandicoot™ - Crashiversary Bundle", console: "", price: 15900, priceBefore: 0, off: 0, image: "" },
-  { name: "Borderlands 3 Next Level Bundle", console: "", price: 6400, priceBefore: 0, off: 0, image: "" },
-  { name: "Crash Bandicoot™ - Quadrilogy Bundle", console: "", price: 12000, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat 11 Ultimate SUBTITULADO", console: "", price: 6100, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS™ Battlefront™ II", console: "", price: 6000, priceBefore: 0, off: 0, image: "" },
-  { name: "WRC 10 - Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Suicide Squad: Kill the Justice League - Digital Deluxe Edition PS5", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Diablo III: Eternal Collection", console: "", price: 7800, priceBefore: 0, off: 0, image: "" },
-  { name: "FAR CRY®6 Gold Edition", console: "", price: 11200, priceBefore: 0, off: 0, image: "" },
-  { name: "Lost Judgment Digital Deluxe Edition", console: "", price: 8800, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 2 Ultimate Edition", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Injustice 2 - Legendary Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Far Cry® 6 Deluxe Edition", console: "", price: 10500, priceBefore: 0, off: 0, image: "" },
-  { name: "Tomb Raider: Definitive Survivor Trilogy", console: "", price: 7500, priceBefore: 0, off: 0, image: "" },
-  { name: "ONE PIECE World Seeker", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat 11 Ultimate + Injustice 2 Legendary Edition Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Diablo® II + III (Prime Evil Collection)", console: "", price: 8900, priceBefore: 0, off: 0, image: "" },
-  { name: "Gotham Knights: Deluxe PS5", console: "PS5", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Rugby 22 PS4", console: "PS4", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Rugby 22 PS5", console: "PS5", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO The Incredibles", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Far Cry® 5 + Far Cry® New Dawn Ultimate Edition ESPAÑOL", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 1 & 2 Double Pack", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange 2 - Temporada completa", console: "", price: 6100, priceBefore: 0, off: 0, image: "" },
-  { name: "NieR Replicant", console: "", price: 9500, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO DC Super-Villains", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Call of Duty®: Vanguard PS4 ESPAÑOL ESPAÑA", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat 11 Ultimate ESPAÑOL LATINO", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Middle-earth™: Shadow of War™ Definitive Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" }
+  /* ---------- PS4 (solo PS4) ----------
+     Battlefield 2042 y LOLLIPOP CHAINSAW RePOP están en las dos listas
+     pero con precio propio por consola (Battlefield: PS5 10.400 y PS4 9.600). */
+  { name: "Battlefield 2042 (Español Latino)", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "LOLLIPOP CHAINSAW RePOP", console: "PS4", price: 27500, priceBefore: 0, off: 0, image: "" },
+
+  /* ---------- Multi-consola: valen para PS4 y PS5 (console: "") ---------- */
+  { name: "Ben 10: Power Trip", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Bratz: Flaunt Your Fashion Complete Edition", console: "", price: 17400, priceBefore: 0, off: 0, image: "" },
+  { name: "Castlevania Anniversary Collection", console: "", price: 7900, priceBefore: 0, off: 0, image: "" },
+  { name: "Celeste", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Cult of the Lamb: Cultist Edition", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Darkest Dungeon II", console: "", price: 17500, priceBefore: 0, off: 0, image: "" },
+  { name: "Darkest Dungeon", console: "", price: 7700, priceBefore: 0, off: 0, image: "" },
+  { name: "Darkest Dungeon: Ancestral Edition", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Darksiders II Deathinitive Edition", console: "", price: 15900, priceBefore: 0, off: 0, image: "" },
+  { name: "DAVE THE DIVER", console: "", price: 10600, priceBefore: 0, off: 0, image: "" },
+  { name: "Disney Epic Mickey: Rebrushed", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Divinity: Original Sin 2 Definitive Edition", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Dragon Age Inquisition Game of the Year", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Grounded", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "High On Life + DLC Bundle", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "High On Life", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
+  { name: "How to Survive 2", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
+  { name: "Life is Strange: True Colors Ultimate Edition", console: "", price: 38200, priceBefore: 0, off: 0, image: "" },
+  { name: "Like a Dragon Gaiden: The Man Who Erased His Name", console: "", price: 17600, priceBefore: 0, off: 0, image: "" },
+  { name: "Like a Dragon: Pirate Yakuza in Hawaii", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Lost Judgment Digital Ultimate Edition", console: "", price: 9800, priceBefore: 0, off: 0, image: "" },
+  { name: "Manhunt", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Max Payne", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Mi Amiga, Peppa Pig", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
+  { name: "Mirror's Edge Catalyst", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Mortal Kombat X (Español Latino)", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Mount & Blade II: Bannerlord", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "MX vs ATV Legends", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS Deluxe", console: "", price: 32200, priceBefore: 0, off: 0, image: "" },
+  { name: "Nickelodeon All-Star Brawl", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Nickelodeon Kart Racers 3: Slime Speedway Turbo Edition", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "ONE PIECE ODYSSEY Deluxe Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "ONE PIECE World Seeker Deluxe Edition", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "One Piece: Pirate Warriors 3", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Outer Wilds", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Outlast 1", console: "", price: 7700, priceBefore: 0, off: 0, image: "" },
+  { name: "PAC-MAN WORLD Re-PAC", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Party Animals", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Persona 5 Strikers", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Pure Farming 2018", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
+  { name: "SAMURAI SHODOWN", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Serious Sam Collection", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "THE KING OF FIGHTERS '98 ULTIMATE MATCH", console: "", price: 6400, priceBefore: 0, off: 0, image: "" },
+  { name: "The Precinct", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "The Quarry Deluxe Edition", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "The Telltale Batman Shadows Edition", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Vampyr", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Watch Dogs: Legion Ultimate Edition (subtitulado)", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Watch Dogs: Legion (subtitulado)", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "XCOM 2", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
+  { name: "XCOM 2 Digital Deluxe Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" }
 ];
 
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
@@ -735,6 +876,27 @@ const resultCount = document.getElementById("resultCount");
 
 function money(n){ return (n || 0).toLocaleString("es-AR"); }
 
+/* Clave única de cada juego para el carrito.
+   Los juegos que valen para las dos consolas usan solo el nombre; los que
+   son de una consola agregan la consola. Hace falta porque hay juegos con
+   el mismo nombre en PS4 y PS5 con distinto precio (Battlefield 2042). */
+function keyOf(g){
+  return g.console ? `${g.name} — ${g.console}` : g.name;
+}
+
+/* Regla de consola: si el juego NO especifica consola (console: ""),
+   aparece en las DOS listas (PS4 y PS5). */
+function coincideConsola(g, consola){
+  if(consola === "Todas") return true;
+  if(g.console === "") return true;
+  return g.console === consola;
+}
+
+/* Texto de consola que se muestra en la ficha */
+function textoConsola(g){
+  return g.console ? `Consola: ${escapeHtml(g.console)}` : "Consola: PS4 y PS5";
+}
+
 function save(){
   localStorage.setItem("bootplay_tienda_selected", JSON.stringify(selected));
   updateCount();
@@ -746,8 +908,7 @@ function updateCount(){
 function render(){
   const q = search.value.trim().toLowerCase();
   const list = GAMES.filter(g =>
-    g.name.toLowerCase().includes(q) &&
-    (filtroConsola === "Todas" || g.console === filtroConsola)
+    g.name.toLowerCase().includes(q) && coincideConsola(g, filtroConsola)
   );
 
   resultCount.textContent = `${list.length} juego${list.length === 1 ? "" : "s"}`;
@@ -759,7 +920,8 @@ function render(){
   }
 
   list.forEach((g) => {
-    const exists = selected.includes(g.name);
+    const clave = keyOf(g);
+    const exists = selected.includes(clave);
     const card = document.createElement("article");
     card.className = "card";
 
@@ -768,7 +930,6 @@ function render(){
       : '<div class="cover-icon">🎮</div>';
     const badge = g.off ? `<span class="badge">-${g.off}%</span>` : "";
     const antes = g.priceBefore ? `<span class="price-old">$${money(g.priceBefore)}</span>` : "";
-    const consola = g.console ? `Consola: ${escapeHtml(g.console)}` : "Consola: a confirmar";
 
     card.innerHTML = `
       <div class="cover">
@@ -778,13 +939,13 @@ function render(){
       <div class="card-body">
         <div class="game-name">${escapeHtml(g.name)}</div>
         <div class="price">$${money(g.price)}${antes}</div>
-        <div class="meta">${consola}</div>
+        <div class="meta">${textoConsola(g)}</div>
         <button class="btn ${exists ? "" : "primary"} add" type="button">${exists ? "✓ Agregado" : "＋ Agregar al pedido"}</button>
       </div>`;
 
     card.querySelector("button").onclick = (e) => {
       e.stopPropagation();
-      toggle(g.name);
+      toggle(clave);
     };
 
     grid.appendChild(card);
@@ -801,9 +962,9 @@ document.querySelectorAll(".chip").forEach((chip) => {
   };
 });
 
-function toggle(name){
-  if(selected.includes(name)) selected = selected.filter(x => x !== name);
-  else selected.push(name);
+function toggle(clave){
+  if(selected.includes(clave)) selected = selected.filter(x => x !== clave);
+  else selected.push(clave);
   save(); render();
 }
 
@@ -849,6 +1010,52 @@ function escapeHtml(s){
 search.addEventListener("input", render);
 updateCount();
 render();
+
+/* ======================================================
+   CONTADOR — "🌷 Florecen los precios: ofertas de primavera"
+   Fecha límite: 07/10/2026. Como las ofertas valen HASTA ese día,
+   el objetivo es el arranque del 08/10/2026 a las 00:00 (hora local).
+   Al llegar a cero se muestra "Ofertas finalizadas" con opacidad reducida.
+====================================================== */
+(function () {
+  var contador = document.getElementById("promoContador");
+  if (!contador) return;
+
+  var FIN = new Date(2026, 9, 8, 0, 0, 0).getTime();  /* 9 = octubre (mes 0-indexado) */
+  var elDias = document.getElementById("cdDias");
+  var elHoras = document.getElementById("cdHoras");
+  var elMin = document.getElementById("cdMin");
+  var elSeg = document.getElementById("cdSeg");
+
+  function dosDigitos(n){ return n < 10 ? "0" + n : String(n); }
+
+  function actualizar(){
+    var falta = FIN - Date.now();
+
+    if (falta <= 0){
+      contador.classList.add("finalizado");
+      elDias.textContent = "00";
+      elHoras.textContent = "00";
+      elMin.textContent = "00";
+      elSeg.textContent = "00";
+      return;
+    }
+
+    var total = Math.floor(falta / 1000);
+    var dias = Math.floor(total / 86400);
+    var horas = Math.floor((total % 86400) / 3600);
+    var min = Math.floor((total % 3600) / 60);
+    var seg = total % 60;
+
+    elDias.textContent = String(dias);
+    elHoras.textContent = dosDigitos(horas);
+    elMin.textContent = dosDigitos(min);
+    elSeg.textContent = dosDigitos(seg);
+  }
+
+  actualizar();
+  window.setInterval(actualizar, 1000);
+})();
 </script>
 
 </body>
