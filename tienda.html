@@ -499,6 +499,234 @@ footer{
 @media (max-width:420px){
   .grid{
     grid-template-columns:1fr;}}
+
+/* ===== BOOTPLAY — REDISEÑO METÁLICO PS ===== */
+:root{
+  --bg:#050607;
+  --panel:#101216;
+  --panel2:#171a1f;
+  --text:#e9edf2;
+  --muted:#8d96a1;
+  --accent:#b9c0c8;
+  --accent2:#f3f5f7;
+  --border:rgba(210,220,230,.16);
+  --ok:#45d483;
+  --danger:#ff6574;
+  --ps5-metal-1:#5d646d;
+  --ps5-metal-2:#dfe5ea;
+  --ps5-metal-3:#7c858e;
+  --ps4-blue-1:#0068d9;
+  --ps4-blue-2:#24a7ff;
+}
+
+/* Base */
+body{
+  background:
+    radial-gradient(circle at 50% -15%,rgba(190,200,210,.12),transparent 34%),
+    radial-gradient(circle at 0% 35%,rgba(0,105,220,.07),transparent 30%),
+    #050607;
+  color:var(--text);
+}
+header{
+  background:rgba(5,6,7,.90);
+  border-bottom:1px solid rgba(210,220,230,.18);
+}
+.logo{
+  background:linear-gradient(145deg,#30353b,#cfd5da 48%,#50565d);
+  box-shadow:0 8px 30px rgba(210,220,230,.15);
+}
+
+/* Botones generales: plata */
+.btn{
+  background:linear-gradient(145deg,#171a1e,#2b3036);
+  border:1px solid rgba(220,225,230,.25);
+  color:#d9dee3;
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 5px 18px rgba(0,0,0,.22);
+}
+.btn:hover{
+  border-color:rgba(235,240,245,.55);
+  box-shadow:inset 0 1px rgba(255,255,255,.13),0 8px 24px rgba(180,190,200,.12);
+}
+.btn.primary{
+  background:linear-gradient(135deg,#626a73 0%,#eef2f5 47%,#8b949d 100%);
+  color:#111418;
+  border:1px solid #eef2f5;
+  text-shadow:0 1px rgba(255,255,255,.5);
+  box-shadow:inset 0 1px rgba(255,255,255,.75),0 8px 28px rgba(200,210,220,.16);
+}
+
+/* Hero */
+.eyebrow{
+  color:#c8ced4;
+}
+.hero h1{
+  color:#f0f3f5;
+  text-shadow:0 0 30px rgba(210,220,230,.10);
+}
+
+/* Selector de consolas */
+.chips{
+  gap:12px;
+}
+.chip{
+  background:linear-gradient(145deg,#121519,#242930);
+  border:1px solid rgba(220,225,230,.18);
+  color:#aeb6bf;
+  box-shadow:inset 0 1px rgba(255,255,255,.05);
+}
+.chip.active{
+  background:linear-gradient(135deg,#59616a,#f0f3f5 46%,#777f88);
+  color:#111418;
+  border-color:#e8edf1;
+  box-shadow:0 8px 25px rgba(210,220,230,.17),inset 0 1px rgba(255,255,255,.8);
+}
+
+/* Estados específicos de los botones */
+.chip[data-console="PS5"]{
+  color:#d7dce1;
+}
+.chip[data-console="PS5"].active{
+  background:linear-gradient(135deg,#555d66,#f1f4f6 46%,#737c85);
+  color:#0e1114;
+}
+.chip[data-console="PS4"]{
+  color:#55baff;
+}
+.chip[data-console="PS4"].active{
+  background:linear-gradient(135deg,#0057bd,#24a7ff);
+  color:#fff;
+  border-color:#3ab4ff;
+  box-shadow:0 8px 28px rgba(0,120,230,.28);
+}
+.chip[data-console="PS3"]{
+  color:#b9c0c8;
+}
+.chip[data-console="PS3"].active{
+  background:linear-gradient(135deg,#20252b,#424952);
+  color:#f0f3f5;
+}
+
+/* Buscador */
+.search{
+  background:#0e1115;
+  border:1px solid rgba(210,220,230,.18);
+  color:#e9edf2;
+}
+.search::placeholder{color:#77818b}
+.search:focus{border-color:#bfc7cf;box-shadow:0 0 0 3px rgba(190,200,210,.08)}
+
+/* Cards */
+.card{
+  background:linear-gradient(155deg,#1c2025,#0c0f12 72%);
+  border:1px solid rgba(205,215,225,.17);
+  box-shadow:0 12px 30px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.035);
+}
+.card:hover{
+  border-color:rgba(215,225,235,.48);
+  box-shadow:0 18px 38px rgba(0,0,0,.36),0 0 24px rgba(190,200,210,.07);
+}
+.cover{
+  background:
+    radial-gradient(circle at 50% 25%,rgba(220,225,230,.22),transparent 40%),
+    linear-gradient(145deg,#343a41,#111418 62%);
+}
+.cover-icon{
+  filter:grayscale(1) drop-shadow(0 8px 20px rgba(220,225,230,.20));
+}
+.game-name{
+  color:#cbd1d7;
+}
+.price{
+  color:#f0f3f5;
+  text-shadow:0 0 16px rgba(220,225,230,.08);
+}
+.meta{
+  color:#858f99;
+}
+.badge{
+  background:linear-gradient(135deg,#555e67,#cfd5da,#6e7780);
+  color:#101317;
+  border-color:#dbe0e4;
+}
+
+/* Cards quando o filtro é PS4: reforça azul */
+body.ps4-mode .card{
+  border-color:rgba(0,135,235,.24);
+}
+body.ps4-mode .card:hover{
+  border-color:rgba(30,165,255,.65);
+}
+body.ps4-mode .game-name,
+body.ps4-mode .price{
+  color:#dcefff;
+}
+
+/* Cards PS5: prata mais evidente */
+body.ps5-mode .card{
+  background:linear-gradient(155deg,#272c32,#0c0f12 70%);
+  border-color:rgba(205,215,225,.25);
+}
+body.ps5-mode .game-name{
+  color:#cfd5da;
+}
+body.ps5-mode .price{
+  color:#f3f5f7;
+}
+body.ps5-mode .meta{
+  color:#9da6af;
+}
+
+/* Mensagem PS3 */
+.ps3-coming{
+  grid-column:1/-1;
+  min-height:260px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:45px 25px;
+  border-radius:22px;
+  border:1px solid rgba(205,215,225,.18);
+  background:
+    radial-gradient(circle at 50% 30%,rgba(190,200,210,.12),transparent 45%),
+    linear-gradient(145deg,#191d22,#090b0e);
+  box-shadow:0 18px 45px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.06);
+}
+.ps3-coming .ps3-symbol{
+  font-size:54px;
+  margin-bottom:14px;
+  filter:grayscale(1);
+}
+.ps3-coming h3{
+  margin:0 0 10px;
+  font-size:28px;
+  color:#e2e6ea;
+}
+.ps3-coming p{
+  margin:0;
+  max-width:600px;
+  color:#8d969f;
+  font-size:16px;
+}
+
+/* Footer */
+footer{
+  background:linear-gradient(180deg,#181b1f,#0b0d10);
+  border-top:1px solid rgba(210,220,230,.12);
+}
+.footer-col h3,.footer-logo strong{color:#dfe4e8}
+.footer-link{color:#858e98}
+.footer-link:hover{color:#e8edf1}
+.footer-bottom{border-top-color:rgba(210,220,230,.08);color:#68717a}
+
+/* Carrito */
+.drawer{
+  background:linear-gradient(160deg,#171b20,#090b0e);
+  border-left-color:rgba(210,220,230,.18);
+}
+.drawer-footer{border-top-color:rgba(210,220,230,.13)}
+
 </style>
 </head>
 
@@ -592,6 +820,8 @@ footer{
     <button class="chip active" type="button" data-console="Todas">Todas</button>
     <button class="chip" type="button" data-console="PS4">PS4</button>
     <button class="chip" type="button" data-console="PS5">PS5</button>
+    <button class="chip" type="button" data-console="PS3">PS3</button>
+     <button class="chip chip-ps3" type="button" data-console="PS3">PS3</button>
   </div>
 
   <div class="controls">
@@ -888,6 +1118,7 @@ function keyOf(g){
    aparece en las DOS listas (PS4 y PS5). */
 function coincideConsola(g, consola){
   if(consola === "Todas") return true;
+  if(consola === "PS3") return false;
   if(g.console === "") return true;
   return g.console === consola;
 }
@@ -906,7 +1137,37 @@ function updateCount(){
 }
 
 function render(){
+  document.body.classList.remove("ps4-mode","ps5-mode","ps3-mode");
+  if (filtroConsola === "PS4") document.body.classList.add("ps4-mode");
+  if (filtroConsola === "PS5") document.body.classList.add("ps5-mode");
+  if (filtroConsola === "PS3") document.body.classList.add("ps3-mode");
+
   const q = search.value.trim().toLowerCase();
+
+  if(filtroConsola === "PS3"){
+    resultCount.textContent = "Próximamente";
+    grid.innerHTML = `
+      <div class="ps3-notice">
+        <div class="ps3-notice-inner">
+          <span class="ps3-badge">PS3 · Próximamente</span>
+          <h3 class="ps3-title">Más juegos para esta categoría</h3>
+          <p>Estamos preparando el catálogo de PS3. Próximamente vas a encontrar más juegos disponibles en esta sección.</p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if (filtroConsola === "PS3") {
+    resultCount.textContent = "Próximamente";
+    grid.innerHTML = `
+      <div class="ps3-coming">
+        <div class="ps3-symbol">🎮</div>
+        <h3>PS3 — Próximamente</h3>
+        <p>Estamos preparando más juegos para esta categoría.<br>Pronto vas a encontrar nuevas opciones disponibles.</p>
+      </div>`;
+    return;
+  }
+
   const list = GAMES.filter(g =>
     g.name.toLowerCase().includes(q) && coincideConsola(g, filtroConsola)
   );
