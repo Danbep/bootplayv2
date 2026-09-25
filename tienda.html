@@ -269,15 +269,31 @@ h1{
 .selected-item{
   display:flex;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
   align-items:center;
   padding:13px 0;
   border-bottom:1px solid var(--border)}
+.selected-item .selected-name{
+  flex:1;
+  min-width:0;
+  overflow-wrap:anywhere}
+.selected-price{
+  font-weight:800;
+  white-space:nowrap}
 .remove{
   border:0;
   background:transparent;
   color:var(--muted);
   cursor:pointer}
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  margin-top:-1px;
+  border-top:1px solid var(--border);
+  font-weight:900;
+  font-size:18px}
 .drawer-footer{
   border-top:1px solid var(--border);
   padding-top:18px}
@@ -285,6 +301,34 @@ h1{
   color:var(--muted);
   font-size:13px;
   line-height:1.5}
+/* Paso 2: opciones de pago */
+.pago-opciones{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px}
+.pago-opciones .btn{
+  flex:1}
+.pago-detalle{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:14px}
+.pago-detalle p{
+  margin:6px 0;
+  font-size:14px}
+.pago-nota{
+  color:var(--muted);
+  font-size:13px;
+  font-style:italic}
+.volver{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-weight:700;
+  padding:0 0 14px;
+  display:inline-block}
 /* =========================
    PROMO — OFERTAS DE PRIMAVERA
 ========================= */
@@ -435,7 +479,7 @@ footer{
   position:fixed;
   right:20px;
   bottom:20px;
-  z-index:50;
+  z-index:29;
   background:#20d66b;
   color:white;
   padding:13px 19px;
@@ -1098,6 +1142,8 @@ const GAMES = [
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
 let selected = JSON.parse(localStorage.getItem("bootplay_tienda_selected") || "[]");
 let filtroConsola = "Todas";
+let cartStep = 1;          /* 1 = lista + total, 2 = forma de pago */
+let paymentMethod = null;  /* "transferencia" | "efectivo" */
 
 const grid = document.getElementById("grid");
 const search = document.getElementById("search");
@@ -1111,6 +1157,18 @@ function money(n){ return (n || 0).toLocaleString("es-AR"); }
    el mismo nombre en PS4 y PS5 con distinto precio (Battlefield 2042). */
 function keyOf(g){
   return g.console ? `${g.name} — ${g.console}` : g.name;
+}
+
+/* Busca el juego original a partir de la clave guardada en el carrito
+   (necesario para mostrar el precio de cada ítem y el total). */
+function findGame(key){
+  return GAMES.find(g => keyOf(g) === key);
+}
+function cartTotal(){
+  return selected.reduce((sum, key) => {
+    const g = findGame(key);
+    return sum + (g ? g.price : 0);
+  }, 0);
 }
 
 /* Regla de consola: si el juego NO especifica consola (console: ""),
@@ -1229,38 +1287,113 @@ function toggle(clave){
 }
 
 function openCart(){
+  cartStep = 1;
+  paymentMethod = null;
   document.body.classList.add("open");
-  document.getElementById("drawerRoot").innerHTML = `
-    <div class="drawer-backdrop" onclick="closeCart()"></div>
-    <aside class="drawer">
-      <div class="drawer-head"><h3>Tu pedido</h3><button class="btn" onclick="closeCart()">✕</button></div>
-      <div class="selected">
-        ${selected.length ? selected.map((name, i) => `
-          <div class="selected-item"><span>${escapeHtml(name)}</span><button class="remove" onclick="removeSelected(${i})">Quitar</button></div>
-        `).join("") : '<div class="empty">Todavía no seleccionaste juegos.</div>'}
-      </div>
-      <div class="drawer-footer">
-        <p>Al enviar, se abrirá WhatsApp con tu selección para que puedas consultar y coordinar el pedido.</p>
-        <button class="btn primary" style="width:100%" onclick="sendWhatsApp()" ${selected.length ? "" : "disabled"}>📲 Enviar pedido por WhatsApp</button>
-      </div>
-    </aside>`;
+  renderCart();
 }
 function closeCart(){
   document.body.classList.remove("open");
   document.getElementById("drawerRoot").innerHTML = "";
 }
+
+/* Dibuja el carrito completo según el paso actual (1 = lista, 2 = pago).
+   La lista y el total se arman siempre igual; lo que cambia es el
+   contenido de drawer-footer. */
+function renderCart(){
+  const total = cartTotal();
+
+  const listaHtml = selected.length ? selected.map((key, i) => {
+    const g = findGame(key);
+    const precio = g ? g.price : 0;
+    const quitar = cartStep === 1 ? `<button class="remove" onclick="removeSelected(${i})">Quitar</button>` : "";
+    return `
+      <div class="selected-item">
+        <span class="selected-name">${escapeHtml(key)}</span>
+        <span class="selected-price">$${money(precio)}</span>
+        ${quitar}
+      </div>`;
+  }).join("") : '<div class="empty">Todavía no seleccionaste juegos.</div>';
+
+  let footerHtml;
+  if(cartStep === 1){
+    footerHtml = `
+      <p>Revisá tu selección y el total antes de seguir.</p>
+      <button class="btn primary" style="width:100%" onclick="irAPago()" ${selected.length ? "" : "disabled"}>Siguiente →</button>`;
+  } else {
+    footerHtml = `
+      <button class="volver" type="button" onclick="volverALista()">← Volver a la lista</button>
+      <div class="pago-opciones">
+        <button class="btn ${paymentMethod === "transferencia" ? "primary" : ""}" type="button" onclick="elegirPago('transferencia')">🏦 Transferencia</button>
+        <button class="btn ${paymentMethod === "efectivo" ? "primary" : ""}" type="button" onclick="elegirPago('efectivo')">💵 Efectivo</button>
+      </div>
+      ${renderDetallePago()}`;
+  }
+
+  document.getElementById("drawerRoot").innerHTML = `
+    <div class="drawer-backdrop" onclick="closeCart()"></div>
+    <aside class="drawer">
+      <div class="drawer-head"><h3>Tu pedido</h3><button class="btn" onclick="closeCart()">✕</button></div>
+      <div class="selected">${listaHtml}</div>
+      <div class="cart-total"><span>Total</span><span>$${money(total)}</span></div>
+      <div class="drawer-footer">${footerHtml}</div>
+    </aside>`;
+}
+
+/* Detalle según la forma de pago elegida en el paso 2 */
+function renderDetallePago(){
+  if(paymentMethod === "transferencia"){
+    return `
+      <div class="pago-detalle">
+        <p><strong>Alias:</strong> bootplay</p>
+        <p><strong>CBU:</strong> 4530000800016285250759</p>
+        <p><strong>Nombre:</strong> Albano Daniel Nadim Brafa</p>
+        <p class="pago-nota">Enviá el comprobante por WhatsApp.</p>
+      </div>
+      <button class="btn primary" style="width:100%" onclick="sendWhatsApp()">📲 Enviar pedido por WhatsApp</button>`;
+  }
+  if(paymentMethod === "efectivo"){
+    return `
+      <div class="pago-detalle">
+        <p>Retiro del código en puerta.</p>
+      </div>
+      <button class="btn primary" style="width:100%" onclick="sendWhatsApp()">📲 Enviar pedido por WhatsApp</button>`;
+  }
+  return `<p class="pago-nota">Elegí una forma de pago para continuar.</p>`;
+}
+
+function irAPago(){
+  if(!selected.length) return;
+  cartStep = 2;
+  renderCart();
+}
+function volverALista(){
+  cartStep = 1;
+  paymentMethod = null;
+  renderCart();
+}
+function elegirPago(metodo){
+  paymentMethod = metodo;
+  renderCart();
+}
+
 function removeSelected(i){
   selected.splice(i, 1);
-  save(); openCart(); render();
+  save(); renderCart(); render();
 }
+
 function sendWhatsApp(){
-  if(!selected.length) return;
+  if(!selected.length || !paymentMethod) return;
   if(WHATSAPP_NUMBER.includes("X")){
     alert("Primero configurá tu número de WhatsApp en tienda.html.");
     return;
   }
+  const total = cartTotal();
+  const metodoTexto = paymentMethod === "transferencia" ? "Transferencia" : "Efectivo (retiro del código en puerta)";
   const text = "Hola Bootplay! Quiero consultar por estos juegos de la Tienda digital:%0A%0A" +
-    selected.map((x, i) => `${i + 1}. ${encodeURIComponent(x)}`).join("%0A");
+    selected.map((x, i) => `${i + 1}. ${encodeURIComponent(x)}`).join("%0A") +
+    `%0A%0ATotal: ${encodeURIComponent("$" + money(total))}` +
+    `%0AForma de pago: ${encodeURIComponent(metodoTexto)}`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
 }
 function escapeHtml(s){
