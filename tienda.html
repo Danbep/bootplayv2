@@ -1145,6 +1145,30 @@ let filtroConsola = "Todas";
 let cartStep = 1;          /* 1 = lista + total, 2 = forma de pago */
 let paymentMethod = null;  /* "transferencia" | "efectivo" */
 
+/* ======================================================
+   PORTADAS — imagenes/<nombre del juego>.webp
+   Regla: mismo nombre que "name", sin ":" (único carácter que se
+   quita). Apóstrofes, "!", ®, ™ y espacios se mantienen tal cual.
+   Si el juego trae "image" cargado a mano, se usa ese en su lugar.
+====================================================== */
+const IMAGENES_FALTANTES = [];
+
+function rutaPortada(g){
+  return g.image || `imagenes/${g.name.replace(/:/g, '').trim()}.webp`;
+}
+
+/* Se llama desde el onerror del <img> cuando la portada no carga.
+   Junta en IMAGENES_FALTANTES (sin duplicar) para poder revisarlas
+   después: mirar la consola del navegador (F12) o escribir
+   BOOTPLAY_IMAGENES_FALTANTES en la consola. */
+function reportarImagenFaltante(nombre, ruta){
+  if(IMAGENES_FALTANTES.some(x => x.nombre === nombre)) return;
+  IMAGENES_FALTANTES.push({ nombre, ruta });
+  console.warn(`🖼️ Falta portada para "${nombre}" → se esperaba "${ruta}"`);
+  console.table(IMAGENES_FALTANTES);
+}
+window.BOOTPLAY_IMAGENES_FALTANTES = IMAGENES_FALTANTES;
+
 const grid = document.getElementById("grid");
 const search = document.getElementById("search");
 const resultCount = document.getElementById("resultCount");
@@ -1243,9 +1267,12 @@ function render(){
     const card = document.createElement("article");
     card.className = "card";
 
-    const portada = g.image
-      ? `<img src="${g.image}" alt="${escapeHtml(g.name)}">`
-      : '<div class="cover-icon">🎮</div>';
+    const rutaImg = rutaPortada(g);
+    const portada = `
+      <div class="cover-icon">🎮</div>
+      <img src="${escapeHtml(rutaImg)}" alt="${escapeHtml(g.name)}" loading="lazy"
+           data-nombre="${escapeHtml(g.name)}" data-ruta="${escapeHtml(rutaImg)}"
+           onerror="reportarImagenFaltante(this.dataset.nombre, this.dataset.ruta); this.remove();">`;
     const badge = g.off ? `<span class="badge">-${g.off}%</span>` : "";
     const antes = g.priceBefore ? `<span class="price-old">$${money(g.priceBefore)}</span>` : "";
 
