@@ -771,6 +771,166 @@ footer{
 }
 .drawer-footer{border-top-color:rgba(210,220,230,.13)}
 
+
+/* ===== JUEGO DESTACADO — EA SPORTS FC 27 CORREGIDO ===== */
+.featured-game{
+  grid-column:span 3;
+  width:min(1040px, 100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:285px minmax(0,1fr);
+  /* Cambiar height fijo por auto para que se ajuste al contenido */
+  height:auto;
+  min-height:0;
+  overflow:hidden;
+  border-radius:18px;
+  border:1px solid rgba(235,242,248,.38);
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.18) 0%,
+      rgba(190,200,210,.13) 25%,
+      rgba(60,70,80,.20) 50%,
+      rgba(235,240,245,.12) 72%,
+      rgba(75,85,95,.20) 100%);
+  backdrop-filter:blur(12px) saturate(115%);
+  -webkit-backdrop-filter:blur(12px) saturate(115%);
+  box-shadow:
+    0 14px 35px rgba(0,0,0,.30),
+    inset 0 1px rgba(255,255,255,.62),
+    inset 0 -1px rgba(0,0,0,.25);
+  margin-bottom:2px;
+}
+
+.featured-cover{
+  position:relative;
+  min-height:0;
+  height:100%;            /* ← Hace que la imagen tome la altura total del padre */
+  background:#11151a;
+  overflow:hidden;
+}
+
+.featured-cover img{
+  width:100%;
+  height:100%;            /* ← La imagen se estira al 100% del contenedor */
+  display:block;
+  object-fit:cover;       /* ← Ajusta la imagen sin deformarla */
+}
+
+.featured-content{
+  min-width:0;
+  padding:18px 22px;
+  color:#e8edf2;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start; /* Alinear al inicio */
+}
+
+.featured-title{
+  margin:0 0 12px;
+  font-size:clamp(21px,2.5vw,31px);
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.8px;
+  color:#eef2f5;
+  text-shadow:
+    0 1px 0 #fff,
+    0 2px 0 #8a9299,
+    0 4px 7px rgba(0,0,0,.65);
+}
+
+.featured-section{
+  background:rgba(8,15,22,.36);
+  border:1px solid rgba(225,233,240,.20);
+  border-radius:12px;
+  padding:9px 11px;
+  margin-top:7px;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.16),
+    0 5px 14px rgba(0,0,0,.16);
+}
+
+.featured-section-title{
+  font-size:14px;
+  font-weight:900;
+  margin-bottom:5px;
+  color:#e4e9ee;
+  text-shadow:0 1px 2px #000;
+}
+
+.featured-option{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:5px 0;
+  border-top:1px solid rgba(220,230,238,.11);
+}
+
+.featured-option:first-of-type{border-top:0}
+
+.featured-option-info{
+  font-size:13px;
+  font-weight:800;
+  color:#e2e7ec;
+  text-shadow:0 1px 2px #000;
+}
+
+.featured-price{
+  font-size:18px;
+  font-weight:950;
+  white-space:nowrap;
+  color:#f3f5f7;
+  text-shadow:
+    0 1px 0 #fff,
+    0 2px 0 #777f86,
+    0 3px 6px rgba(0,0,0,.75);
+}
+
+.featured-add{
+  border-radius:9px;
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:950;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.68);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.75),
+    0 4px 10px rgba(0,0,0,.22);
+  white-space:nowrap;
+}
+
+.featured-add.primary-metal{
+  background:linear-gradient(145deg,#4b535b,#f0f3f5 45%,#727b83 72%,#cdd3d8);
+  color:#101419;
+  text-shadow:0 1px 0 rgba(255,255,255,.7);
+}
+
+.featured-add.blue-metal{
+  background:linear-gradient(145deg,#174c78,#75c6ff 46%,#2c6fa6 72%,#7fcaff);
+  color:#fff;
+  text-shadow:0 1px 2px #073052;
+}
+
+.featured-add:hover{transform:translateY(-1px);filter:brightness(1.08)}
+
+@media (max-width:900px){
+  .featured-game{grid-column:1/-1;width:100%;}
+}
+
+@media (max-width:650px){
+  .featured-game{
+    grid-template-columns:1fr;
+    height:auto;
+    min-height:0;
+  }
+  .featured-cover{min-height:190px;height:190px}
+  .featured-content{padding:16px}
+  .featured-option{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .featured-add{width:100%}
+}
 </style>
 </head>
 
@@ -869,6 +1029,50 @@ footer{
 
   <div class="controls">
     <input id="search" class="search" type="search" placeholder="🔎 Buscar un juego..." autocomplete="off">
+  </div>
+
+
+  <!-- ===== JUEGO DESTACADO ===== -->
+  <div class="grid" id="featuredGrid" style="padding-bottom:0;">
+    <article class="featured-game">
+      <div class="featured-cover">
+        <img src="imagenes/EA SPORTS FC™ 27.webp"
+             alt="EA SPORTS FC 27"
+             onerror="this.style.display='none';">
+      </div>
+      <div class="featured-content">
+        <h2 class="featured-title">EA SPORTS FC™ 27</h2>
+
+        <div class="featured-section">
+          <div class="featured-section-title">🎮 PS4 &amp; PS5 - Standard Edition</div>
+
+          <div class="featured-option">
+            <div class="featured-option-info">🥇 Cuenta Primaria — <span class="featured-price">$65.000</span></div>
+            <button class="featured-add primary-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Standard — Primaria')">
+              Agregar (Primaria)
+            </button>
+          </div>
+
+          <div class="featured-option">
+            <div class="featured-option-info">🥈 Cuenta Secundaria — <span class="featured-price">$37.000</span></div>
+            <button class="featured-add blue-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Standard — Secundaria')">
+              Agregar (Secundaria)
+            </button>
+          </div>
+        </div>
+
+        <div class="featured-section">
+          <div class="featured-section-title">🎮 PS4 &amp; PS5 - Ultimate Edition</div>
+
+          <div class="featured-option">
+            <div class="featured-option-info">🥈 Cuenta Secundaria — <span class="featured-price">$52.000</span></div>
+            <button class="featured-add blue-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Ultimate — Secundaria')">
+              Agregar (Ultimate)
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -1136,8 +1340,171 @@ const GAMES = [
   { name: "Watch Dogs: Legion Ultimate Edition (subtitulado)", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
   { name: "Watch Dogs: Legion (subtitulado)", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
   { name: "XCOM 2", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
-  { name: "XCOM 2 Digital Deluxe Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" }
+  { name: "XCOM 2 Digital Deluxe Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  /* ---------- JUEGOS ADICIONALES — juegos.txt ---------- */
+  { name: "Alan Wake 2 Deluxe Edition PS5", console: "PS5", price: 20600, priceBefore: 0, off: 0, image: "" },
+  { name: "Alone in the Dark PS5", console: "PS5", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Black Flag Resynced Deluxe Edition PS5", console: "PS5", price: 63000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Black Flag Resynced PS5", console: "PS5", price: 56000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Rogue Remastered", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed Triple Pack: Black Flag, Unity, Syndicate", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® III Remastered", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Odyssey - ULTIMATE EDITION ESPAÑOL", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Odyssey - ULTIMATE EDITION INGLÉS", console: "", price: 9100, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Odyssey ESPAÑOL", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Origins - GOLD EDITION", console: "", price: 6500, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed® Unity", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin's Creed®Mirage ESPAÑOL", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin’s Creed Mirage - Master Assassin Edition", console: "", price: 33400, priceBefore: 0, off: 0, image: "" },
+  { name: "Assassin’s Creed® The Ezio Collection", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Batman™: Arkham Knight", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Battlefield 4™", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Battlefield™ 1", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Battlefield™ V", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Bayonetta", console: "", price: 9800, priceBefore: 0, off: 0, image: "" },
+  { name: "Bloodborne™: Game of the Year Edition", console: "", price: 17400, priceBefore: 0, off: 0, image: "" },
+  { name: "Bully (Canis Canem Edit)", console: "", price: 16300, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Advanced Warfare Gold Edition", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Black Ops III - Zombies Chronicles Deluxe ESPAÑOL", console: "", price: 40700, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Ghosts Gold Edition", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Infinite Warfare - Legacy Edition ESPAÑOL", console: "", price: 38200, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Modern Warfare® 2 Campaign Remastered", console: "", price: 7400, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Vanguard PS5 ESPAÑOL ESPAÑA", console: "PS5", price: 10500, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: Vanguard PS5 ESPAÑOL LATINO", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Call of Duty®: WWII - Edición Digital Deluxe ESPAÑOL LATINO", console: "", price: 40700, priceBefore: 0, off: 0, image: "" },
+  { name: "Captain Tsubasa: Rise of New Champions – Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Crash Bandicoot™ Bundle - N. Sane Trilogy + CTR Nitro-Fueled", console: "", price: 9300, priceBefore: 0, off: 0, image: "" },
+  { name: "Crash™ + Spyro™ Triple Play Bundle", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Crash™ Team Racing Nitro-Fueled + Spyro™ Game Bundle", console: "", price: 9200, priceBefore: 0, off: 0, image: "" },
+  { name: "Dead Island - Series Bundle", console: "", price: 18500, priceBefore: 0, off: 0, image: "" },
+  { name: "Dead Island Definitive Edition", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
+  { name: "Dead Island: Riptide Definitive Edition", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
+  { name: "Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles 2 Deluxe Edition", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Diablo® IV - Standard Edition", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "DOOM Eternal Standard Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "DRAGON BALL FighterZ - Legendary Edition", console: "", price: 33900, priceBefore: 0, off: 0, image: "" },
+  { name: "Dragon Ball Xenoverse 1 and 2 Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Dragon Ball Xenoverse", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "DRAGON BALL Z: KAKAROT DAIMA EDITION", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "DRAGON BALL: Sparking! ZERO - Edición Super Limit-Breaking NEO PS5", console: "PS5", price: 63000, priceBefore: 0, off: 0, image: "" },
+  { name: "EA Family Bundle", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry 4 - Gold Edition", console: "", price: 15900, priceBefore: 0, off: 0, image: "" },
+  { name: "FAR CRY 5", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry New Dawn", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry New Dawn Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry®3 Classic Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry® 4", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry® 5 Gold Edition", console: "", price: 18500, priceBefore: 0, off: 0, image: "" },
+  { name: "Far Cry® 6 Game of the Year Edition", console: "", price: 9000, priceBefore: 0, off: 0, image: "" },
+  { name: "Gang Beasts", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Gran Turismo® 7 PS4", console: "PS4", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Gran Turismo® 7 PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Hades", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "Hades II PS5", console: "PS5", price: 25300, priceBefore: 0, off: 0, image: "" },
+  { name: "HITMAN World of Assassination Part One", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Invincible VS PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Judgment PS4", console: "PS4", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "Judgment PS5", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "Just Cause 3: XXL Edition", console: "", price: 5800, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO® CITY Undercover", console: "", price: 8800, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO® Marvel Super Heroes 2 Deluxe Edition", console: "", price: 10400, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO® Marvel’s Avengers Deluxe Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO® Star Wars™: The Force Awakens Standard Edition", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "LEGO® The Hobbit", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Little Nightmares I & II Bundle", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Mad Max", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "MADiSON PS4", console: "PS4", price: 25300, priceBefore: 0, off: 0, image: "" },
+  { name: "MADiSON PS5", console: "PS5", price: 25300, priceBefore: 0, off: 0, image: "" },
+  { name: "Mafia: The Old Country Definitive Edition PS5", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
+  { name: "Marvel's Spider-Man: Miles Morales ESPAÑOL LATINO", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Marvel’s Spider-Man 2 PS5 ESPAÑOL LATINO", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "Matchpoint - Tennis Championships", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
+  { name: "Middle-earth™: Shadow Bundle", console: "", price: 10400, priceBefore: 0, off: 0, image: "" },
+  { name: "Need for Speed™ Ultimate Bundle", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "ONE PIECE: PIRATE WARRIORS 4 Ultimate Edition", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Capítulo 5 PS4", console: "PS4", price: 21400, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Capítulo 5 PS5", console: "PS5", price: 21400, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 2 PS4", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 2 PS5", console: "PS5", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 3 PS4", console: "PS4", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 3 PS5", console: "PS5", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 4 PS4", console: "PS4", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Poppy Playtime: Chapter 4 PS5", console: "PS5", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Prince of Persia™ - New Era Bundle", console: "", price: 21000, priceBefore: 0, off: 0, image: "" },
+  { name: "Ratchet & Clank: Rift Apart Digital Deluxe Edition PS5", console: "PS5", price: 18300, priceBefore: 0, off: 0, image: "" },
+  { name: "Ratchet & Clank™", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Sackboy: A Big Adventure Digital Deluxe Edition", console: "", price: 21900, priceBefore: 0, off: 0, image: "" },
+  { name: "Sleeping Dogs™ Definitive Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Slime Rancher", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Slime Rancher 2 PS5", console: "PS5", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Sonic Colours: Ultimate - Digital Deluxe", console: "", price: 8900, priceBefore: 0, off: 0, image: "" },
+  { name: "Sonic Origins", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "SONIC SUPERSTARS", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
+  { name: "Stellar Blade™ PS5", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
+  { name: "Stray", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "TEKKEN 7 - Originals Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
+  { name: "Tennis World Tour", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Tennis World Tour - Roland-Garros Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
+  { name: "The Elder Scrolls IV: Oblivion Remastered PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
+  { name: "The Elder Scrolls V: Skyrim Special Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
+  { name: "The Evil Within 2 ESPAÑOL LATINO", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "THE FOREST", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "The Last of Us™ Part I PS5 ESPAÑOL LATINO", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
+  { name: "The Last of Us™ Part II Remastered ESPAÑOL LATINO PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "The Warriors®", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
+  { name: "The Witcher 3: Wild Hunt – Complete Edition SUBTITULADO", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
+  { name: "Tom Clancy's The Division 2", console: "", price: 8300, priceBefore: 0, off: 0, image: "" },
+  { name: "Tony Hawk's™ Pro Skater™ 1 + 2", console: "", price: 8200, priceBefore: 0, off: 0, image: "" },
+  { name: "Tony Hawk's™ Pro Skater™ 1 - 4", console: "", price: 46600, priceBefore: 0, off: 0, image: "" },
+  { name: "Tony Hawk's™ Pro Skater™ 3 + 4", console: "", price: 33900, priceBefore: 0, off: 0, image: "" },
+  { name: "UFC™ 6 Ultimate Edition PS5", console: "PS5", price: 81000, priceBefore: 0, off: 0, image: "" },
+  { name: "Watch Dogs® 2 - Deluxe Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
+  { name: "Watch Dogs®2", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
+  { name: "Watch Dogs®2 - Gold Edition", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "WRC 10 FIA World Rally Championship PS4", console: "PS4", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "WRC 10 FIA World Rally Championship PS5", console: "PS5", price: 11300, priceBefore: 0, off: 0, image: "" },
+  { name: "Yakuza Kiwami", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Yakuza Kiwami 2", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
+  { name: "Zombie Army Trilogy", console: "", price: 8700, priceBefore: 0, off: 0, image: "" }
 ];
+
+
+/* ===== PRODUCTOS DESTACADOS ===== */
+const FEATURED_ITEMS = {
+  "EA SPORTS FC™ 27 — PS4 & PS5 Standard — Primaria": {
+    name: "EA SPORTS FC™ 27 — Standard Edition — Cuenta Primaria",
+    price: 65000
+  },
+  "EA SPORTS FC™ 27 — PS4 & PS5 Standard — Secundaria": {
+    name: "EA SPORTS FC™ 27 — Standard Edition — Cuenta Secundaria",
+    price: 37000
+  },
+  "EA SPORTS FC™ 27 — PS4 & PS5 Ultimate — Secundaria": {
+    name: "EA SPORTS FC™ 27 — Ultimate Edition — Cuenta Secundaria",
+    price: 52000
+  }
+};
+
+function toggleFeatured(key){
+  if(selected.includes(key)) selected = selected.filter(x => x !== key);
+  else selected.push(key);
+  save();
+  updateFeaturedButtons();
+}
+
+function updateFeaturedButtons(){
+  document.querySelectorAll(".featured-add").forEach(btn => {
+    const onclick = btn.getAttribute("onclick") || "";
+    const m = onclick.match(/toggleFeatured\('([^']+)'\)/);
+    if(!m) return;
+    const key = m[1];
+    const exists = selected.includes(key);
+    btn.textContent = exists ? "✓ Agregado" : (
+      key.includes("Ultimate") ? "Agregar (Ultimate)" :
+      key.includes("Primaria") ? "Agregar (Primaria)" : "Agregar (Secundaria)"
+    );
+  });
+}
 
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
 let selected = JSON.parse(localStorage.getItem("bootplay_tienda_selected") || "[]");
@@ -1186,7 +1553,11 @@ function keyOf(g){
 /* Busca el juego original a partir de la clave guardada en el carrito
    (necesario para mostrar el precio de cada ítem y el total). */
 function findGame(key){
-  return GAMES.find(g => keyOf(g) === key);
+  const normal = GAMES.find(g => keyOf(g) === key);
+  if(normal) return normal;
+  const featured = FEATURED_ITEMS[key];
+  if(featured) return { name: featured.name, console: "", price: featured.price };
+  return undefined;
 }
 function cartTotal(){
   return selected.reduce((sum, key) => {
@@ -1430,6 +1801,7 @@ function escapeHtml(s){
 search.addEventListener("input", render);
 updateCount();
 render();
+updateFeaturedButtons();
 
 /* ======================================================
    CONTADOR — "🌷 Florecen los precios: ofertas de primavera"
