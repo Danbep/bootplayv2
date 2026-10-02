@@ -1623,7 +1623,8 @@ function render(){
   const list = GAMES.filter(g =>
     g.name.toLowerCase().includes(q) && coincideConsola(g, filtroConsola)
   );
-
+  // Ordenar alfabéticamente por nombre
+  list.sort((a, b) => a.name.localeCompare(b.name, 'es'));
   resultCount.textContent = `${list.length} juego${list.length === 1 ? "" : "s"}`;
   grid.innerHTML = "";
 
