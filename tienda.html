@@ -984,60 +984,12 @@ footer{
 </section>
 
 <!-- ======================================================
-     DESTACADO — EA SPORTS FC 27 (apartado de las ofertas)
-====================================================== -->
-<section class="container featured-area">
-  <div class="featured-heading">Juego destacado</div>
-  <div class="grid" id="featuredGrid" style="padding-bottom:0;">
-    <article class="featured-game">
-      <div class="featured-cover">
-        <img src="imagenes/EA SPORTS FC™ 27.webp"
-             alt="EA SPORTS FC 27"
-             onerror="this.style.display='none';">
-      </div>
-      <div class="featured-content">
-        <h2 class="featured-title">EA SPORTS FC™ 27</h2>
-
-        <div class="featured-section">
-          <div class="featured-section-title">PS4 &amp; PS5 - Standard Edition</div>
-
-          <div class="featured-option">
-            <div class="featured-option-info">Cuenta Primaria — <span class="featured-price">$75.000</span></div>
-            <button class="featured-add primary-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Standard — Primaria')">
-              Agregar (Primaria)
-            </button>
-          </div>
-
-          <div class="featured-option">
-            <div class="featured-option-info">Cuenta Secundaria — <span class="featured-price">$44.000</span></div>
-            <button class="featured-add blue-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Standard — Secundaria')">
-              Agregar (Secundaria)
-            </button>
-          </div>
-        </div>
-
-        <div class="featured-section">
-          <div class="featured-section-title">PS4 &amp; PS5 - Ultimate Edition</div>
-
-          <div class="featured-option">
-            <div class="featured-option-info">Cuenta Secundaria — <span class="featured-price">$62.000</span></div>
-            <button class="featured-add blue-metal" type="button" onclick="toggleFeatured('EA SPORTS FC™ 27 — PS4 & PS5 Ultimate — Secundaria')">
-              Agregar (Ultimate)
-            </button>
-          </div>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ======================================================
-     PROMO — "Ofertas de primavera II"
-     Va arriba del catálogo. Contador regresivo hasta el 21/10/2026.
+     PROMO — Ofertas de Halloween
+     Contador regresivo hasta el 04/11/2026 inclusive.
 ====================================================== -->
 <section class="promo">
-  <h2 class="promo-titulo">Ofertas de primavera II — Elección del jugador</h2>
-  <p class="promo-bajada">Ofertas destacadas en PS4 y PS5</p>
+  <h2 class="promo-titulo">🎃 Ofertas de Halloween en Bootplay 🎃</h2>
+  <p class="promo-bajada">Descuentos terroríficos en PS4 y PS5</p>
 
   <div class="promo-contador" id="promoContador" role="timer" aria-live="polite">
     <p class="promo-falta">Faltan para el fin de las ofertas</p>
@@ -1064,7 +1016,7 @@ footer{
     <p class="promo-finalizado">Ofertas finalizadas</p>
   </div>
 
-  <p class="promo-nota">Ofertas válidas hasta el 21/10/2026</p>
+  <p class="promo-nota">Ofertas válidas hasta el 04/11/2026 inclusive</p>
 </section>
 
 <!-- ======================================================
@@ -1248,350 +1200,145 @@ footer{
 ====================================================== -->
 <script>
 /* ======================================================
-   CATÁLOGO — "Ofertas de primavera II — Elección del jugador"
-   Vigente hasta el 07/10/2026.
-
-   Datos copiados textualmente de la lista que pasó el usuario.
-   Los precios YA VIENEN calculados con la regla "rango + monto
-   fijo" de contexto/proyecto.md: se cargan tal cual, sin recalcular.
-   No se muestra precio del proveedor ni badges de descuento.
-
-   CONSOLA (regla del usuario):
-   - console: "PS5" → solo PS5
-   - console: "PS4" → solo PS4
-   - console: ""    → el juego no especifica consola: aparece en
-                      AMBAS listas (PS4 y PS5).
-
-   PORTADAS: se mantiene el formato actual (image: "" y el
-   placeholder 🎮). No se cambiaron.
-
-   Total: 81 entradas únicas → 79 en la lista PS5 y 53 en la PS4
-   (las 51 multi-consola se cuentan en las dos).
+   CATÁLOGO — Ofertas de Halloween en Bootplay.
+   Listado y precios armados desde reglas(1).txt.
+   Las portadas usan imagenes/<título exacto>.webp.
+   Los precios se muestran únicamente mientras la promoción está activa.
+   Al vencer, las fichas permanecen pero se ocultan todos los importes.
 ====================================================== */
 const GAMES = [
-  { name: "Age of Empires II: Definitive Edition - Standard Edition PS5", console: "PS5", price: 32600, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Chronicles – Trilogy", console: "", price: 5600, priceBefore: 0, off: 0, image: "" },
-  { name: "Bayonetta & Vanquish 10th Anniversary Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Ben 10", console: "", price: 11900, priceBefore: 0, off: 0, image: "" },
-  { name: "Blasphemous 2", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "Brothers: A Tale of Two Sons Remake PS5", console: "PS5", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Chivalry 2", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "CHRONO CROSS: THE RADICAL DREAMERS EDITION", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Cult of the Lamb: Unholy Edition", console: "", price: 20400, priceBefore: 0, off: 0, image: "" },
-  { name: "DEATH STRANDING 2: ON THE BEACH Digital Deluxe Edition PS5", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
-  { name: "DEATH STRANDING Digital Deluxe Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "DEATHLOOP Deluxe Edition PS5", console: "PS5", price: 20600, priceBefore: 0, off: 0, image: "" },
-  { name: "Demon’s Souls PS5", console: "PS5", price: 16200, priceBefore: 0, off: 0, image: "" },
-  { name: "Deus Ex: Mankind Divided", console: "", price: 8300, priceBefore: 0, off: 0, image: "" },
-  { name: "Digimon Story Time Stranger PS5", console: "PS5", price: 43000, priceBefore: 0, off: 0, image: "" },
-  { name: "Dino Crisis", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Dishonored®: Death of the Outsider™", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "EA SPORTS™ PGA TOUR™ PS5", console: "PS5", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "EA SPORTS™ WRC 24 PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "ENDER MAGNOLIA: Bloom in the Mist PS4", console: "PS4", price: 18700, priceBefore: 0, off: 0, image: "" },
-  { name: "ENDER MAGNOLIA: Bloom in the Mist PS5", console: "PS5", price: 18700, priceBefore: 0, off: 0, image: "" },
-  { name: "Expeditions: A MudRunner Game", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "F1® Manager 2024", console: "", price: 11900, priceBefore: 0, off: 0, image: "" },
-  { name: "FINAL FANTASY VII REBIRTH Digital Deluxe Edition PS5", console: "PS5", price: 25300, priceBefore: 0, off: 0, image: "" },
-  { name: "FINAL FANTASY VII REMAKE Digital Deluxe Edition PS4", console: "PS4", price: 17600, priceBefore: 0, off: 0, image: "" },
-  { name: "FINAL FANTASY VII REMAKE INTERGRADE Digital Deluxe Edition PS5", console: "PS5", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "FINAL FANTASY X/X-2 HD Remaster", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "God of War Sons of Sparta PS5", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "GORN VR", console: "", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "Gotham Knights PS5", console: "PS5", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "GreedFall - Gold Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Green Hell", console: "", price: 9800, priceBefore: 0, off: 0, image: "" },
-  { name: "GRID Legends", console: "", price: 11400, priceBefore: 0, off: 0, image: "" },
-  { name: "Guilty Gear: Strive", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Hell is Us PS5", console: "PS5", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Human: Fall Flat", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Indiana Jones and the Great Circle PS5", console: "PS5", price: 47200, priceBefore: 0, off: 0, image: "" },
-  { name: "Injustice™ 2 - Standard Edition ESPAÑOL LATINO", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "JoJo's Bizarre Adventure: All-Star Battle R Deluxe Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Jurassic World Evolution", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "Jurassic World Evolution 2: Deluxe Edition", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Jurassic World Evolution 3: Deluxe Edition PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "Jurassic World Evolution: Jurassic Park Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Just Cause 4 - Complete Edition", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Kingdom Come: Deliverance", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Kingdom Come: Deliverance - Saga Bundle PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Kingdom Come: Deliverance II PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Knack 2", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "L.A. Noire", console: "", price: 7400, priceBefore: 0, off: 0, image: "" },
-  { name: "Lies of P", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange: Double Exposure PS5", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange: Reunion PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Like a Dragon: Infinite Wealth", console: "", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "Like a Dragon: Infinite Wealth Deluxe Edition", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "LIMBO & INSIDE Bundle", console: "", price: 7300, priceBefore: 0, off: 0, image: "" },
-  { name: "Little Nightmares II", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Mafia: Definitive Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Mafia: The Old Country PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Mafia: Trilogy", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Marvel's Guardians of the Galaxy", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Mass Effect™ Legendary Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Mass Effect™: Andromeda – Standard Recruit Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "METAL GEAR SOLID Δ: SNAKE EATER PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Metaphor: ReFantazio", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Metro Exodus", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
-  { name: "Metro Saga Bundle", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "MIO: Memories in Orbit PS5", console: "PS5", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Monster Energy Supercross - The Official Videogame 6", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Monster Hunter Rise + Sunbreak Deluxe", console: "", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "Monster Hunter Rise Deluxe Edition", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Monster Hunter World: Iceborne Master Edition Digital Deluxe", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
-  { name: "MotoGP™25 PS4", console: "PS4", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "MotoGP™25 PS5", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "MOUSE: P.I. For Hire PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "MudRunner", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "MXGP 2021 - The Official Motocross Videogame PS4", console: "PS4", price: 7900, priceBefore: 0, off: 0, image: "" },
-  { name: "MXGP 2021 - The Official Motocross Videogame PS5", console: "PS5", price: 7900, priceBefore: 0, off: 0, image: "" },
-  { name: "MY HERO ONE'S JUSTICE 2 Deluxe Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "NARUTO TO BORUTO: SHINOBI STRIKER", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS ESPAÑOL LATINO", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS Ultimate Edition  ESPAÑOL LATINO", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Nickelodeon All-Star Brawl 2", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "NINJA GAIDEN 2 Black PS5", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "NINJA GAIDEN: Master Collection", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Nioh", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "ONE PIECE ODYSSEY", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "ONE PUNCH MAN: A HERO NOBODY KNOWS edición Deluxe", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Onimusha 1+2 Pack", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Pacific Drive PS5", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Palworld PS5", console: "PS5", price: 25300, priceBefore: 0, off: 0, image: "" },
-  { name: "Persona 3 Reload", console: "", price: 25300, priceBefore: 0, off: 0, image: "" },
-  { name: "Persona 4 Golden", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "PGA TOUR 2K25 PS5", console: "PS5", price: 22300, priceBefore: 0, off: 0, image: "" },
-  { name: "Phoenix Wright: Ace Attorney Trilogy", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Plants vs. Zombies: Battle for Neighborville™ Deluxe Edition", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Plants vs. Zombies™: Replanted", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Police Simulator: Patrol Officers", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Power Rangers: Battle For The Grid", console: "", price: 7900, priceBefore: 0, off: 0, image: "" },
-  { name: "Prey", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Returnal PS5", console: "PS5", price: 16200, priceBefore: 0, off: 0, image: "" },
-  { name: "RIDE 6 PS5", console: "PS5", price: 41600, priceBefore: 0, off: 0, image: "" },
-  { name: "RoboCop: Rogue City PS5", console: "PS5", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "S.T.A.L.K.E.R. 2: Heart of Chornobyl PS5", console: "PS5", price: 47200, priceBefore: 0, off: 0, image: "" },
-  { name: "SAROS PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "Shin Megami Tensei V: Vengeance", console: "", price: 22300, priceBefore: 0, off: 0, image: "" },
-  { name: "SHINOBI: Art of Vengeance", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Sid Meier's Civilization® VII", console: "", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Sid Meier’s Civilization VI", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Elite 5", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Elite 5 Complete Edition", console: "", price: 21000, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts", console: "", price: 7900, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 2 - Deluxe Arsenal Edition", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts 2 Complete Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Sniper Ghost Warrior Contracts Full Arsenal Edition", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "SnowRunner - 1-Year Anniversary Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Sonic Colours: Ultimate", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Sonic Frontiers", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Sonic Mania", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Sonic Origins Plus", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "SOULCALIBUR VI", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Star Wars Outlaws PS5", console: "PS5", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS™ Battlefront™ II: Celebration Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS™ Jedi Bundle Edition", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS™: Squadrons", console: "", price: 5900, priceBefore: 0, off: 0, image: "" },
-  { name: "Stranded Deep", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Suicide Squad: Kill the Justice League PS5", console: "PS5", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Tails of Iron & Tails of Iron 2 - Deluxe Bundle", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Tennis World Tour - Legends Edition", console: "", price: 6600, priceBefore: 0, off: 0, image: "" },
-  { name: "Terraria – PlayStation®4 Edition", console: "PS4", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "The Evil Within Digital Bundle", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "The First Berserker: Khazan PS5", console: "PS5", price: 41600, priceBefore: 0, off: 0, image: "" },
-  { name: "The Midnight Walk PS5", console: "PS5", price: 18500, priceBefore: 0, off: 0, image: "" },
-  { name: "The Order: 1886™", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "The Outer Worlds: Spacer’s Choice Edition", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
-  { name: "The Quarry PS4™", console: "PS4", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "The Quarry PS5™", console: "PS5", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "TIEBREAK – GRAND SLAM EDITION", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Titanfall® 2: Ultimate Edition", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "TopSpin 2K25 Edición Grand Slam®", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "TopSpin 2K25 PS4", console: "PS4", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "TopSpin 2K25 PS5", console: "PS5", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Undisputed PS5", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Unravel", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Until Dawn™ PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Until Then", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "Warhammer 40,000: Space Marine 2 PS5", console: "PS5", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "Wobbly Life", console: "", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "Wolfenstein: The New Order", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Wolfenstein® II: The New Colossus™", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Worms Battlegrounds + Worms W.M.D", console: "", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "WUCHANG: Fallen Feathers PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "WWE 2K26 Attitude Era Edition PS5", console: "PS5", price: 67500, priceBefore: 0, off: 0, image: "" },
-  { name: "WWE 2K26 King of Kings Edition PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "XCOM® 2 Collection", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "007 First Light PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "A Way Out", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Alien: Isolation", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "AO Tennis 2", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "ARC Raiders PS5", console: "PS5", price: 24300, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed Valhalla - Complete Edition ESPAÑOL LATINO", console: "", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Assassin's Creed® Valhalla ESPAÑOL LATINO", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Assetto Corsa Competizione PS4 & PS5", console: "", price: 8600, priceBefore: 0, off: 0, image: "" },
-  { name: "Assetto Corsa Ultimate Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Atomic Heart", console: "", price: 21900, priceBefore: 0, off: 0, image: "" },
-  { name: "Atomic Heart - Ultimate Edition", console: "", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Back 4 Blood: Ultimate Edition", console: "", price: 7800, priceBefore: 0, off: 0, image: "" },
-  { name: "Batman: Arkham Collection", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Batman: Arkham Knight Premium Edition", console: "", price: 8900, priceBefore: 0, off: 0, image: "" },
-  { name: "Batman: Return to Arkham", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Battlefield™ 6 Standard Edition PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "BioShock: The Collection", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Borderlands 3", console: "", price: 6300, priceBefore: 0, off: 0, image: "" },
-  { name: "Borderlands 3 Super Deluxe Edition", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Borderlands 4 PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "Burnout™ Paradise Remastered", console: "", price: 6100, priceBefore: 0, off: 0, image: "" },
-  { name: "Clair Obscur: Expedition 33 PS5", console: "PS5", price: 42900, priceBefore: 0, off: 0, image: "" },
-  { name: "DMC4SE Demon Hunter Bundle", console: "", price: 16200, priceBefore: 0, off: 0, image: "" },
-  { name: "Dying Light 2 Stay Human Reloaded Edition", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Dying Light Definitive Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Dakar Desert Rally - Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Dead Island Definitive Collection", console: "", price: 7000, priceBefore: 0, off: 0, image: "" },
-  { name: "Dead Space PS5", console: "PS5", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "Devil May Cry 4 Special Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "Devil May Cry 5 + Vergil", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "Devil May Cry HD Collection & 4SE Bundle", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Devil May Cry HD Collection", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "DIRT 5", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "DiRT Rally 2.0 - Game of the Year Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "DmC Devil May Cry: Definitive Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "DRAGON BALL FIGHTERZ", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "DRAGON BALL XENOVERSE 2", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "DRAGON BALL XENOVERSE 2 Special Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Dragon Ball Xenoverse: Time Travel Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "DRAGON BALL: Sparking! ZERO Edición Legendaria PS5", console: "PS5", price: 90000, priceBefore: 0, off: 0, image: "" },
-  { name: "EA STAR WARS™ TRIPLE BUNDLE", console: "", price: 9300, priceBefore: 0, off: 0, image: "" },
-  { name: "Fallout 4 SUBTITULADO", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Fallout 4: Anniversary Edition", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Farming Simulator 15", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "Farming Simulator 17", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Farming Simulator 19", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Farming Simulator 22", console: "", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "Farming Simulator 25 PS5", console: "PS5", price: 34500, priceBefore: 0, off: 0, image: "" },
-  { name: "FINAL FANTASY XVI PS5", console: "PS5", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Forza Horizon 5 Deluxe Edition PS5", console: "PS5", price: 38200, priceBefore: 0, off: 0, image: "" },
-  { name: "God Of War 2018 Deluxe Edition ESPAÑOL LATINO", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "God of War® III Remastered", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Grand Theft Auto: The Trilogy – The Definitive Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "Hogwarts Legacy PS4 ESPAÑOL LATINO", console: "PS4", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "Hogwarts Legacy PS5 ESPAÑOL LATINO", console: "PS5", price: 15900, priceBefore: 0, off: 0, image: "" },
-  { name: "Horizon Zero Dawn: Complete Edition ESPAÑOL LATINO", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "It Takes Two", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO®  Harry Potter™ Collection PS5", console: "PS5", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Batman™: Legacy of the Dark Knight Deluxe Edition PS5", console: "PS5", price: 67500, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Batman™: Legacy of the Dark Knight PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® DC Super-Villains Deluxe Edition", console: "", price: 10900, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Harry Potter™ Collection PS4", console: "PS4", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Jurassic World", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Marvel Collection", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Marvel’s Avengers", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Star Wars™: The Skywalker Saga", console: "", price: 14100, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Star Wars™: The Skywalker Saga Galactic Edition", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "LEGO® Worlds", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange Remastered Collection", console: "", price: 6600, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange: True Colors", console: "", price: 8600, priceBefore: 0, off: 0, image: "" },
-  { name: "Life is Strange: True Colors - Deluxe Edition", console: "", price: 9200, priceBefore: 0, off: 0, image: "" },
-  { name: "Marvel's Spider-Man Remastered PS5 ESPAÑOL LATINO", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Marvel's Spider-Man: Game of the Year Edition ESPAÑOL LATINO", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Middle-earth™: Shadow of War™", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat 11 Standard ESPAÑOL LATINO", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat 11 Standard SUBTITULADO", console: "", price: 6000, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat XL ESPAÑOL LATINO", console: "", price: 8700, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat: Elder God Bundle PS5 ESPAÑOL LATINO", console: "PS5", price: 38200, priceBefore: 0, off: 0, image: "" },
-  { name: "Mortal Kombat™ 1 PS5 ESPAÑOL LATINO", console: "PS5", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "NARUTO SHIPPUDEN: Ultimate Ninja STORM Trilogy", console: "", price: 18900, priceBefore: 0, off: 0, image: "" },
-  { name: "NARUTO SHIPPUDEN™: Ultimate Ninja® STORM 4 ROAD TO BORUTO ESPAÑOL LATINO", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "NBA 2K27 PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™ Heat Deluxe Edition", console: "", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™ Hot Pursuit Remastered", console: "", price: 6600, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™ Payback - Deluxe Edition", console: "", price: 11400, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™ Rivals", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "Need for Speed™ Unbound PS5", console: "PS5", price: 10400, priceBefore: 0, off: 0, image: "" },
-  { name: "Overcooked! All You Can Eat", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Plants vs. Zombies™ Garden Warfare 2", console: "", price: 9600, priceBefore: 0, off: 0, image: "" },
-  { name: "RACCOON CITY EDITION", console: "", price: 17200, priceBefore: 0, off: 0, image: "" },
-  { name: "Ready or Not PS5", console: "PS5", price: 42900, priceBefore: 0, off: 0, image: "" },
-  { name: "Red Dead Redemption", console: "", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Red Dead Redemption 2", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "RESIDENT EVIL 2 Deluxe Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Resident Evil 4 Remake Gold Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "RESIDENT EVIL 7 biohazard Gold Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Resident Evil Requiem Deluxe Edition PS5", console: "PS5", price: 62600, priceBefore: 0, off: 0, image: "" },
-  { name: "Resident Evil Triple Pack", console: "", price: 17600, priceBefore: 0, off: 0, image: "" },
-  { name: "Resident Evil Village Gold Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Resident Evil: Deluxe Origins Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "SONIC FORCES Digital Standard Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "SONIC X SHADOW GENERATIONS", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Split Fiction PS5", console: "PS5", price: 39000, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS Jedi: Fallen Order™", console: "", price: 11300, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS Jedi: Survivor™ PS4", console: "PS4", price: 17600, priceBefore: 0, off: 0, image: "" },
-  { name: "STAR WARS Jedi: Survivor™ PS5", console: "PS5", price: 15900, priceBefore: 0, off: 0, image: "" },
-  { name: "Street Fighter™ 6", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
-  { name: "TEKKEN 7", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "TEKKEN 7 - Definitive Edition", console: "", price: 23000, priceBefore: 0, off: 0, image: "" },
-  { name: "TEKKEN 8 PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "TEKKEN 8 Season 2 Ultimate Edition PS5", console: "PS5", price: 67500, priceBefore: 0, off: 0, image: "" },
-  { name: "The LEGO® Games Bundle", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "UFC® 6 PS5", console: "PS5", price: 51500, priceBefore: 0, off: 0, image: "" },
-  { name: "UNCHARTED 4: A Thief’s End & UNCHARTED: The Lost Legacy Digital Bundle ESPAÑOL LATINO", console: "", price: 20600, priceBefore: 0, off: 0, image: "" },
-  { name: "UNCHARTED 4: A Thief’s End SUBTITULADO & UNCHARTED: The Lost Legacy ESPAÑOL ESPAÑA Digital Bundle", console: "", price: 9900, priceBefore: 0, off: 0, image: "" },
-  { name: "Uncharted™: The Nathan Drake Collection", console: "", price: 10600, priceBefore: 0, off: 0, image: "" },
-  { name: "Unravel Two", console: "", price: 5700, priceBefore: 0, off: 0, image: "" },
-  { name: "WRC 9 Deluxe Edition FIA World Rally Championship", console: "", price: 7900, priceBefore: 0, off: 0, image: "" },
-  { name: "WRC Generations - Fully Loaded Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" },
-  { name: "Yakuza 0 Director's Cut PS5", console: "PS5", price: 27500, priceBefore: 0, off: 0, image: "" },
-  { name: "Yakuza Kiwami & Yakuza Kiwami 2 Bundle", console: "", price: 19700, priceBefore: 0, off: 0, image: "" },
-  { name: "Yakuza: Like a Dragon Hero Edition", console: "", price: 15000, priceBefore: 0, off: 0, image: "" }
+  { name: "A Plague Tale: Innocence", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/A Plague Tale: Innocence.webp" },
+  { name: "A Plague Tale: Requiem PS5", console: "PS5", price: 29700, priceBefore: 0, off: 0, image: "imagenes/A Plague Tale: Requiem PS5.webp" },
+  { name: "Alien: Isolation - THE COLLECTION", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Alien: Isolation - THE COLLECTION.webp" },
+  { name: "Amnesia: Collection", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Amnesia: Collection.webp" },
+  { name: "Atomic Heart - Gold Edition", console: "", price: 35100, priceBefore: 0, off: 0, image: "imagenes/Atomic Heart - Gold Edition.webp" },
+  { name: "Back 4 Blood: Deluxe Edition", console: "", price: 13400, priceBefore: 0, off: 0, image: "imagenes/Back 4 Blood: Deluxe Edition.webp" },
+  { name: "Bendy and the Dark Revival PS4", console: "PS4", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Bendy and the Dark Revival PS4.webp" },
+  { name: "Bendy and the Dark Revival PS5", console: "PS5", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Bendy and the Dark Revival PS5.webp" },
+  { name: "Bendy and the Ink Machine PS4", console: "PS4", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Bendy and the Ink Machine PS4.webp" },
+  { name: "Bendy and the Ink Machine PS5", console: "PS5", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Bendy and the Ink Machine PS5.webp" },
+  { name: "Berserk and the Band of the Hawk", console: "", price: 35100, priceBefore: 0, off: 0, image: "imagenes/Berserk and the Band of the Hawk.webp" },
+  { name: "Blair Witch", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Blair Witch.webp" },
+  { name: "Blasphemous", console: "", price: 16500, priceBefore: 0, off: 0, image: "imagenes/Blasphemous.webp" },
+  { name: "Blasphemous + Blasphemous 2 Bundle", console: "", price: 18900, priceBefore: 0, off: 0, image: "imagenes/Blasphemous + Blasphemous 2 Bundle.webp" },
+  { name: "BLEACH Rebirth of Souls", console: "", price: 39200, priceBefore: 0, off: 0, image: "imagenes/BLEACH Rebirth of Souls.webp" },
+  { name: "Bloodborne™", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Bloodborne™.webp" },
+  { name: "Borderlands 3 Next Level Bundle", console: "", price: 12400, priceBefore: 0, off: 0, image: "imagenes/Borderlands 3 Next Level Bundle.webp" },
+  { name: "Borderlands 3: Ultimate Edition", console: "", price: 30500, priceBefore: 0, off: 0, image: "imagenes/Borderlands 3: Ultimate Edition.webp" },
+  { name: "Borderlands Legendary Collection", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Borderlands Legendary Collection.webp" },
+  { name: "Borderlands: The Handsome Collection", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Borderlands: The Handsome Collection.webp" },
+  { name: "Cronos: The New Dawn PS5", console: "PS5", price: 39200, priceBefore: 0, off: 0, image: "imagenes/Cronos: The New Dawn PS5.webp" },
+  { name: "Cult of the Lamb", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Cult of the Lamb.webp" },
+  { name: "Darksiders III Blades & Whip Edition", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/Darksiders III Blades & Whip Edition.webp" },
+  { name: "Days Gone ESPAÑOL LATINO", console: "", price: 38600, priceBefore: 0, off: 0, image: "imagenes/Days Gone ESPAÑOL LATINO.webp" },
+  { name: "Days Gone Remastered PS5", console: "PS5", price: 30500, priceBefore: 0, off: 0, image: "imagenes/Days Gone Remastered PS5.webp" },
+  { name: "Dead by Daylight", console: "", price: 22000, priceBefore: 0, off: 0, image: "imagenes/Dead by Daylight.webp" },
+  { name: "DEAD RISING 2", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/DEAD RISING 2.webp" },
+  { name: "Dead Rising 2 Off The Record", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Dead Rising 2 Off The Record.webp" },
+  { name: "Dead Space Digital Deluxe Edition PS5", console: "PS5", price: 28000, priceBefore: 0, off: 0, image: "imagenes/Dead Space Digital Deluxe Edition PS5.webp" },
+  { name: "DEATH STRANDING DIRECTOR’S CUT Digital Deluxe Edition PS5", console: "PS5", price: 24600, priceBefore: 0, off: 0, image: "imagenes/DEATH STRANDING DIRECTOR’S CUT Digital Deluxe Edition PS5.webp" },
+  { name: "Demon's Souls Digital Deluxe Edition PS5", console: "PS5", price: 23300, priceBefore: 0, off: 0, image: "imagenes/Demon's Souls Digital Deluxe Edition PS5.webp" },
+  { name: "Devil May Cry 5 Deluxe + Vergil", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Devil May Cry 5 Deluxe + Vergil.webp" },
+  { name: "Devil May Cry 5 Special Edition PS5", console: "PS5", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Devil May Cry 5 Special Edition PS5.webp" },
+  { name: "Diablo III: Eternal Collection", console: "", price: 13800, priceBefore: 0, off: 0, image: "imagenes/Diablo III: Eternal Collection.webp" },
+  { name: "Diablo® II + III (Diablo® Prime Evil Collection)", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Diablo® II + III (Diablo® Prime Evil Collection).webp" },
+  { name: "Dishonored 2", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Dishonored 2.webp" },
+  { name: "Dishonored® Definitive Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Dishonored® Definitive Edition.webp" },
+  { name: "Dishonored®: Death of the Outsider™ - Lote Deluxe", console: "", price: 22000, priceBefore: 0, off: 0, image: "imagenes/Dishonored®: Death of the Outsider™ - Lote Deluxe.webp" },
+  { name: "DOOM (2016)", console: "", price: 14000, priceBefore: 0, off: 0, image: "imagenes/DOOM (2016).webp" },
+  { name: "DOOM Eternal Deluxe Edition", console: "", price: 28400, priceBefore: 0, off: 0, image: "imagenes/DOOM Eternal Deluxe Edition.webp" },
+  { name: "Dragon Age™: Inquisition Deluxe Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Dragon Age™: Inquisition Deluxe Edition.webp" },
+  { name: "Dying Light - Essentials Edition", console: "", price: 12700, priceBefore: 0, off: 0, image: "imagenes/Dying Light - Essentials Edition.webp" },
+  { name: "Dying Light 2 Stay Human: Digital Extras Edition", console: "", price: 23700, priceBefore: 0, off: 0, image: "imagenes/Dying Light 2 Stay Human: Digital Extras Edition.webp" },
+  { name: "Dying Light: The Beast Deluxe Edition PS5", console: "PS5", price: 48900, priceBefore: 0, off: 0, image: "imagenes/Dying Light: The Beast Deluxe Edition PS5.webp" },
+  { name: "Evil West", console: "", price: 24600, priceBefore: 0, off: 0, image: "imagenes/Evil West.webp" },
+  { name: "Fallout 4: Game of the Year Edition SUBTITULADO", console: "", price: 20200, priceBefore: 0, off: 0, image: "imagenes/Fallout 4: Game of the Year Edition SUBTITULADO.webp" },
+  { name: "FATAL FRAME II: Crimson Butterfly REMAKE PS5", console: "PS5", price: 48900, priceBefore: 0, off: 0, image: "imagenes/FATAL FRAME II: Crimson Butterfly REMAKE PS5.webp" },
+  { name: "FATAL FRAME: Maiden of Black Water", console: "", price: 39200, priceBefore: 0, off: 0, image: "imagenes/FATAL FRAME: Maiden of Black Water.webp" },
+  { name: "FATAL FRAME: Mask of the Lunar Eclipse", console: "", price: 39200, priceBefore: 0, off: 0, image: "imagenes/FATAL FRAME: Mask of the Lunar Eclipse.webp" },
+  { name: "FOR HONOR™ STANDARD EDITION", console: "", price: 14400, priceBefore: 0, off: 0, image: "imagenes/FOR HONOR™ STANDARD EDITION.webp" },
+  { name: "Gotham Knights: Deluxe PS5", console: "PS5", price: 18900, priceBefore: 0, off: 0, image: "imagenes/Gotham Knights: Deluxe PS5.webp" },
+  { name: "Hogwarts Legacy: Digital Deluxe Edition ESPAÑOL LATINO", console: "", price: 22000, priceBefore: 0, off: 0, image: "imagenes/Hogwarts Legacy: Digital Deluxe Edition ESPAÑOL LATINO.webp" },
+  { name: "Jurassic World Evolution 2", console: "", price: 24600, priceBefore: 0, off: 0, image: "imagenes/Jurassic World Evolution 2.webp" },
+  { name: "Jurassic World Evolution 2: Dominion Bundle", console: "", price: 43000, priceBefore: 0, off: 0, image: "imagenes/Jurassic World Evolution 2: Dominion Bundle.webp" },
+  { name: "Jurassic World Evolution 3 PS5", console: "PS5", price: 57600, priceBefore: 0, off: 0, image: "imagenes/Jurassic World Evolution 3 PS5.webp" },
+  { name: "Jurassic World Evolution Deluxe Edition", console: "", price: 18200, priceBefore: 0, off: 0, image: "imagenes/Jurassic World Evolution Deluxe Edition.webp" },
+  { name: "Legacy of Kain™ Soul Reaver 1&2 Remastered", console: "", price: 23300, priceBefore: 0, off: 0, image: "imagenes/Legacy of Kain™ Soul Reaver 1&2 Remastered.webp" },
+  { name: "LEGO® Batman™ 3: Más allá de Gotham Edición Deluxe", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/LEGO® Batman™ 3: Más allá de Gotham Edición Deluxe.webp" },
+  { name: "LEGO® DC Super-Villains", console: "", price: 13600, priceBefore: 0, off: 0, image: "imagenes/LEGO® DC Super-Villains.webp" },
+  { name: "LEGO® Marvel Super Heroes 2", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/LEGO® Marvel Super Heroes 2.webp" },
+  { name: "LEGO® Marvel™ Super Heroes", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/LEGO® Marvel™ Super Heroes.webp" },
+  { name: "Lies of P: Overture Bundle", console: "", price: 70500, priceBefore: 0, off: 0, image: "imagenes/Lies of P: Overture Bundle.webp" },
+  { name: "Little Nightmares Enhanced Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Little Nightmares Enhanced Edition.webp" },
+  { name: "Little Nightmares III", console: "", price: 30500, priceBefore: 0, off: 0, image: "imagenes/Little Nightmares III.webp" },
+  { name: "Marvel vs. Capcom: Infinite - Deluxe Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Marvel vs. Capcom: Infinite - Deluxe Edition.webp" },
+  { name: "Marvel vs. Capcom: Infinite - Standard Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Marvel vs. Capcom: Infinite - Standard Edition.webp" },
+  { name: "Metro Exodus: Gold Edition", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Metro Exodus: Gold Edition.webp" },
+  { name: "Middle-earth™: Shadow of Mordor™-Game of the Year Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Middle-earth™: Shadow of Mordor™-Game of the Year Edition.webp" },
+  { name: "Middle-earth™: Shadow of War™ Definitive Edition", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Middle-earth™: Shadow of War™ Definitive Edition.webp" },
+  { name: "Monster Hunter Wilds PS5", console: "PS5", price: 39200, priceBefore: 0, off: 0, image: "imagenes/Monster Hunter Wilds PS5.webp" },
+  { name: "Monster Hunter World: Iceborne Master Edition", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Monster Hunter World: Iceborne Master Edition.webp" },
+  { name: "MONSTER HUNTER: WORLD™", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/MONSTER HUNTER: WORLD™.webp" },
+  { name: "Mortal Kombat 11 Ultimate + Injustice 2 Leg. Edition Bundle ESPAÑOL LATINO", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Mortal Kombat 11 Ultimate + Injustice 2 Leg. Edition Bundle ESPAÑOL LATINO.webp" },
+  { name: "Mortal Kombat 11 Ultimate ESPAÑOL LATINO", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Mortal Kombat 11 Ultimate ESPAÑOL LATINO.webp" },
+  { name: "Mortal Kombat 11 Ultimate SUBTITULADO", console: "", price: 12100, priceBefore: 0, off: 0, image: "imagenes/Mortal Kombat 11 Ultimate SUBTITULADO.webp" },
+  { name: "Mortal Kombat: Legacy Kollection", console: "", price: 35100, priceBefore: 0, off: 0, image: "imagenes/Mortal Kombat: Legacy Kollection.webp" },
+  { name: "Mortal Kombat™ 1: Definitive Edition PS5 ESPAÑOL LATINO", console: "", price: 29300, priceBefore: 0, off: 0, image: "imagenes/Mortal Kombat™ 1: Definitive Edition PS5 ESPAÑOL LATINO.webp" },
+  { name: "No More Room in Hell 2 PS5", console: "PS5", price: 35100, priceBefore: 0, off: 0, image: "imagenes/No More Room in Hell 2 PS5.webp" },
+  { name: "Outlast 2", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Outlast 2.webp" },
+  { name: "Outlast: Trinity", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Outlast: Trinity.webp" },
+  { name: "Persona 5 Royal PS5", console: "PS5", price: 29700, priceBefore: 0, off: 0, image: "imagenes/Persona 5 Royal PS5.webp" },
+  { name: "Persona®5 Royal Ultimate Edition", console: "", price: 29700, priceBefore: 0, off: 0, image: "imagenes/Persona®5 Royal Ultimate Edition.webp" },
+  { name: "Plants vs. Zombies: Battle for Neighborville™", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Plants vs. Zombies: Battle for Neighborville™.webp" },
+  { name: "Plants vs. Zombies™ Garden Warfare", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Plants vs. Zombies™ Garden Warfare.webp" },
+  { name: "Prey: Digital Deluxe Edition", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/Prey: Digital Deluxe Edition.webp" },
+  { name: "Red Dead Redemption & Red Dead Redemption 2 Bundle", console: "", price: 53000, priceBefore: 0, off: 0, image: "imagenes/Red Dead Redemption & Red Dead Redemption 2 Bundle.webp" },
+  { name: "REANIMAL PS5", console: "PS5", price: 39200, priceBefore: 0, off: 0, image: "imagenes/REANIMAL PS5.webp" },
+  { name: "Resonance: A Plague Tale Legacy PS5", console: "PS5", price: 61700, priceBefore: 0, off: 0, image: "imagenes/Resonance: A Plague Tale Legacy PS5.webp" },
+  { name: "Resident Evil", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Resident Evil.webp" },
+  { name: "Resident Evil 0", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Resident Evil 0.webp" },
+  { name: "RESIDENT EVIL 2 Remake", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/RESIDENT EVIL 2 Remake.webp" },
+  { name: "RESIDENT EVIL 3 Remake", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/RESIDENT EVIL 3 Remake.webp" },
+  { name: "resident evil 4 (2005)", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/resident evil 4 (2005).webp" },
+  { name: "Resident Evil 4 Remake", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Resident Evil 4 Remake.webp" },
+  { name: "RESIDENT EVIL 5", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/RESIDENT EVIL 5.webp" },
+  { name: "Resident Evil 6", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Resident Evil 6.webp" },
+  { name: "RESIDENT EVIL 7 biohazard", console: "", price: 18000, priceBefore: 0, off: 0, image: "imagenes/RESIDENT EVIL 7 biohazard.webp" },
+  { name: "Resident Evil 7 Gold Edition & Village Gold Edition", console: "", price: 30500, priceBefore: 0, off: 0, image: "imagenes/Resident Evil 7 Gold Edition & Village Gold Edition.webp" },
+  { name: "Resident Evil Code: Veronica X", console: "", price: 16200, priceBefore: 0, off: 0, image: "imagenes/Resident Evil Code: Veronica X.webp" },
+  { name: "Resident Evil Remake Trilogy", console: "", price: 39200, priceBefore: 0, off: 0, image: "imagenes/Resident Evil Remake Trilogy.webp" },
+  { name: "Resident Evil Requiem PS5", console: "PS5", price: 61700, priceBefore: 0, off: 0, image: "imagenes/Resident Evil Requiem PS5.webp" },
+  { name: "RESIDENT EVIL REVELATIONS", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/RESIDENT EVIL REVELATIONS.webp" },
+  { name: "Resident Evil Revelations 2 Deluxe Edition", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Resident Evil Revelations 2 Deluxe Edition.webp" },
+  { name: "Resident Evil Village", console: "", price: 19700, priceBefore: 0, off: 0, image: "imagenes/Resident Evil Village.webp" },
+  { name: "Rise of the Tomb Raider: 20º aniversario", console: "", price: 13100, priceBefore: 0, off: 0, image: "imagenes/Rise of the Tomb Raider: 20º aniversario.webp" },
+  { name: "RoboCop: Rogue City - Alex Murphy Edition PS5", console: "PS5", price: 14400, priceBefore: 0, off: 0, image: "imagenes/RoboCop: Rogue City - Alex Murphy Edition PS5.webp" },
+  { name: "Saints Row: The Third Remastered", console: "", price: 14400, priceBefore: 0, off: 0, image: "imagenes/Saints Row: The Third Remastered.webp" },
+  { name: "Shadow of the Tomb Raider Definitive Edition", console: "", price: 14000, priceBefore: 0, off: 0, image: "imagenes/Shadow of the Tomb Raider Definitive Edition.webp" },
+  { name: "SILENT HILL 2 Deluxe Edition PS5", console: "PS5", price: 48900, priceBefore: 0, off: 0, image: "imagenes/SILENT HILL 2 Deluxe Edition PS5.webp" },
+  { name: "SILENT HILL f - Deluxe Edition PS5", console: "PS5", price: 53000, priceBefore: 0, off: 0, image: "imagenes/SILENT HILL f - Deluxe Edition PS5.webp" },
+  { name: "South Park: The Video Game Collection", console: "", price: 22000, priceBefore: 0, off: 0, image: "imagenes/South Park: The Video Game Collection.webp" },
+  { name: "South Park™: The Fractured but Whole™ Gold Edition", console: "", price: 24600, priceBefore: 0, off: 0, image: "imagenes/South Park™: The Fractured but Whole™ Gold Edition.webp" },
+  { name: "Teenage Mutant Ninja Turtles: The Cowabunga Collection", console: "", price: 28000, priceBefore: 0, off: 0, image: "imagenes/Teenage Mutant Ninja Turtles: The Cowabunga Collection.webp" },
+  { name: "The Evil Within SUBTITULADO", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/The Evil Within SUBTITULADO.webp" },
+  { name: "The Last of Us Part II PS4 ESPAÑOL LATINO", console: "", price: 33400, priceBefore: 0, off: 0, image: "imagenes/The Last of Us Part II PS4 ESPAÑOL LATINO.webp" },
+  { name: "The Last of Us™ Part I Digital Deluxe Edition PS5 ESPAÑOL LATINO", console: "", price: 30500, priceBefore: 0, off: 0, image: "imagenes/The Last of Us™ Part I Digital Deluxe Edition PS5 ESPAÑOL LATINO.webp" },
+  { name: "The Walking Dead: The Telltale Definitive Series", console: "", price: 22400, priceBefore: 0, off: 0, image: "imagenes/The Walking Dead: The Telltale Definitive Series.webp" },
+  { name: "Tomb Raider: Definitive Survivor Trilogy", console: "", price: 12200, priceBefore: 0, off: 0, image: "imagenes/Tomb Raider: Definitive Survivor Trilogy.webp" },
+  { name: "Ultimate Marvel vs. Capcom 3", console: "", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Ultimate Marvel vs. Capcom 3.webp" },
+  { name: "Until Dawn™ PS4", console: "PS4", price: 14900, priceBefore: 0, off: 0, image: "imagenes/Until Dawn™ PS4.webp" },
+  { name: "Visage", console: "", price: 29300, priceBefore: 0, off: 0, image: "imagenes/Visage.webp" },
+  { name: "World War Z PS4", console: "PS4", price: 17600, priceBefore: 0, off: 0, image: "imagenes/World War Z PS4.webp" },
+  { name: "World War Z: Aftermath Deluxe Edition PS4", console: "PS4", price: 29300, priceBefore: 0, off: 0, image: "imagenes/World War Z: Aftermath Deluxe Edition PS4.webp" },
+  { name: "World War Z: Aftermath Deluxe Edition PS5", console: "PS5", price: 29300, priceBefore: 0, off: 0, image: "imagenes/World War Z: Aftermath Deluxe Edition PS5.webp" },
+  { name: "World War Z: Aftermath PS5", console: "PS5", price: 19700, priceBefore: 0, off: 0, image: "imagenes/World War Z: Aftermath PS5.webp" },
+  { name: "Zombie Army 4: Dead War", console: "", price: 17600, priceBefore: 0, off: 0, image: "imagenes/Zombie Army 4: Dead War.webp" }
 ];
 
 
-/* ===== PRODUCTOS DESTACADOS ===== */
-const FEATURED_ITEMS = {
-  "EA SPORTS FC™ 27 — PS4 & PS5 Standard — Primaria": {
-    name: "EA SPORTS FC™ 27 — Standard Edition — Cuenta Primaria",
-    price: 75000
-  },
-  "EA SPORTS FC™ 27 — PS4 & PS5 Standard — Secundaria": {
-    name: "EA SPORTS FC™ 27 — Standard Edition — Cuenta Secundaria",
-    price: 44000
-  },
-  "EA SPORTS FC™ 27 — PS4 & PS5 Ultimate — Secundaria": {
-    name: "EA SPORTS FC™ 27 — Ultimate Edition — Cuenta Secundaria",
-    price: 62000
-  }
-};
-
-function toggleFeatured(key){
-  if(selected.includes(key)) selected = selected.filter(x => x !== key);
-  else selected.push(key);
-  save();
-  updateFeaturedButtons();
-}
-
-function updateFeaturedButtons(){
-  document.querySelectorAll(".featured-add").forEach(btn => {
-    const onclick = btn.getAttribute("onclick") || "";
-    const m = onclick.match(/toggleFeatured\('([^']+)'\)/);
-    if(!m) return;
-    const key = m[1];
-    const exists = selected.includes(key);
-    btn.textContent = exists ? "✓ Agregado" : (
-      key.includes("Ultimate") ? "Agregar (Ultimate)" :
-      key.includes("Primaria") ? "Agregar (Primaria)" : "Agregar (Secundaria)"
-    );
-  });
-}
-
 const WHATSAPP_NUMBER = "5493434524653"; // Reemplazá esto por tu número, sin + ni espacios.
 let selected = JSON.parse(localStorage.getItem("bootplay_tienda_selected") || "[]");
-const VALID_CART_KEYS = new Set([
-  ...GAMES.map(g => keyOf(g)),
-  ...Object.keys(FEATURED_ITEMS)
-]);
+const VALID_CART_KEYS = new Set(GAMES.map(g => keyOf(g)));
 selected = selected.filter(key => VALID_CART_KEYS.has(key));
 let filtroConsola = "Todas";
 let cartStep = 1;          /* 1 = lista + total, 2 = forma de pago */
@@ -1606,7 +1353,7 @@ let paymentMethod = null;  /* "transferencia" | "efectivo" */
 const IMAGENES_FALTANTES = [];
 
 function rutaPortada(g){
-  return g.image || `imagenes/${g.name.replace(/:/g, ' ').replace(/\s+/g, ' ').trim()}.webp`;
+  return g.image || `imagenes/${g.name}.webp`;
 }
 
 /* Se llama desde el onerror del <img> cuando la portada no carga.
@@ -1625,6 +1372,8 @@ const grid = document.getElementById("grid");
 const search = document.getElementById("search");
 const resultCount = document.getElementById("resultCount");
 
+const FIN_OFERTAS = new Date(2026, 10, 5, 0, 0, 0).getTime(); // hasta el 04/11 inclusive
+function ofertasActivas(){ return Date.now() < FIN_OFERTAS; }
 function money(n){ return (n || 0).toLocaleString("es-AR"); }
 
 /* Clave única de cada juego para el carrito.
@@ -1640,11 +1389,10 @@ function keyOf(g){
 function findGame(key){
   const normal = GAMES.find(g => keyOf(g) === key);
   if(normal) return normal;
-  const featured = FEATURED_ITEMS[key];
-  if(featured) return { name: featured.name, console: "", price: featured.price };
   return undefined;
 }
 function cartTotal(){
+  if (!ofertasActivas()) return 0;
   return selected.reduce((sum, key) => {
     const g = findGame(key);
     return sum + (g ? g.price : 0);
@@ -1740,7 +1488,7 @@ function render(){
       </div>
       <div class="card-body">
         <div class="game-name">${escapeHtml(g.name)}</div>
-        <div class="price">$${money(g.price)}${antes}</div>
+        ${ofertasActivas() ? `<div class="price">$${money(g.price)}${antes}</div>` : ""}
         <div class="meta">${textoConsola(g)}</div>
         <button class="btn ${exists ? "" : "primary"} add" type="button">${exists ? "✓ Agregado" : "＋ Agregar al pedido"}</button>
       </div>`;
@@ -1794,7 +1542,7 @@ function renderCart(){
     return `
       <div class="selected-item">
         <span class="selected-name">${escapeHtml(key)}</span>
-        <span class="selected-price">$${money(precio)}</span>
+        ${ofertasActivas() ? `<span class="selected-price">$${money(precio)}</span>` : ""}
         ${quitar}
       </div>`;
   }).join("") : '<div class="empty">Todavía no seleccionaste juegos.</div>';
@@ -1819,7 +1567,7 @@ function renderCart(){
     <aside class="drawer">
       <div class="drawer-head"><h3>Tu pedido</h3><button class="btn" onclick="closeCart()">✕</button></div>
       <div class="selected">${listaHtml}</div>
-      <div class="cart-total"><span>Total</span><span>$${money(total)}</span></div>
+      ${ofertasActivas() ? `<div class="cart-total"><span>Total</span><span>$${money(total)}</span></div>` : `<div class="cart-total"><span>Ofertas finalizadas</span></div>`}
       <div class="drawer-footer">${footerHtml}</div>
     </aside>`;
 }
@@ -1876,7 +1624,7 @@ function sendWhatsApp(){
   const metodoTexto = paymentMethod === "transferencia" ? "Transferencia" : "Efectivo (retiro del código en puerta)";
   const text = "Hola Bootplay! Quiero consultar por estos juegos de la Tienda digital:%0A%0A" +
     selected.map((x, i) => `${i + 1}. ${encodeURIComponent(x)}`).join("%0A") +
-    `%0A%0ATotal: ${encodeURIComponent("$" + money(total))}` +
+    (ofertasActivas() ? `%0A%0ATotal: ${encodeURIComponent("$" + money(total))}` : "") +
     `%0AForma de pago: ${encodeURIComponent(metodoTexto)}`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
 }
@@ -1887,19 +1635,17 @@ function escapeHtml(s){
 search.addEventListener("input", render);
 updateCount();
 render();
-updateFeaturedButtons();
 
 /* ======================================================
-   CONTADOR — "Ofertas de primavera II — Elección del jugador"
-   Fecha límite: 21/10/2026. Como las ofertas valen HASTA ese día,
-   el objetivo es el arranque del 22/10/2026 a las 00:00 (hora local).
-   Al llegar a cero se muestra "Ofertas finalizadas" con opacidad reducida.
+   CONTADOR — Ofertas de Halloween.
+   Las ofertas valen hasta el 04/11/2026 inclusive; finalizan el 05/11 a las 00:00.
+   Al llegar a cero, las fichas quedan visibles pero sin precios.
 ====================================================== */
 (function () {
   var contador = document.getElementById("promoContador");
   if (!contador) return;
 
-  var FIN = new Date(2026, 9, 22, 0, 0, 0).getTime();  /* 9 = octubre (mes 0-indexado) */
+  var FIN = FIN_OFERTAS;
   var elDias = document.getElementById("cdDias");
   var elHoras = document.getElementById("cdHoras");
   var elMin = document.getElementById("cdMin");
@@ -1907,15 +1653,22 @@ updateFeaturedButtons();
 
   function dosDigitos(n){ return n < 10 ? "0" + n : String(n); }
 
+  var vencimientoProcesado = false;
   function actualizar(){
     var falta = FIN - Date.now();
 
     if (falta <= 0){
+      if (!vencimientoProcesado){
+        vencimientoProcesado = true;
+        GAMES.forEach(function(g){ g.price = 0; g.priceBefore = 0; g.off = 0; });
+      }
       contador.classList.add("finalizado");
       elDias.textContent = "00";
       elHoras.textContent = "00";
       elMin.textContent = "00";
       elSeg.textContent = "00";
+      render();
+      if (document.body.classList.contains("open")) renderCart();
       return;
     }
 
